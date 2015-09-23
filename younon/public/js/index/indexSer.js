@@ -65,8 +65,6 @@ angular.module('index.services', [])
                     changeGoodsNumber();
                     cb();
                 });
-
-
             },
             hasMore: function () {
                 return isMore;

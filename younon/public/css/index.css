@@ -4,3 +4,11 @@
 .index-cart .list:last-child{
     padding-bottom:49px;
 }
+
+.index-person{
+    float: left;
+    padding: 5px 5px;
+    background-color: #B4EEB4;
+    margin-top: 25px;
+    border-radius: 4px;
+}

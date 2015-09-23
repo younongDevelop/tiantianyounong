@@ -7,6 +7,6 @@ angular.module('person.controllers', [])
     .controller('personBaseCtrl', function($scope) {
         console.log('personBaseCtrl');
     })
-    .controller('personCtrl', function($scope) {
+    .controller('personOrdersCtrl', function($scope) {
         console.log('personCtrl');
     });

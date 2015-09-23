@@ -88,15 +88,15 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
       .state('person', {
           url: '/person',
           abstract: true,
+          templateUrl: 'templates/index/tabs.html',
           controller:'personBaseCtrl'
       })
 
-      .state('person.index', {
-          url: '/index',
+      .state('person.orders', {
+          url: '/orders',
           views: {
-              templateUrl: 'templates/personInfor/index.html',
-              controller: 'personCtrl'
-
+              templateUrl: 'templates/personInfor/orders.html',
+              controller: 'personOrdersCtrl'
           }
       })
 
