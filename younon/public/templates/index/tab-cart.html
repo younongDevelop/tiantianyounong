@@ -3,10 +3,15 @@
       <ion-list>
           <ion-item ng-repeat="item in cartGoods" class="item-thumbnail-left" >
               <img ng-src="{{item.img}}">
-              <h2>{{item.product_name}}</h2>
+              <h2 style="margin-top:10px">{{item.product_name}}</h2>
               <p class="attention">￥{{item.product_sell_price/100}}</p>
               <p class="fl">{{item.prod_sku_values}}</p>
-              <button class=" fr" style="min-width:20px;min-height:20px">{{item.quantity}}</button>
+
+              <select class="fr"
+                      ng-model="data.numberArr[$index]"
+                      ng-options="o as o for o in number"
+                      ng-change="changeNumber(data.numberArr[$index],$index)">
+              </select>
               <p class="fr">数量：</p>
               <ion-option-button class="button-assertive" ng-click="del($index)">
                   删除

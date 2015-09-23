@@ -11,17 +11,40 @@ angular.module('index.controllers', [])
         console.log('index');
     })
 
-.controller('cartCtrl', function($scope,cart,$ionicListDelegate) {
+.controller('cartCtrl', function($scope,cart,$ionicListDelegate,$ionicPopup) {
+
+        $scope.number=[];
+        for(var i=1;i<51;i++){
+            $scope.number.push(i);
+        }
 
         cart.getGoods(function(data){
-            console.log(data);
             $scope.cartGoods=data;
+            console.log(data);
+
         });
-   $scope.del=function(index){
+
+       $scope.del=function(index){
        cart.deleteGoods(index,function(){
-           console.log('sdfsdf');
+           $ionicPopup.alert({
+               title: '',
+               template: '删除失败',
+               okText: '好的'
+           });
+           return;
        });
    }
+
+        $scope.changeNumber=function(number,index){
+            cart.changeNumber(number,index,function(){
+                 $ionicPopup.alert({
+                    title: '',
+                    template: '修改失败',
+                    okText: '好的'
+                });
+                return;
+            });
+        }
 
 })
 
