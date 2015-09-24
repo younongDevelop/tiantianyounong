@@ -1,6 +1,7 @@
 angular.module('index.controllers', [])
 
-    .controller('indexBaseCtrl', function($scope,cart) {
+    .controller('indexBaseCtrl', function($scope,cart,$http) {
+
         cart.getGoodsNumber(function(data){
             console.log(data);
             $scope.data=data;

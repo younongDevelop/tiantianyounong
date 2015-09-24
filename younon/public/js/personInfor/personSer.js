@@ -3,51 +3,86 @@
  */
 angular.module('person.services', [])
 
-    .factory('person', function() {
-        // Might use a resource here that returns a JSON array
+    .factory('personAddress', function($http) {
+        var addresses=[];
+        var cities=[];
+        var districts=[];
+        var community=[];
+        var selectedId={id:''};
+        if(localStorage.address_id){selectedId.id=localStorage.address_id};
 
-        // Some fake testing data
-        var chats = [{
-            id: 0,
-            name: 'Ben Sparrow',
-            lastText: 'You on your way?',
-            face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-        }, {
-            id: 1,
-            name: 'Max Lynx',
-            lastText: 'Hey, it\'s me',
-            face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-        }, {
-            id: 2,
-            name: 'Adam Bradleyson',
-            lastText: 'I should buy a boat',
-            face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-        }, {
-            id: 3,
-            name: 'Perry Governor',
-            lastText: 'Look at my mukluks!',
-            face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
-        }, {
-            id: 4,
-            name: 'Mike Harrington',
-            lastText: 'This is wicked good ice cream.',
-            face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
-        }];
+        return{
+            getAddresses:function(cb){
+                cb(addresses);
+            },
+            getCity:function(cb){
 
-        return {
-            all: function() {
-                return chats;
-            },
-            remove: function(chat) {
-                chats.splice(chats.indexOf(chat), 1);
-            },
-            get: function(chatId) {
-                for (var i = 0; i < chats.length; i++) {
-                    if (chats[i].id === parseInt(chatId)) {
-                        return chats[i];
+                $http.get(api+'/cities').success(function(data) {
+                    if(data.code===0){
+                        cities=data.results;
+                        cb(cities);
                     }
-                }
-                return null;
+                }).error(function (res) {
+                    console.log(res);
+                });
+            },
+            loadDistrict:function(cityId,cb){
+                $http.get(api+'/districts/'+cityId).success(function(data) {
+                    districts=data.results;
+                    cb(districts);
+                    console.log(districts);
+                }).error(function (res) {
+                        console.log(res);
+                });
+            },
+            loadCommunity:function(districtId,cb){
+                $http.get(api+'/communities/'+districtId).success(function(data) {
+                    community=data.results;
+                    console.log(community);
+                    cb(community);
+                }).error(function (res) {
+                    console.log(res);
+                });
+            },
+            loadAddress:function(page,pageSize,version,cb){
+                $http.get(api+'/addresses/'+customerId+'/'+page+'/'+pageSize+'/'+version).success(function(data,status,headers) {
+                    console.log(data);
+                    if(data.code===0){
+                        for (var i in data.results) {
+                            if(data.results[i].status!=0){addresses.push(data.results[i]);}
+                        }
+                        if(!localStorage.address_id&&addresses[0]){
+                            selectedId.id=addresses[0].address_id,
+                                localStorage.address_id=addresses[0].address_id;
+                                localStorage.receiver_name=addresses[0].receiver_name;
+                                localStorage.receiver_phone=addresses[0].receiver_phone;
+                                localStorage.address_detail=addresses[0].address_detail;
+                        }
+                        cb(data.results);
+                    }
+                }).error(function (res) {
+                    console.log(res);
+                });
+                },
+            addAddress:function(item,cb){
+
+            },
+            delAddress:function(index,cb){
+                addresses.splice(index,1);
+            },
+            changeAddress:function(index,key,value,cb){
+
+            },
+            selectAddress:function(item){
+                selectedId.id=item.address_id;
+                localStorage.address_id=item.address_id;
+                localStorage.receiver_name=item.receiver_name;
+                localStorage.receiver_phone=item.receiver_phone;
+                localStorage.address_detail=item.address_detail;
+            },
+            getSelectedId:function(cb){
+                cb(selectedId);
             }
-        };
+
+            }
     });
