@@ -7,8 +7,11 @@ angular.module('index.controllers', [])
         });
     })
 
-.controller('indexCtrl', function($scope) {
-        console.log('index');
+.controller('indexCtrl', function($scope, cate) {
+        $scope.cates = [];
+        cate.getCates(function(cates){
+           $scope.cates = cates; 
+        });
     })
 
 .controller('cartCtrl', function($scope,cart,$ionicListDelegate,$ionicPopup) {

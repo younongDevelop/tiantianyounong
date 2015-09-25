@@ -1,5 +1,46 @@
 <ion-view>
     <ion-content>
-        sdfsdfsd
+    	<div class="index-content">
+    		<!-- 轮播组件 -->
+			<ion-slide-box does-continue="true" slide-interval="1000">
+				<ion-slide>
+					<div class="index-slide-item"><h1>第一个</h1></div>
+				</ion-slide>
+				<ion-slide>
+					<div class="index-slide-item"><h1>第二个</h1></div>
+				</ion-slide>
+				<ion-slide>
+					<div class="index-slide-item"><h1>第三个</h1></div>
+				</ion-slide>
+			</ion-slide-box>
+	    	<!-- 搜索框 -->
+	    	<div class="list list-inset">
+				<label class="item item-input">
+					<i class="icon ion-search placeholder-icon"></i>
+					<input type="text" placeholder="商品搜索：请输入商品关键字">
+				</label>
+			</div>
+			<!-- 产品分类展示 -->
+			<ul class="list index-cate-list">
+			    <li class="item index-cate-item" ng-repeat="cate in cates">
+			      	<h2>{{cate.name}}</h2>
+			      	<div class="row">
+			      		<div class="col col-50" ng-repeat="pro in cate.pros">
+			      			<a href="{{pro.product_url}}">
+				      			<div class="index-pro padding">
+				      				<img src="{{pro.product_images.small}}" alt="">
+				      				<h3 class="index-pro-title">{{pro.product_name}} {{pro.sku_attrval}}</h3>
+				      				<div class="index-price">
+				      					<span class="index-yn-price">￥{{pro.product_sell_price/100}}</span>
+				      					<span class="index-market-price">￥{{pro.product_original_price/100}}</span>
+				      				</div>
+				      			</div>		      				
+			      			</a>
+			      		</div>
+			      	</div>
+			    </li>
+			</ul>			    		
+    	</div>
+
     </ion-content>
 </ion-view>

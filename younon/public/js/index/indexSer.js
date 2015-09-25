@@ -69,8 +69,52 @@ angular.module('index.services', [])
             hasMore: function () {
                 return isMore;
             }
-
         }
-
-
+})
+.factory('cate',function($http){
+    var cates = [];
+    return {
+        /**
+        * @desc 获取分类数据,分类数据中包含产品数据
+        * @func getCates
+        * @param {function} cb 回调函数
+        */ 
+        getCates: function(cb){
+            var searchUrl = '/search/?field=product_id+product_url+product_name+product_images+sku_attrval+product_original_price+product_sell_price+product_origin+product_weight+commentcount&n=40&wf=product&from=weixin&categoryid={categoryid}&ranker_type='
+            // 记录将要发送的请求数
+            var reqRecond = 0;
+            $http.get('/rest/categories').success(function(data){
+                console.log('/rest/categories',data);
+                cates = data.results;
+                reqRecond = cates.length;
+                for(var index in cates){
+                    var cate = cates[index];
+                    var url = searchUrl.replace("{categoryid}", cate.id);
+                    (function(){
+                        var thisCate = cate;
+                        $http.get(url).success(function(data){
+                            debugger;
+                            thisCate.pros = data.search_response && data.search_response.books;
+                            // 将图片地址string转化为object
+                            for(var i in thisCate.pros){
+                                var pro = thisCate.pros;
+                                try{
+                                    pro.product_images = JSON.parse(pro.product_images);
+                                }catch(e){
+                                    pro.product_images = {small:null,list:null};
+                                }
+                                
+                            }
+                            // 请求完成，清除一个记录，如果请求都完成了，则调用回调函数
+                            reqRecond--;
+                            if(reqRecond <= 0){
+                                cb&&cb(cates);
+                                console.log('cates full', cates);
+                            }
+                        })
+                    })();
+                }
+            })
+        }
+    }
 });
