@@ -1,37 +1,36 @@
 <ion-view>
     <ion-content>
-        <div class="list">
+        <div class="list" style="padding:20px">
             <label class="item item-input">
                 <span class="input-label">收货人</span>
-                <input type="text">
+                <input type="text" ng-model="address.receiver_name">
             </label>
-
-
             <label class="item item-input">
                 <span class="input-label">电话号码</span>
-                <input type="password">
+                <input type="text" ng-model="address.receiver_phone">
             </label>
-            <select class="input-box"
-                    ng-model="city.id"
+            <select class="input-box aadressSelect fl"
+                    ng-model="address.city_id"
                     ng-options="o.city_id as o.city_name for o in cities"
-                    ng-change="getDistrict(city.id)">
+                    ng-change="getDistrict(address.city_id)" style="width:35%;">
             </select>
-            <select class="input-box"
-                    ng-model="district.id"
+            <select class="input-box aadressSelect"
+                    ng-model="address.district_id"
                     ng-options="o.district_id as o.district_name for o in districts"
-                    ng-change="getCommunity(district.id)">
+                    ng-change="getCommunity(address.district_id)" style="width:40%">
             </select>
-            <select class="input-box"
-                    ng-model="city.id"
-                    ng-options="o.comm_id as o.comm_name for o in community">
+            <select class="input-box aadressSelect"
+                    ng-model="address.community_id"
+                    ng-options="o.comm_id as o.comm_name for o in community" style="width:80%;">
             </select>
-
-
-
             <label class="item item-input">
                 <span class="input-label">详细地址</span>
-                <input type="password">
+                <input type="text" ng-model="address.address_room">
             </label>
+
+            <button class="button button-block button-positive" ng-click="submit()">
+                Submit
+            </button>
         </div>
 
 

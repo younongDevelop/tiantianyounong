@@ -124,6 +124,14 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
               }
           }
       })
+      .state('account.about', {
+          url: '/about',
+          views: {
+              'tab-account': {
+                  templateUrl: 'templates/personInfor/account-about.html'
+              }
+          }
+      })
 
 
       //person路由结束

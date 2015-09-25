@@ -7,3 +7,13 @@
 .address-item .item-content{
     padding:10px;
 }
+
+.list .aadressSelect{
+    height: 40px;
+    border: 1px solid #ddd;
+    margin: 10px;
+}
+
+.account-address .list:last-child{
+    padding-bottom:49px;
+}
