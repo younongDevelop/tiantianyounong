@@ -8,11 +8,33 @@ angular.module('index.controllers', [])
         });
     })
 
-.controller('indexCtrl', function($scope, cate) {
+.controller('indexCtrl', function($scope, cate, $ionicSlideBoxDelegate, $timeout) {
         $scope.cates = [];
-        cate.getCates(function(cates){
-           $scope.cates = cates; 
+        // 获取产品品类
+        cate.getCates(function(catesInfo){
+           $scope.catesInfo = catesInfo;
         });
+        // 获取幻灯片数据
+        $scope.slideInfo = {
+            number:4,
+            slides:[{
+                url:"//www.baidu.com",
+                imgSrc:"./img/slide1.jpg"
+            },{
+                url:"//www.xiajiecheng.com",
+                imgSrc:"./img/slide2.jpg"
+            },{
+                url:"//www.qq.com",
+                imgSrc:"./img/slide3.jpg"
+            },{
+                url:"//www.qq.com",
+                imgSrc:"./img/slide3.jpg"
+            }]
+        }
+        // 控制幻灯片自动滑动
+        setInterval(function(){
+            $ionicSlideBoxDelegate.next();
+        },4000);
     })
 
 .controller('cartCtrl', function($scope,cart,$ionicListDelegate,$ionicPopup) {
