@@ -21,7 +21,7 @@ angular.module('index.services', [])
 
                 if(data.code===0){
                     for (var i in data.results) {
-                        if(data.results[i].status!=0) {goods.push(data.results[i]);}
+                        if(data.results[i].statue!=0){goods.push(data.results[i]);}
                     }
                 }
                 console.log(goods);
@@ -93,7 +93,6 @@ angular.module('index.services', [])
                     (function(){
                         var thisCate = cate;
                         $http.get(url).success(function(data){
-                            debugger;
                             thisCate.pros = data.search_response && data.search_response.books;
                             // 将图片地址string转化为object
                             for(var i in thisCate.pros){

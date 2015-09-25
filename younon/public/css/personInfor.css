@@ -1,0 +1,9 @@
+.change-address-button{
+    padding:5px;
+    min-width: 0;
+    min-height: 0;
+    line-height: 20px;
+}
+.address-item .item-content{
+    padding:10px;
+}

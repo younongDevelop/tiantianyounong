@@ -1,0 +1,37 @@
+<ion-view>
+    <ion-content>
+        <ion-list ng-if="addresses.length > 0">
+            <ion-item ng-repeat="address in addresses"  style="margin-bottom:20px;" class="address-item">
+                <div style="height:40px;border-bottom:1px solid #ddd;line-height: 40px;margin-bottom:20px">
+                    <i ng-if="address.address_id==selectedId.id" class="icon ion-ios-checkmark-outline" style="font-size: 25px"></i>
+                    <a href="#/account/addrChg/{{address.address_id}}"><button class="button button-light change-address-button fr">修改</button></a>
+                </div>
+                <div ng-click="selectAddr(address)">
+                    <div>
+                        <span>收货人</span>
+                <span class="item-note">{{address.receiver_name}}</span>
+                    </div>
+                    <div>
+                        <span>电话</span>
+                        <span class="item-note">{{address.receiver_phone}}</span>
+                    </div>
+                    <div>
+                        <span>地址</span>
+                        <span class="item-note">{{address.address_detail}}</span>
+                    </div>
+                    </div>
+
+                <ion-option-button class="button-assertive" ng-click="delAddress($index)">
+                    删除
+                </ion-option-button>
+
+            </ion-item>
+
+            <ion-infinite-scroll icon="ion-loading-c" ng-if="moreDataCanBeLoaded()" on-infinite="getMore()" distance="10%">
+            </ion-infinite-scroll>
+        </ion-list>
+        <div ng-if="addresses.length == 0;" style="text-align: center">
+            暂无收获地址
+        </div>
+    </ion-content>
+</ion-view>

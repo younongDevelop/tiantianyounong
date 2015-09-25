@@ -1,0 +1,39 @@
+<ion-view>
+    <ion-content>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">收货人</span>
+                <input type="text">
+            </label>
+
+
+            <label class="item item-input">
+                <span class="input-label">电话号码</span>
+                <input type="password">
+            </label>
+            <select class="input-box"
+                    ng-model="city.id"
+                    ng-options="o.city_id as o.city_name for o in cities"
+                    ng-change="getDistrict(city.id)">
+            </select>
+            <select class="input-box"
+                    ng-model="district.id"
+                    ng-options="o.district_id as o.district_name for o in districts"
+                    ng-change="getCommunity(district.id)">
+            </select>
+            <select class="input-box"
+                    ng-model="city.id"
+                    ng-options="o.comm_id as o.comm_name for o in community">
+            </select>
+
+
+
+            <label class="item item-input">
+                <span class="input-label">详细地址</span>
+                <input type="password">
+            </label>
+        </div>
+
+
+    </ion-content>
+</ion-view>

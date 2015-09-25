@@ -1,8 +1,11 @@
 // Ionic Starter App
 
 var api='rest/';
+var search='search/';
 var pageNumber=10;
 var customerId=11;
+
+
 
 angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin.controllers', 'admin.services','person.controllers', 'person.services','shop.controllers', 'shop.services',])
 
@@ -85,20 +88,43 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
 
         //shopping路由结束
 
-      .state('person', {
-          url: '/person',
+      .state('account', {
+          url: '/account',
           abstract: true,
           templateUrl: 'templates/index/tabs.html',
-          controller:'personBaseCtrl'
+          controller:'indexBaseCtrl'
       })
 
-      .state('person.orders', {
+      .state('account.orders', {
           url: '/orders',
           views: {
-              templateUrl: 'templates/personInfor/orders.html',
-              controller: 'personOrdersCtrl'
+              'tab-account': {
+                  templateUrl: 'templates/personInfor/account-orders.html',
+                  controller: 'accountCtrl'
+              }
           }
       })
+
+      .state('account.addresses', {
+          url: '/addresses',
+          views: {
+              'tab-account': {
+                  templateUrl: 'templates/personInfor/account-addresses.html',
+                  controller: 'addressesCtrl'
+              }
+          }
+      })
+
+      .state('account.addrChg', {
+          url: '/addrChg/{param}',
+          views: {
+              'tab-account': {
+                  templateUrl: 'templates/personInfor/account-addrChg.html',
+                  controller: 'addrChgCtrl'
+              }
+          }
+      })
+
 
       //person路由结束
 
