@@ -1,5 +1,15 @@
 <ion-view>
     <ion-content>
-        personInfor
+        <ion-list ng-if="orders.length > 0">
+            <ion-item ng-repeat="item in orders"  style="margin-bottom:20px;" class="address-item">
+                啊啊啊啊啊
+
+            </ion-item>
+            <ion-infinite-scroll icon="ion-loading-c" ng-if="moreDataCanBeLoaded()" on-infinite="getMore()" distance="10%">
+            </ion-infinite-scroll>
+        </ion-list>
+        <div ng-if="orders.length == 0;" style="text-align: center">
+            暂无订单
+        </div>
     </ion-content>
 </ion-view>

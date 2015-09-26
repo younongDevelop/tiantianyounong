@@ -106,11 +106,11 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
       })
 
       .state('account.orders', {
-          url: '/orders',
+          url: '/orders/{statue}',
           views: {
               'tab-account': {
                   templateUrl: 'templates/personInfor/account-orders.html',
-                  controller: 'accountCtrl'
+                  controller: 'accountOrdersCtrl'
               }
           }
       })
@@ -131,6 +131,14 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
               'tab-account': {
                   templateUrl: 'templates/personInfor/account-addrChg.html',
                   controller: 'addrChgCtrl'
+              }
+          }
+      })
+      .state('account.about', {
+          url: '/about',
+          views: {
+              'tab-account': {
+                  templateUrl: 'templates/personInfor/account-about.html'
               }
           }
       })
