@@ -40,8 +40,47 @@ angular.module('index.services', [])
             getGoodsNumber:function(cb){
                 cb(goodsNumber);
             },
-            addGoods:function(){
-
+            /**
+            * @desc 添加商品到购物车
+            * @func addGoods
+            * @param {number} pro 商品对象
+            * @param {function} suc 添加成功后的回调函数
+            * @param {function} err 添加失败后的回调函数
+            */
+            addGoods:function(pro,suc,err){
+                var pid = parseInt(pro.product_id);
+                $http.post(api+'/basket/add',{
+                    cid:customerId,
+                    pid:pid,
+                    quantity:1
+                }).success(function(res){
+                    if(res.code === 0 ){
+                        suc && suc(res);
+                        // 购物车总数量加1
+                        goodsNumber.number++;
+                        // 如果商品存在于购物车，更新购物车的单商品数量
+                        debugger;
+                        for(var i in goods){
+                            var good = goods[i];
+                            if(good.prod_sku_id === pid){
+                                good.quantity++;
+                                good.version = res.results;
+                                changeGoodsNumber();
+                                return
+                            }
+                        }
+                        // 如果商品不存在 将商品加入购物车模型
+                        pro.prod_sku_id = pro.product_id;
+                        pro.quantity = 1;
+                        pro.version = res.results;                   
+                        goods.unshift(pro);
+                        changeGoodsNumber();
+                        return;
+                    }
+                    err && err(res);
+                }).error(function(res){
+                    err && err(res);
+                })
             },
             deleteGoods:function(index,cb){
                 $http.put(api+'/basket/del/'+customerId+'/'+goods[index].prod_sku_id).success(function (data) {
@@ -79,7 +118,7 @@ angular.module('index.services', [])
     var hotprosInfo = {hotpros:[]};
     window.catesInfo = catesInfo;
     function load(){
-        var searchUrl = '/search/?field=product_id+product_url+product_name+product_images+sku_attrval+product_original_price+product_sell_price+product_origin+product_weight+commentcount&n=40&wf=product&from=weixin&categoryid={categoryid}&ranker_type='
+        var searchUrl = '/search/?field=product_id+product_url+prod_sku_id+product_name+product_images+sku_attrval+product_original_price+product_sell_price+product_origin+product_weight+commentcount&n=40&wf=product&from=weixin&categoryid={categoryid}&ranker_type='
         // 记录将要发送的请求数
         // 载入列别数据
         $http.get('/rest/categories').success(function(data){
@@ -94,15 +133,14 @@ angular.module('index.services', [])
                     $http.get(url).success(function(data){
                         thisCate.pros = data.search_response && data.search_response.books;
                         // 将图片地址string转化为object
-                        for(var i in thisCate.pros){
-                            var pro = thisCate.pros[i];
-                            try{
-                                pro.product_images = JSON.parse(pro.product_images);
-                            }catch(e){
-                                pro.product_images = {small:null,list:null};
-                            }
-                            
-                        }
+                        // for(var i in thisCate.pros){
+                        //     var pro = thisCate.pros[i];
+                        //     try{
+                        //         pro.product_images = JSON.parse(pro.product_images);
+                        //     }catch(e){
+                        //         pro.product_images = {small:null,list:null};
+                        //     }
+                        // }
                     })
                 })();
             }
@@ -112,15 +150,14 @@ angular.module('index.services', [])
         $http.get(url).success(function(data){
             hotprosInfo.hotpros = data.search_response && data.search_response.books;
             // 将图片地址string转化为object
-            for(var i in hotprosInfo.hotpros){
-                var pro = hotprosInfo.hotpros[i];
-                try{
-                    pro.product_images = JSON.parse(pro.product_images);
-                }catch(e){
-                    pro.product_images = {small:null,list:null};
-                }
-                
-            }
+            // for(var i in hotprosInfo.hotpros){
+            //     var pro = hotprosInfo.hotpros[i];
+            //     try{
+            //         pro.product_images = JSON.parse(pro.product_images);
+            //     }catch(e){
+            //         pro.product_images = {small:null,list:null};
+            //     }
+            // }
         })
     }
     load();

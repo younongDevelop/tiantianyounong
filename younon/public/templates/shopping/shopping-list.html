@@ -1,0 +1,52 @@
+<ion-view view-title="天天有农">
+    <ion-content>
+        <div class="list-content">
+            <!-- 搜索框 -->
+            <div class="search padding-bottom padding-top">
+                <div class="row">
+                    <div class="col col-80">
+                        <label class="item item-input">
+                            <i class="icon ion-search placeholder-icon"></i>
+                            <input type="text" placeholder="商品搜索：请输入商品关键字" ng-model="searchStr">
+                        </label>                        
+                    </div>
+                    <div class="col col-20">
+                        <button class="button button-stable" ng-click="search(searchStr)">
+                            搜索
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- 产品列表 -->
+            <ion-list>
+                <ion-item class="list-pro-item" ng-repeat="pro in proListInfo.proList">
+                 	
+                        <div class="row">
+                            <div class="col col-90">
+                                <a href="{{pro.product_url}}">
+                                    <div class="row">
+                                        <div class="col col-20">
+                                            <img ng-src="{{pro.img}}" class="list-pro-img">
+                                        </div>
+                                        <div class="col col-80 list-detail">
+                                            <h2 class="list-pro-title">{{pro.product_name}}</h2>
+                                            <p class="list-pro-des">{{pro.sku_attrval}}</p>
+                                            <p class="list-pro-price">￥{{pro.product_sell_price/100}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col col-10">
+                                <i class="icon ion-ios-cart list-cart-btn" ng-click="addGoods($index)"></i>
+                            </div>
+                        </div>
+
+
+                 	
+                </ion-item>
+                <ion-infinite-scroll icon="ion-loading-c" ng-if="hasMore()" on-infinite="loadMore()" distance="10%">
+                </ion-infinite-scroll>
+            </ion-list>
+        </div>
+    </ion-content>
+</ion-view>

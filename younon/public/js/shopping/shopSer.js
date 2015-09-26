@@ -70,7 +70,7 @@ angular.module('shop.services', [])
         * @param {function} cb 回调函数
         */
         function getList(params, cb){
-            var searchUrlTmpl = '/search/?keyword={keyword}&start={page}&n={pageSize}&field=product_id+product_url+product_name+product_images+sku_attrval+product_original_price+product_sell_price+product_origin+product_weight+commentcount&wf=product&from=weixin&ranker_type=';
+            var searchUrlTmpl = '/search/?keyword={keyword}&start={page}&n={pageSize}&field=product_id+prod_sku_id+product_url+product_name+product_images+sku_attrval+product_original_price+product_sell_price+product_origin+product_weight+commentcount&wf=product&from=weixin&ranker_type=';
             var searchUrl = searchUrlTmpl.replace(/{(\w+)}/g,function($0,$1){
                 return params[$1]===undefined?"":params[$1];
             });
@@ -103,12 +103,12 @@ angular.module('shop.services', [])
                 getList({keyword:keyword,page:page,pageSize:pageSize},function(data){
                     if(data.code !== 0) return;
                     proListInfo.proList = data.search_response.books;
-                    page++;
                     if(data.search_response.books < pageSize){
                         isMore = false;
                     }
                     cb && cb();
                 })
+                page++;
             },
             /**
             * @desc 加载更多结果
@@ -120,12 +120,12 @@ angular.module('shop.services', [])
                     if(data.code !== 0) return;
                     proListInfo.proList = proListInfo.proList.concat(data.search_response.books);
                     // 更新page和hasMore状态
-                    page++;
                     if(data.search_response.books.length < pageSize){
                         isMore = false;
                     }
                     cb && cb();
                 })
+                page++;
             },
             /**
             * @desc 重新加载结果

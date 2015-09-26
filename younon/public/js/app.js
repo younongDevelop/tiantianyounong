@@ -6,7 +6,6 @@ var pageNumber=10;
 var customerId=11;
 
 
-
 angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin.controllers', 'admin.services','person.controllers', 'person.services','shop.controllers', 'shop.services',])
 
 .run(function($ionicPlatform) {
@@ -155,3 +154,22 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
   $urlRouterProvider.otherwise('/tab/index');
 
 });
+
+// 公共方法
+angular.module('common.util', []).factory("util",function(){
+  return {
+    /**
+    * @desc 解析商品对象中的图片地址对象
+    */
+    parseImgUrls:function(urlsStr){
+        var urlObj;
+        try{
+            urlObj = JSON.parse(pro.product_images);
+            return urlObj
+        }catch(e){
+            urlObj = {small:null,list:null};
+            return urlObj;
+        }
+    }
+  }
+})

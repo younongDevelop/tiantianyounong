@@ -1,5 +1,5 @@
-.list-pro-item .item-content{
-	padding:10px;
+.list-pro-item{
+	padding:0;
 }
 .list-detail{
 	padding-left: 20px;
@@ -8,10 +8,19 @@ p.list-pro-price{
 	color: red;
 	font-size: 1.2rem;
 }
-h2.list-pro-title{
+/*h2.list-pro-title{
 	white-space: normal;
     height: 2.5rem;
+}*/
+.list-pro-des{
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 .list-pro-img{
 	width: 100%;
+}
+.list-cart-btn{
+	position: relative;
+	top:20px;
+	font-size: 2rem;
 }

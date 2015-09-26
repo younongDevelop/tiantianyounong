@@ -8,7 +8,8 @@ angular.module('index.controllers', [])
         });
     })
 
-.controller('indexCtrl', function($scope, cate, $ionicSlideBoxDelegate, $timeout) {
+.controller('indexCtrl', function($scope, cate, cart, $ionicSlideBoxDelegate, $timeout, $location) {
+        $scope.searchStr = "";
         $scope.cates = [];
         // 获取产品品类
         cate.getCates(function(catesInfo){
@@ -18,6 +19,11 @@ angular.module('index.controllers', [])
         cate.getHotPros(function(hotprosInfo){
            $scope.hotprosInfo = hotprosInfo;
         });
+        // 点击搜索事件
+        $scope.search = function(searchStr){
+            $location.path('/shopping/list/'+searchStr);
+            $location.replace();
+        }
         // 获取幻灯片数据
         $scope.slideInfo = {
             number:4,
@@ -39,6 +45,17 @@ angular.module('index.controllers', [])
         setInterval(function(){
             $ionicSlideBoxDelegate.next();
         },4000);
+        // 添加购物车
+        $scope.addGood = function(pro){
+            // var pro = $scope.hotprosInfo.hotpros[index];
+            cart.addGoods(pro,function(res){
+                // 添加成功后
+                console.log("suc",res);
+            },function(res){
+                // 添加失败后
+                console.log("err",res);
+            })
+        }
     })
 
 .controller('cartCtrl', function($scope,cart,$ionicListDelegate,$ionicPopup) {
