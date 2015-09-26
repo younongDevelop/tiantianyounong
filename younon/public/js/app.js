@@ -74,18 +74,29 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
       .state('shopping', {
           url: '/shopping',
           abstract: true,
+          templateUrl: 'templates/index/tabs.html',
           controller:'shoppingBaseCtrl'
       })
 
       .state('shopping.index', {
           url: '/index',
           views: {
+            'tab-index':{
                   templateUrl: 'templates/shopping/index.html',
                   controller: 'shoppingCtrl'
+            }
+          }
+      })
+      .state('shopping.list', {
+          url: '/list/{search}',
+          views: {
+            'tab-index':{
+                  templateUrl: 'templates/shopping/shopping-list.html',
+                  controller: 'listCtrl'              
+            }
 
           }
       })
-
         //shopping路由结束
 
       .state('account', {
@@ -124,8 +135,6 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
               }
           }
       })
-
-
       //person路由结束
 
       .state('admin', {

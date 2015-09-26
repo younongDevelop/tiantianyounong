@@ -29,7 +29,7 @@
 .index-cate-list{
 	background-color: #f5f5f5;
 }
-.index-cate-item > .row{
+.index-cate-item > .row,.index-hot > .row{
 	-webkit-flex-flow: row wrap;
 	flex-flow: row wrap;
 }
@@ -49,8 +49,9 @@
 .index-cart-btn{
 	/*color: rgb(60,129,242);*/
 	float: right;
-	font-size: 1.5rem;
+	font-size: 2rem;
 	padding-right: .5rem;
+	margin-top: -6px;
 }
 .index-pro .index-pro-title{
 	height: 2rem;

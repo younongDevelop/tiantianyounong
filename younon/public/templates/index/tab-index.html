@@ -24,6 +24,24 @@
 					<input type="text" placeholder="商品搜索：请输入商品关键字">
 				</label>
 			</div>
+			<!-- 热卖商品呈现 -->
+			<li class="item index-hot">
+				<h2>热卖商品</h2>
+		      	<div class="row">
+		      		<div class="col col-50" ng-repeat="pro in hotprosInfo.hotpros">
+		      			<a href="{{pro.product_url}}">
+			      			<div class="index-pro padding-bottom">
+			      				<img src="{{pro.product_images.small}}" alt="">
+			      				<h3 class="index-pro-title padding-left padding-right">{{pro.product_name}} {{pro.sku_attrval}}</h3>
+			      				<div class="index-price padding-left padding-right">
+			      					<span class="index-yn-price">￥{{pro.product_sell_price/100}}</span>
+			      					<i class="icon ion-ios-cart index-cart-btn"></i>
+			      				</div>
+			      			</div>		      				
+		      			</a>
+		      		</div>
+		      	</div>
+			</li>
 			<!-- 产品分类展示 -->
 			<ul class="list index-cate-list">
 			    <li class="item index-cate-item" ng-repeat="cate in catesInfo.cates">

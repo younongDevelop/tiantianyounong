@@ -1,0 +1,17 @@
+.list-pro-item .item-content{
+	padding:10px;
+}
+.list-detail{
+	padding-left: 20px;
+}
+p.list-pro-price{
+	color: red;
+	font-size: 1.2rem;
+}
+h2.list-pro-title{
+	white-space: normal;
+    height: 2.5rem;
+}
+.list-pro-img{
+	width: 100%;
+}

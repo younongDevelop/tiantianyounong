@@ -44,7 +44,7 @@ angular.module('person.controllers', [])
             }
         }
         $scope.getMore = function () {
-
+            console.log("scroll");
             if (page > 1) {
                 isMore = false;
                 personAddress.loadAddress(page,pageSize,version,loadMore);

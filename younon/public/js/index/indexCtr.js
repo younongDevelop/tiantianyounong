@@ -14,6 +14,10 @@ angular.module('index.controllers', [])
         cate.getCates(function(catesInfo){
            $scope.catesInfo = catesInfo;
         });
+        // 获取热卖产品
+        cate.getHotPros(function(hotprosInfo){
+           $scope.hotprosInfo = hotprosInfo;
+        });
         // 获取幻灯片数据
         $scope.slideInfo = {
             number:4,

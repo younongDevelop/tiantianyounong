@@ -40,6 +40,9 @@ angular.module('index.services', [])
             getGoodsNumber:function(cb){
                 cb(goodsNumber);
             },
+            addGoods:function(){
+
+            },
             deleteGoods:function(index,cb){
                 $http.put(api+'/basket/del/'+customerId+'/'+goods[index].prod_sku_id).success(function (data) {
                     console.log(data);
@@ -73,11 +76,12 @@ angular.module('index.services', [])
 })
 .factory('cate',function($http){
     var catesInfo = {cates:[]};
+    var hotprosInfo = {hotpros:[]};
     window.catesInfo = catesInfo;
     function load(){
         var searchUrl = '/search/?field=product_id+product_url+product_name+product_images+sku_attrval+product_original_price+product_sell_price+product_origin+product_weight+commentcount&n=40&wf=product&from=weixin&categoryid={categoryid}&ranker_type='
         // 记录将要发送的请求数
-        // var reqRecond = 0;
+        // 载入列别数据
         $http.get('/rest/categories').success(function(data){
             console.log('/rest/categories',data);
             var cates = catesInfo.cates = data.results;
@@ -91,7 +95,7 @@ angular.module('index.services', [])
                         thisCate.pros = data.search_response && data.search_response.books;
                         // 将图片地址string转化为object
                         for(var i in thisCate.pros){
-                            var pro = thisCate.pros;
+                            var pro = thisCate.pros[i];
                             try{
                                 pro.product_images = JSON.parse(pro.product_images);
                             }catch(e){
@@ -99,14 +103,23 @@ angular.module('index.services', [])
                             }
                             
                         }
-                        // // 请求完成，清除一个记录，如果请求都完成了，则调用回调函数
-                        // reqRecond--;
-                        // if(reqRecond <= 0){
-                        //     cb&&cb(cates);
-                        //     console.log('cates full', cates);
-                        // }
                     })
                 })();
+            }
+        })
+        //载入热卖数据
+        var url = searchUrl.replace("{categoryid}", 1);
+        $http.get(url).success(function(data){
+            hotprosInfo.hotpros = data.search_response && data.search_response.books;
+            // 将图片地址string转化为object
+            for(var i in hotprosInfo.hotpros){
+                var pro = hotprosInfo.hotpros[i];
+                try{
+                    pro.product_images = JSON.parse(pro.product_images);
+                }catch(e){
+                    pro.product_images = {small:null,list:null};
+                }
+                
             }
         })
     }
@@ -119,6 +132,10 @@ angular.module('index.services', [])
         */ 
         getCates: function(cb){
             cb && cb(catesInfo);
+        },
+        getHotPros:function(cb){
+            cb && cb(hotprosInfo);    
         }
+
     }
 });
