@@ -96,11 +96,11 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
       })
 
       .state('account.orders', {
-          url: '/orders',
+          url: '/orders/{statue}',
           views: {
               'tab-account': {
                   templateUrl: 'templates/personInfor/account-orders.html',
-                  controller: 'accountCtrl'
+                  controller: 'accountOrdersCtrl'
               }
           }
       })

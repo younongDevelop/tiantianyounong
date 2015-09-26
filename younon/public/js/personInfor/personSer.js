@@ -2,7 +2,7 @@
  * Created by wei on 15/9/21.
  */
 angular.module('person.services', [])
-
+    //我的地址相关部分
     .factory('personAddress', function($http) {
         var addresses=[];
         var cities=[];
@@ -138,6 +138,77 @@ angular.module('person.services', [])
 
             }
     })
+
+
+    //我的订单相关部分
+
+
+    .factory('accountOrders', function($http) {
+
+        var undoneOrders=[];
+        var doneOrders=[];
+        var statueArrMap={
+            1:undoneOrders,
+            2:doneOrders
+        };
+
+        return{
+
+            getUndoneOrders:function(cb){
+                cb(undoneOrders);
+            },
+            getDoneOrders:function(cb){
+                cb(doneOrders);
+            },
+            loadOrders:function(page,pageSize,version,statue,cb){
+                console.log(page);
+                $http.get(api+'/orders/'+customerId+'/'+statue+'/'+page+'/'+pageSize+'/'+version).success(function(data){
+                    console.log(data);
+                    if(data.code===0){
+                        cb(data.results)
+                        data.results.forEach(function(item){
+                            statueArrMap[statue].push(item);
+                        })
+                    }
+                }).error(function(res){
+                    console.log(res);
+
+                })
+
+
+            },
+            changeOrderStatue:function(orderId,statue,cb){
+
+            }
+
+        }
+    })
+
+    .factory('statueMap', function() {
+        var map={
+            MOBILE_NULL:'手机号码不能为空',
+            MOBILE_INVALID:'手机号码输入有误',
+            NAME_NULL:'收货人不能为空',
+            ADDRESS_NULL:'详细地址不能为空',
+            CHANGE_SUCCESS:'修改成功',
+            CHANGE_FAILURE:'修改失败',
+            ADD_SUCCESS:'添加成功',
+            ADD_FAILURE:'添加失败',
+            DEL_SUCCESS:'删除成功',
+            DEL_FAILURE:'删除失败'
+
+        };
+        return {
+            getStatueMap:function(){
+                return map;
+            }
+        };
+    })
+
+
+
+
+    //表单校验部分
 
     .factory('errMap', function() {
         var map={
