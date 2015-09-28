@@ -147,6 +147,7 @@ angular.module('person.services', [])
 
         var undoneOrders=[];
         var doneOrders=[];
+        var orderDetail={};
         var statueArrMap={
             1:undoneOrders,
             2:doneOrders
@@ -161,7 +162,6 @@ angular.module('person.services', [])
                 cb(doneOrders);
             },
             loadOrders:function(page,pageSize,version,statue,cb){
-                console.log(page);
                 $http.get(api+'/orders/'+customerId+'/'+statue+'/'+page+'/'+pageSize+'/'+version).success(function(data){
                     console.log(data);
                     if(data.code===0){
@@ -172,15 +172,52 @@ angular.module('person.services', [])
                     }
                 }).error(function(res){
                     console.log(res);
-
                 })
-
-
             },
             changeOrderStatue:function(orderId,statue,cb){
+                var urlMap={
+                  pay:'/orders/paysuccess/'+orderId,
+                  cancel:'/orders/del/'+orderId
+                };
+                $http.put(api+urlMap[statue]).success(function(data){
+                    var cbMAp={
+                        pay:'ORDER_PAY_SUCCESS',
+                        cancel:'CANCEL_ORDER_SUCCESS'
+                    };
+                    var statueMap={
+                        pay:'支付成功',
+                        cancel:'已取消'
+                    };
+                    if(data.code===0){
+                        cb(cbMAp[statue]);
+                        var i=0;
+                        undoneOrders.forEach(function(item){
+                            if(item.order_id==orderId){
+                                undoneOrders.splice(i,1);
+                                orderDetail.order_status=statueMap[statue];
+                            }
+                            i++;
+                        })
 
+                    }
+                }).error(function(res){
+                    var cbMAp={
+                        pay:'ORDER_PAY_FAILURE',
+                        cancel:'CANCEL_ORDER_FAILURE'
+                    };
+                    cb(cbMAp[statue]);
+                });
+            },
+            getOrderDetail:function(orderId,cb){
+                $http.get(api+'/orders/info/'+orderId).success(function(data){
+                    if(data.code===0){
+                        orderDetail=data.results;
+                        cb(orderDetail);
+                    }
+                }).error(function(res){
+                    console.log(res);
+                })
             }
-
         }
     })
 
@@ -221,8 +258,11 @@ angular.module('person.services', [])
             ADD_SUCCESS:'添加成功',
             ADD_FAILURE:'添加失败',
             DEL_SUCCESS:'删除成功',
-            DEL_FAILURE:'删除失败'
-
+            DEL_FAILURE:'删除失败',
+            CANCEL_ORDER_SUCCESS:'订单取消成功',
+            CANCEL_ORDER_FAILURE:'订单取消失败',
+            ORDER_PAY_SUCCESS:'订单支付成功',
+            ORDER_PAY_FAILURE:'订单支付失败'
         };
         return {
            getMap:function(){
