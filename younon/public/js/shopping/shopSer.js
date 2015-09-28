@@ -153,3 +153,36 @@ angular.module('shop.services', [])
             }
         }
     })
+    .factory('detail',function($http, $stateParams, util){
+        // 商品详情信息
+        var proDetailInfo = {proDetail:null};
+        // 载入商品详情信息
+        function loadDetail(suc){
+            var proid = $stateParams.proid;
+            var urlTmpl = '/?product_id={product_id}&field=product_id+product_orgin+product_name+product_description+product_images+product_vendor+product_price+product_sell_price+product_score+product_comment_volume+product_delivery_sites+product_attributes&from=weixin&wf=product&groupbyparams=none'
+            var url = urlTmpl.replace("{product_id}",proid);
+            $http.get(search+url).success(function(data){
+                if (data.code === 0) {
+                    proDetailInfo.proDetail = data.search_response.books[0];
+                    // 对图片地址进行处理
+                    if(proDetailInfo.proDetail){
+                        proDetailInfo.proDetail.product_images = util.parseImgUrls(proDetailInfo.proDetail.product_images);
+                    }
+                    suc && suc();
+                }else{
+                    console.log(data.message);
+                }
+            })
+        }
+        return {
+            /**
+            * @desc 获取详情
+            * @func getDetail
+            */ 
+            getDetail:function(cb){
+                cb && cb(proDetailInfo);
+            },
+            loadDetail:loadDetail
+        }
+        
+    })

@@ -1,0 +1,54 @@
+<ion-view>
+    <ion-content>
+    	<div class="detail-content">
+    		<!-- 图片轮播展示 -->
+			<ion-slide-box does-continue="true" class="detail-slide-box">
+				<ion-slide ng-repeat="imgUrl in proDetailInfo.proDetail.product_images.list">
+					<div class="detail-slide-item">
+						<img src="{{imgUrl}}" alt="">
+					</div>
+				</ion-slide>
+			</ion-slide-box>
+    		<!-- 商品详 -->
+    		<ul class="list">
+    			<li class="item detail-base-info">
+		    		<h3 class="detail-pro-title">{{proDetailInfo.proDetail.product_name}}</h3>
+		    		<p class="detail-integral">可获0积分</p>
+		    		<p class="detail-price">
+		    			<span class="detail-yn-price">价格：￥{{proDetailInfo.proDetail.product_sell_price/100}}</span>
+		    		</p>
+		    		<p class="place">产地：{{proDetailInfo.proDetail.product_orgin}}</p>
+    			</li>
+		    	<li class="item detail-number-select row">
+					<div class="col">
+						<span>购买数量:</span>
+					</div>
+					<div class="col">
+					<select class="fr"
+	                      	ng-model="data.selectNumber"
+	                      	ng-options="o as o for o in number">
+	              	</select>
+					</div>
+		    	</li>
+		    	<li class="detail-image-detail item">
+	    			<ul>
+	    				<li ng-repeat="url in imgDetail.imgUrls">
+	    					<img src="{{url}}" alt="">
+	    				</li>
+	    			</ul>
+	    		</li>
+    		</ul>
+    	</div>
+    </ion-content>
+	<div class="bar bar-footer detail-operation">
+		<div class="row">
+			<div class="col col-20" style="position: relative;" ng-click="gotoCart()">
+				<i badge="1" class="icon ion-ios-cart detail-jump-cart">
+				</i>
+				<span class="badge badge-assertive detail-cart-badge">{{data.number}}</span>
+			</div>
+			<div class="col col-40"><button class="button detail-add-cart" ng-click="addGoods(data.selectNumber)">加入购物车</button></div>
+			<div class="col col-40"><button class="button detail-buyit">立即购买</button></div>
+		</div>
+	</div>
+</ion-view>

@@ -10,24 +10,18 @@
 						</a>
 					</div>
 				</ion-slide>
-				<!-- <ion-slide>
-					<div class="index-slide-item"><h1>第二个</h1></div>
-				</ion-slide>
-				<ion-slide>
-					<div class="index-slide-item"><h1>第三个</h1></div>
-				</ion-slide> -->
 			</ion-slide-box>
             <!-- 搜索框 -->
             <div class="search padding-bottom padding-top">
                 <div class="row">
-                    <div class="col col-80">
+                    <div class="col col-75">
                         <label class="item item-input">
                             <i class="icon ion-search placeholder-icon"></i>
-                            <input type="text" placeholder="商品搜索：请输入商品关键字" ng-model="searchStr">
+                            <input type="text" placeholder="请输入商品关键字" ng-model="searchStr">
                         </label>
                     </div>
-                    <div class="col col-20">
-                        <button class="button button-stable" ng-click="search(searchStr)">
+                    <div class="col col-25">
+                        <button style="float:right;" class="button button-stable" ng-click="search(searchStr)">
                             搜索
                         </button>
                     </div>
@@ -39,14 +33,14 @@
 		      	<div class="row">
 		      		<div class="col col-50" ng-repeat="pro in hotprosInfo.hotpros">
 		      			<div class="index-pro padding-bottom">
-		      				<a href="{{pro.product_url}}">
-		      					<img ng-src="{{ pro.img }}" alt="">
+		      				<a href="javascript:void(0);" ng-click="jumpDetail(pro.prod_sku_id)">
+		      					<img ng-src="{{ pro.imgUrl }}" alt="">
 		      				</a>
-		      				<h3 class="index-pro-title padding-horizontal">{{pro.product_name}}</h3>
-		      				<p class="index-pro-des padding-horizontal">{{pro.sku_attrval}}</p>
+		      				<h3 class="index-pro-title padding-horizontal">{{pro.title}}</h3>
+		      				<p class="index-pro-des padding-horizontal">{{pro.prod_sku_values}}</p>
 		      				<div class="index-price padding-horizontal">
-		      					<span class="index-yn-price">￥{{pro.product_sell_price/100}}</span>
-		      					<i class="icon ion-ios-cart index-cart-btn" ng-click="addGood(pro)"></i>
+		      					<span class="index-yn-price">￥{{pro.current_price}}</span>
+		      					<i class="icon ion-ios-cart index-cart-btn" ng-click="addHotGood(pro)"></i>
 		      				</div>
 		      			</div>		      				
 		      			
@@ -60,10 +54,11 @@
 			      	<div class="row">
 			      		<div class="col col-50" ng-repeat="pro in cate.pros">
 			      			<div class="index-pro padding-bottom">
-			      				<a href="{{pro.product_url}}">
+			      				<a href="javascript:void(0);" ng-click="jumpDetail(pro.product_id);">
 			      					<img ng-src="{{ pro.img }}" alt="">
 			      				</a>
-			      				<h3 class="index-pro-title padding-left padding-right">{{pro.product_name}} {{pro.sku_attrval}}</h3>
+			      				<h3 class="index-pro-title padding-left padding-right">{{pro.product_name}}</h3>
+			      				<p class="index-pro-des padding-horizontal">{{pro.sku_attrval}}</p>
 			      				<div class="index-price padding-left padding-right">
 			      					<span class="index-yn-price">￥{{pro.product_sell_price/100}}</span>
 			      					<i class="icon ion-ios-cart index-cart-btn" ng-click="addGood(pro)"></i>

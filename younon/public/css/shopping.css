@@ -24,3 +24,52 @@ p.list-pro-price{
 	top:20px;
 	font-size: 2rem;
 }
+.detail-slide-box{
+	height: 8rem;
+}
+.detail-slide-item{
+	height: 8rem;
+	background-color: white;
+}
+.detail-slide-item img{
+	width: 100%;
+	height: 100%;
+}
+
+.detail-base-info{
+	margin-top: 20px;
+}
+.detail-image-detail{
+	margin-top: 20px;
+}
+.detail-image-detail img{
+	width: 100%;
+}
+.detail-operation{
+	height: 52px;
+	padding:0;
+}
+.detail-add-cart, .detail-buyit{
+	width: 100%;
+	border-radius: 3px;
+}
+.detail-jump-cart{
+	font-size: 2rem;
+    margin-left: 1rem;
+}
+.detail-number-select{
+	line-height: 34px;
+}
+.detail-number-select select{
+	margin-top: 6px;
+}
+.detail-cart-badge{
+	position: absolute;
+    right: 7px;
+    top: 5px;
+	font-size: .5rem;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
