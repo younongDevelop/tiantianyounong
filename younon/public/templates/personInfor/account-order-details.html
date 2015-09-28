@@ -45,18 +45,13 @@
             </div>
             <ion-list>
                 <ion-item ng-repeat="item in orderDetail.items" class="item-thumbnail-left">
-                    <img ng-src="{{item.product_images.small}}">
+                    <img ng-src="{{item.image}}">
                     <h2 style="margin-top:10px">{{item.product_name}}</h2>
                     <p class="attention">￥{{item.product_sell_price/100}}</p>
                     <p class="fl">{{item.prod_sku_values}}</p>
                     <p class="fr"> x{{item.quantity}}</p>
-
                 </ion-item>
-
             </ion-list>
-
-
-
         </div>
     </ion-content>
     <div class="bar bar-footer " ng-if="statue==1">

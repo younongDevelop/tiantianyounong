@@ -25,6 +25,12 @@ angular.module('index.services', [])
                     }
                 }
                 console.log(goods);
+
+                goods.forEach(function(item){
+                    var obj = JSON.parse(item.product_images);
+                    item.image=obj.small;
+                })
+
                 changeGoodsNumber();
             }).error(function (res) {
                 console.log(res);
