@@ -7,7 +7,7 @@ angular.module('person.controllers', [])
 
     .controller('accountOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders,$stateParams) {
         var page=1;
-        var pageSize=50;
+        var pageSize=10;
         var version=0;
         var isMore = false;
 
@@ -15,6 +15,7 @@ angular.module('person.controllers', [])
             1:accountOrders.getUndoneOrders,
             2:accountOrders.getDoneOrders
         };
+        $scope.statue=$stateParams.statue;
 
         getDataMap[$stateParams.statue](function(data){
             $scope.orders=data;
@@ -47,7 +48,43 @@ angular.module('person.controllers', [])
             // 在重新完全载入数据后，需要发送一个scroll.infiniteScrollComplete事件，告诉directive，我们完成了这个动作，系统会清理scroller和为下一次的载入数据，重新绑定这一事件。
             $scope.$broadcast('scroll.infiniteScrollComplete');
         }
+    })
 
+    .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup) {
+
+        $scope.statue=$stateParams.statue;
+
+        var errorMap=errMap.getMap();
+        accountOrders.getOrderDetail($stateParams.orderId,function(data){
+            $scope.orderDetail=data;
+            console.log(data);
+
+        });
+
+        $scope.cancelOrder=function(){
+            accountOrders.changeOrderStatue($stateParams.orderId,'cancel',function(data){
+                $ionicPopup.alert({
+                    title: '',
+                    template:errorMap[data],
+                    okText: '好的'
+                });
+            });
+
+        };
+
+        $scope.pay=function(){
+            //accountOrders.changeOrderStatue($stateParams.orderId,'pay',function(data){
+            //    $ionicPopup.alert({
+            //        title: '',
+            //        template:errorMap[data],
+            //        okText: '好的'
+            //    });
+            //
+            //});
+
+        };
+
+        console.log($stateParams.orderId);
 
 
     })

@@ -124,6 +124,13 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
           }
       })
 
+      .state('orderDetails', {
+          url: '/orderDetails/{orderId}/{statue}',
+          templateUrl: 'templates/personInfor/account-order-details.html',
+          controller: 'accountOrderDetails'
+      })
+
+
       .state('account.addresses', {
           url: '/addresses',
           views: {

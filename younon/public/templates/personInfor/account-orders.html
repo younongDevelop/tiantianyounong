@@ -1,9 +1,25 @@
 <ion-view>
     <ion-content>
         <ion-list ng-if="orders.length > 0">
-            <ion-item ng-repeat="item in orders"  style="margin-bottom:20px;" class="address-item">
-                啊啊啊啊啊
-
+            <ion-item ng-repeat="item in orders"  style="margin-bottom:20px;" class="orders-item">
+                <a href="#/orderDetails/{{item.order_id}}/{{statue}}">
+                    <div class="item" >
+                    订单号
+                    <span class="item-note">{{item.order_no}}</span>
+                    </div>
+                    <div class="item" >
+                        商品总金额
+                        <span class="item-note attention">￥{{item.order_total}}</span>
+                    </div>
+                    <div class="item" >
+                        下单时间
+                        <span class="item-note">{{item.date_purchased}}</span>
+                    </div>
+                    <div class="item" >
+                       订单状态
+                        <span class="item-note">{{item.order_status}}</span>
+                    </div>
+                </a>
             </ion-item>
             <ion-infinite-scroll icon="ion-loading-c" ng-if="moreDataCanBeLoaded()" on-infinite="getMore()" distance="10%">
             </ion-infinite-scroll>

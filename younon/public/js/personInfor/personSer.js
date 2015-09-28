@@ -25,9 +25,7 @@ angular.module('person.services', [])
                                                     item.receiver_name=data.receiver_name;
                                                         item.receiver_phone=data.receiver_phone;
                 }
-
             })
-
         }
 
         return{
@@ -89,6 +87,8 @@ angular.module('person.services', [])
                     if(res.code===0){
                         //addresses.unshift();
                         cb('ADD_SUCCESS');
+                    }else{
+                        cb('ADD_FAILURE');
                     }
 
                 }).error(function(res){
@@ -97,22 +97,16 @@ angular.module('person.services', [])
                 })
             },
             delAddress:function(index,cb){
-
                 $http.put(api+'/addresses/del/'+addresses[index].address_id).success(function(res){
-
                         if(res.code===0){
                             cb('DEL_SUCCESS');
                             addresses.splice(index,1);
                         }else{
                             cb('DEL_FAILURE');
                         }
-
                 }).error(function(){
                     cb('DEL_FAILURE');
                 })
-
-
-
             },
             changeAddress:function(data,cb){
                 $http.post(api+'/addresses/chg',data).success(function(res){
@@ -122,7 +116,6 @@ angular.module('person.services', [])
                     }
                 }).error(function(res){
                     cb('CHANGE_FAILURE');
-
                 })
             },
             selectAddress:function(item){
@@ -135,25 +128,19 @@ angular.module('person.services', [])
             getSelectedId:function(cb){
                 cb(selectedId);
             }
-
-            }
+        }
     })
 
-
     //我的订单相关部分
-
-
     .factory('accountOrders', function($http) {
-
         var undoneOrders=[];
         var doneOrders=[];
+        var orderDetail={};
         var statueArrMap={
             1:undoneOrders,
             2:doneOrders
         };
-
         return{
-
             getUndoneOrders:function(cb){
                 cb(undoneOrders);
             },
@@ -161,7 +148,6 @@ angular.module('person.services', [])
                 cb(doneOrders);
             },
             loadOrders:function(page,pageSize,version,statue,cb){
-                console.log(page);
                 $http.get(api+'/orders/'+customerId+'/'+statue+'/'+page+'/'+pageSize+'/'+version).success(function(data){
                     console.log(data);
                     if(data.code===0){
@@ -172,15 +158,57 @@ angular.module('person.services', [])
                     }
                 }).error(function(res){
                     console.log(res);
-
                 })
-
-
             },
             changeOrderStatue:function(orderId,statue,cb){
-
+                var urlMap={
+                  pay:'/orders/paysuccess/'+orderId,
+                  cancel:'/orders/del/'+orderId
+                };
+                var errMAp={
+                    pay:'ORDER_PAY_FAILURE',
+                    cancel:'CANCEL_ORDER_FAILURE'
+                };
+                $http.put(api+urlMap[statue]).success(function(data){
+                    var cbMAp={
+                        pay:'ORDER_PAY_SUCCESS',
+                        cancel:'CANCEL_ORDER_SUCCESS'
+                    };
+                    var statueMap={
+                        pay:'支付成功',
+                        cancel:'已取消'
+                    };
+                    if(data.code===0){
+                        cb(cbMAp[statue]);
+                        var i=0;
+                        undoneOrders.forEach(function(item){
+                            if(item.order_id==orderId){
+                                undoneOrders.splice(i,1);
+                                orderDetail.order_status=statueMap[statue];
+                            }
+                            i++;
+                        })
+                    }else{
+                        cb(errMAp[statue]);
+                    }
+                }).error(function(res){
+                    cb(errMAp[statue]);
+                });
+            },
+            getOrderDetail:function(orderId,cb){
+                $http.get(api+'/orders/info/'+orderId).success(function(data){
+                    if(data.code===0){
+                        orderDetail=data.results;
+                        orderDetail.items.forEach(function(item){
+                            var obj = JSON.parse(item.product_images);
+                            item.image=obj.small;
+                        })
+                        cb(orderDetail);
+                    }
+                }).error(function(res){
+                    console.log(res);
+                })
             }
-
         }
     })
 
@@ -196,7 +224,6 @@ angular.module('person.services', [])
             ADD_FAILURE:'添加失败',
             DEL_SUCCESS:'删除成功',
             DEL_FAILURE:'删除失败'
-
         };
         return {
             getStatueMap:function(){
@@ -204,9 +231,6 @@ angular.module('person.services', [])
             }
         };
     })
-
-
-
 
     //表单校验部分
 
@@ -221,8 +245,11 @@ angular.module('person.services', [])
             ADD_SUCCESS:'添加成功',
             ADD_FAILURE:'添加失败',
             DEL_SUCCESS:'删除成功',
-            DEL_FAILURE:'删除失败'
-
+            DEL_FAILURE:'删除失败',
+            CANCEL_ORDER_SUCCESS:'订单取消成功',
+            CANCEL_ORDER_FAILURE:'订单取消失败',
+            ORDER_PAY_SUCCESS:'订单支付成功',
+            ORDER_PAY_FAILURE:'订单支付失败'
         };
         return {
            getMap:function(){
@@ -231,24 +258,19 @@ angular.module('person.services', [])
         };
     })
 
-
     .factory('checkPhone', function() {
         return{
             checkMobile:function(mobile){
                 if (!mobile || !mobile.length) {
                     return 'MOBILE_NULL';
                 }
-
                 if (!('' + mobile)
                         .match(/^[1][3|4|5|7|8][0-9]{9}$/)) {
                     return 'MOBILE_INVALID';
                 }
-
                 return false;
-
             }
         }
-
     })
 
     .factory('checkName', function() {
@@ -271,7 +293,5 @@ angular.module('person.services', [])
                 return false;
             }
         }
-
     })
-
 ;
