@@ -13,7 +13,8 @@ angular.module('person.controllers', [])
 
         var getDataMap={
             1:accountOrders.getUndoneOrders,
-            2:accountOrders.getDoneOrders
+            2:accountOrders.getDoneOrders,
+            3:accountOrders.getFinishOrders
         };
         $scope.statue=$stateParams.statue;
 
