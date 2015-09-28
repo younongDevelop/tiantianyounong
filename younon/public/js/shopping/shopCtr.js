@@ -20,8 +20,6 @@ angular.module('shop.controllers', [])
         list.getProListInfo(function(proListInfo){
         	$scope.proListInfo = proListInfo;
         });
-        // 载入数据
-        // list.load();
         console.log("list");
         $scope.search = function(searchStr){
             list.setKeyword(searchStr);
