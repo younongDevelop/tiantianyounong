@@ -22,3 +22,40 @@
     padding:0;
     border:0;
 }
+
+.fill-info-item .row{
+    padding: 0;
+    height: 34px;
+    line-height: 34px;
+}
+.fill-info-item .col{
+    padding: 0;
+}
+.fill-info-item {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.fill-account-item .col:last-child{
+    text-align: right;
+}
+.fill-submit{
+    line-height: 47px;
+}
+.fill-info-item select{
+    margin-top: 8px;
+}
+.fill-pro-item .col:last-child{
+    text-align: right;
+}
+.fill-info-title{
+    border-color: rgba(1,1,1,0);
+    padding-top: 20px;
+    background-color: rgb(244,245,246);
+}
+.fill-info-title i{
+    font-size: 1.6rem;
+    margin-right: .3rem;
+    margin-top: 1px;
+    position: relative;
+    top: 3px;
+}

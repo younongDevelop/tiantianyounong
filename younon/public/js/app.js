@@ -158,6 +158,15 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
               }
           }
       })
+      .state('account.orderFill', {
+          url: '/orderFill',
+          views: {
+              'tab-account': {
+                  templateUrl: 'templates/personInfor/account-order-fill.html',
+                  controller:"orderFill"
+              }
+          }
+      })
       //person路由结束
 
       .state('admin', {
