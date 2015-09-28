@@ -8,7 +8,8 @@ angular.module('index.controllers', [])
         });
     })
 
-.controller('indexCtrl', function($scope, cate, cart, $ionicSlideBoxDelegate, $timeout, $location) {
+.controller('indexCtrl', function($scope, cate, cart, $ionicSlideBoxDelegate, $timeout, $location, $ionicPopup, $rootScope) {
+    
         $scope.searchStr = "";
         $scope.cates = [];
         // 获取产品品类
@@ -21,8 +22,7 @@ angular.module('index.controllers', [])
         });
         // 点击搜索事件
         $scope.search = function(searchStr){
-            $location.path('/shopping/list/'+searchStr);
-            $location.replace();
+            $location.path('/tab/list/'+searchStr);
         }
         // 获取幻灯片数据
         $scope.slideInfo = {
@@ -48,13 +48,47 @@ angular.module('index.controllers', [])
         // 添加购物车
         $scope.addGood = function(pro){
             // var pro = $scope.hotprosInfo.hotpros[index];
+            // 兼容到购物车商品对象
+            pro.quantity = 1;
+            pro.prod_sku_values=pro.sku_attrval;
+
             cart.addGoods(pro,function(res){
                 // 添加成功后
                 console.log("suc",res);
             },function(res){
                 // 添加失败后
                 console.log("err",res);
+                $ionicPopup.alert({
+                    title: '',
+                    template: '添加购物车失败',
+                    okText: '好的'
+                });
             })
+        }
+        // 添加热卖商品到购物车
+        $scope.addHotGood = function(pro){
+            // 兼容到购物车商品对象
+            pro.quantity = 1;
+            pro.product_id = pro.prod_sku_id;
+            pro.product_name = pro.title;
+            pro.product_sell_price = pro.current_price*100;
+
+            cart.addGoods(pro,function(res){
+                // 添加成功后
+                console.log("suc",res);
+            },function(res){
+                // 添加失败后
+                console.log("err",res);
+                $ionicPopup.alert({
+                    title: '',
+                    template: '添加购物车失败',
+                    okText: '好的'
+                });
+            })
+        }
+        // 跳转到详情页
+        $scope.jumpDetail = function(proid){
+            $location.path('/shopping/detail/'+proid);
         }
     })
 

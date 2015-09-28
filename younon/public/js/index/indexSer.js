@@ -55,21 +55,19 @@ angular.module('index.services', [])
             */
             addGoods:function(pro,suc,err){
                 var pid = parseInt(pro.product_id);
-                $http.post(api+'/basket/add',{
+                var addInfo = {
                     cid:customerId,
-                    pid:pid,
-                    quantity:1
-                }).success(function(res){
+                    pid:pro.product_id,
+                    quantity:pro.quantity
+                }
+                $http.post(api+'/basket/add',addInfo).success(function(res){
                     if(res.code === 0 ){
                         suc && suc(res);
-                        // 购物车总数量加1
-                        goodsNumber.number++;
                         // 如果商品存在于购物车，更新购物车的单商品数量
-                        debugger;
                         for(var i in goods){
                             var good = goods[i];
                             if(good.prod_sku_id === pid){
-                                good.quantity++;
+                                good.quantity+=addInfo.quantity;
                                 good.version = res.results;
                                 changeGoodsNumber();
                                 return
@@ -77,7 +75,6 @@ angular.module('index.services', [])
                         }
                         // 如果商品不存在 将商品加入购物车模型
                         pro.prod_sku_id = pro.product_id;
-                        pro.quantity = 1;
                         pro.version = res.results;                   
                         goods.unshift(pro);
                         changeGoodsNumber();
@@ -122,7 +119,6 @@ angular.module('index.services', [])
 .factory('cate',function($http){
     var catesInfo = {cates:[]};
     var hotprosInfo = {hotpros:[]};
-    window.catesInfo = catesInfo;
     function load(){
         var searchUrl = '/search/?field=product_id+product_url+prod_sku_id+product_name+product_images+sku_attrval+product_original_price+product_sell_price+product_origin+product_weight+commentcount&n=40&wf=product&from=weixin&categoryid={categoryid}&ranker_type='
         // 记录将要发送的请求数
@@ -151,22 +147,17 @@ angular.module('index.services', [])
                 })();
             }
         })
-        //载入热卖数据
-        var url = searchUrl.replace("{categoryid}", 1);
-        $http.get(url).success(function(data){
-            hotprosInfo.hotpros = data.search_response && data.search_response.books;
-            // 将图片地址string转化为object
-            // for(var i in hotprosInfo.hotpros){
-            //     var pro = hotprosInfo.hotpros[i];
-            //     try{
-            //         pro.product_images = JSON.parse(pro.product_images);
-            //     }catch(e){
-            //         pro.product_images = {small:null,list:null};
-            //     }
-            // }
+    }
+    //载入热卖数据
+    function loadHot(){
+        $http.get(api+"/hotSale/0/10").success(function(data){
+            if(data.code === 0){
+                hotprosInfo.hotpros = data.results;
+            }
         })
     }
     load();
+    loadHot();
     return {
         /**
         * @desc 获取分类数据,分类数据中包含产品数据
