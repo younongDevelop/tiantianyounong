@@ -72,6 +72,8 @@ angular.module('index.controllers', [])
             pro.product_id = pro.prod_sku_id;
             pro.product_name = pro.title;
             pro.product_sell_price = pro.current_price*100;
+            pro.product_images = {small:pro.imgUrl, list:[]};
+            pro.image=pro.imgUrl;
 
             cart.addGoods(pro,function(res){
                 // 添加成功后
@@ -92,7 +94,7 @@ angular.module('index.controllers', [])
         }
     })
 
-.controller('cartCtrl', function($scope,cart,$ionicListDelegate,$ionicPopup) {
+.controller('cartCtrl', function($scope,cart,orderPros,$ionicListDelegate,$ionicPopup,$location) {
 
         $scope.number=[];
         for(var i=1;i<51;i++){
@@ -126,7 +128,14 @@ angular.module('index.controllers', [])
                 return;
             });
         }
-
+        $scope.accountCart = function(){
+            cart.getGoodsUpToDate(function(goods){
+                orderPros.replacePros(goods);
+                $location.path('/account/orderFill');
+            },function(){
+                $ionicPopup.alert("对不起，结算失败 再试试把");
+            })
+        }
 })
 
 .controller('accountCtrl', function($scope) {

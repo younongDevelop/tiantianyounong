@@ -97,17 +97,17 @@
     				</li>
     				<li class="item fill-account-info">
     					<ul>
-    						<li class="fill-account-item row"><div class="col">商品总重</div><div class="col">1000kg</div></li>
-    						<li class="fill-account-item row"><div class="col">商品总金额</div><div class="col">￥10000.00</div></li>
-    						<li class="fill-account-item row"><div class="col">运费</div><div class="col">￥10.00</div></li>
-    						<li class="fill-account-item row"><div class="col">运费减免</div><div class="col">￥10.00</div></li>
-    						<li class="fill-account-item row"><div class="col">赠送积分</div><div class="col">200积分</div></li>
+    						<li class="fill-account-item row"><div class="col">商品总重</div><div class="col">{{accoutnInfo.product_weight_all}}kg</div></li>
+    						<li class="fill-account-item row"><div class="col">商品总金额</div><div class="col">￥{{accoutnInfo.product_price_all/100}}</div></li>
+    						<li class="fill-account-item row"><div class="col">运费</div><div class="col">￥{{accoutnInfo.send_price/100}}</div></li>
+    						<li class="fill-account-item row"><div class="col">运费减免</div><div class="col">￥{{accoutnInfo.send_price_redu/100}}</div></li>
+    						<li class="fill-account-item row"><div class="col">赠送积分</div><div class="col">{{accoutnInfo.integral}}积分</div></li>
     					</ul>
     				</li>
     				<li class="item fill-submit row">
     					<div class="col col-66">
     						<span>总金额</span>
-    						<span class="fill-amount">￥100000.00</span>
+    						<span class="fill-amount">￥{{accoutnInfo.amount/100}}</span>
     					</div>
     					<div class="col col-33"><button class="button fill-btn-submit" ng-click="submit()">提交订单</button></div>
     				</li>

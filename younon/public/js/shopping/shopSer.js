@@ -192,7 +192,7 @@ angular.module('shop.services', [])
                 commentcount: "28",
                 product_id: "21",
                 product_images:{
-                    small:'abc',
+                    small:'./img/slide1.jpg',
                     list:['abc3','abc2','abc1'],
                 },
                 product_name: "黑猪肉",
@@ -206,7 +206,7 @@ angular.module('shop.services', [])
                 commentcount: "28",
                 product_id: "11",
                 product_images:{
-                    small:'abc',
+                    small:'./img/slide1.jpg',
                     list:['abc3','abc2','abc1'],
                 },
                 product_name: "苹果",
