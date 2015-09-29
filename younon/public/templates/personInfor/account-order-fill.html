@@ -7,18 +7,16 @@
     					<i class="ion-person"></i>
     					个人信息
     				</li>
-    				<li class="item fill-info-item">
-    					<div class="row">
-    						<div class="col col-33">收货人</div>
-    						<div class="col col-66"><input type="text" readonly="readonly" value="" ng-model="formData.receiver_name"></div>
-    					</div>
-    				</li>
-    				<li class="item fill-info-item">
-    					<div class="row">
-    						<div class="col col-33">收货地址</div>
-    						<div class="col col-66"><input type="text" readonly="readonly" value="" ng-model="formData.deliver_address"></div>
-    					</div>
-    				</li>
+                    <li class="item fill-info-item" ng-if="hasDefaultAddress()">
+                        <ul>
+                            <li>收货人<span class="item-note">{{formData.receiver_name}}</span></li>
+                            <li>电话<span class="item-note">{{formData.deliver_phone}}</span></li>
+                            <li>收货地址<span class="item-note">{{formData.deliver_address}}</span></li>
+                        </ul>
+                    </li>
+                    <li class="item fill-info-item" ng-if="!hasDefaultAddress()" ng-click="toSelectAddress()">
+                        请选择地址<span class="item-note"><i class="ion-chevron-right"></i></span>
+                    </li>
     			</ul>
     		</li>
     		<li class="fill-send-info">
@@ -33,7 +31,7 @@
     						<div class="col col-66">
     							<select class="fr"
 				                    ng-model="formData.deliver_type"
-				                    ng-options="way.value as way.show for way in selectData.sendWay"
+				                    ng-options="way as way for way in selectAttrsInfo.selectAttrs[1].attr_value"
 				                    ng-change="changeNumber(data.numberArr[$index],$index)">
 				              	</select>
     						</div>
@@ -45,7 +43,7 @@
     						<div class="col col-66">
     							<select class="fr"
 				                    ng-model="formData.deliver_time"
-				                    ng-options="way.value as way.show for way in selectData.sendTime"
+				                    ng-options="way as way for way in selectAttrsInfo.selectAttrs[0].attr_value"
 				                    ng-change="changeNumber(data.numberArr[$index],$index)">
 				              	</select>
     						</div>
@@ -65,7 +63,7 @@
     						<div class="col col-66">
     							<select class="fr"
 				                    ng-model="formData.payment_type"
-				                    ng-options="way.value as way.show for way in selectData.payWay"
+				                    ng-options="way as way for way in selectAttrsInfo.selectAttrs[2].attr_value"
 				                    ng-change="changeNumber(data.numberArr[$index],$index)">
 				              	</select>
     						</div>

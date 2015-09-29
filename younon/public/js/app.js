@@ -159,11 +159,20 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
           }
       })
       .state('account.orderFill', {
-          url: '/orderFill',
+          url: '/orderFill/{param}',
           views: {
               'tab-account': {
                   templateUrl: 'templates/personInfor/account-order-fill.html',
                   controller:"orderFill"
+              }
+          }
+      })
+      .state('account.orderSuc', {
+          url: '/orderSuc',
+          views: {
+              'tab-account': {
+                  templateUrl: 'templates/personInfor/account-order-suc.html',
+                  controller:"orderSuc"
               }
           }
       })

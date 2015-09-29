@@ -15,7 +15,6 @@ angular.module('shop.controllers', [])
 	})
 
 	.controller('listCtrl',function($scope,list,cart,$stateParams,$location,$ionicPopup){
-        debugger;
         $scope.searchStr = $stateParams.search;
 		// 绑定列表数据
         list.getProListInfo(function(proListInfo){
@@ -60,7 +59,7 @@ angular.module('shop.controllers', [])
         $scope.search($scope.searchStr);
     })
 
-    .controller("detailCtrl",function($scope, detail, cart, orderPros, $ionicSlideBoxDelegate,$stateParams,$location, $ionicPopup){
+    .controller("detailCtrl",function($scope, detail, cart, orderFill, $ionicSlideBoxDelegate,$stateParams,$location, $ionicPopup){
         var proid = $stateParams.proid;
 
         $scope.number=[];
@@ -101,8 +100,8 @@ angular.module('shop.controllers', [])
         $scope.buyNow = function(selectNumber){
             var pro  = $scope.proDetailInfo.proDetail;
             pro.quantity = selectNumber;
-            orderPros.replacePros([pro]);
-            $location.path('/account/orderFill');
+            orderFill.replacePros([pro]);
+            $location.path('/account/orderFill/'+pro.product_id);
         }
 
     });

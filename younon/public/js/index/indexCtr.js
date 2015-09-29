@@ -94,7 +94,7 @@ angular.module('index.controllers', [])
         }
     })
 
-.controller('cartCtrl', function($scope,cart,orderPros,$ionicListDelegate,$ionicPopup,$location) {
+.controller('cartCtrl', function($scope,cart,orderFill,$ionicListDelegate,$ionicPopup,$location) {
 
         $scope.number=[];
         for(var i=1;i<51;i++){
@@ -130,8 +130,8 @@ angular.module('index.controllers', [])
         }
         $scope.accountCart = function(){
             cart.getGoodsUpToDate(function(goods){
-                orderPros.replacePros(goods);
-                $location.path('/account/orderFill');
+                orderFill.replacePros(goods);
+                $location.path('/account/orderFill/'+(goods[0]?goods[0].product_id:0));
             },function(){
                 $ionicPopup.alert("对不起，结算失败 再试试把");
             })

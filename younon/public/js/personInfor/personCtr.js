@@ -258,42 +258,15 @@ angular.module('person.controllers', [])
             });
 
     })
-    .controller('orderFill', function($scope, orderPros, $http, $ionicPopup){
-        // 选择列表选项信息
-        $scope.selectData = {
-            sendWay:[{
-                value:'1',
-                show:'送货上门'
-            },{
-                value:'2',
-                show:'柜台自提'
-            }],
-            sendTime:[{
-                value:'1',
-                show:'只在周末送货'
-            },{
-                value:'2',
-                show:'每日17:00~20:00'
-            },{
-                value:'3',
-                show:'不限'
-            }],
-            payWay:[{
-                value:'1',
-                show:'在线支付' 
-            },{
-                value:'2',
-                show:'货到付款'
-            }]
-        };
+    .controller('orderFill', function($scope, orderFill, $http, $ionicPopup,$location){
         //表单对象
         $scope.formData = {
             customer_id:(customerId+''),         //customer id
-            deliver_address:'中国山城',     //deliver address
-            deliver_phone:'18258266829',       //contact phone
-            deliver_type:'1',        //送货方式    送货上门 / 柜台自提
-            payment_type:'1',        //支付方式   传值：“1”—在线支付；“2”—货到付款
-            deliver_time:'1',        //送货时间   选项1：只在周末送货 选项2：每日17:00~20:00送货 选项3:不限
+            deliver_address:'',     //deliver address
+            deliver_phone:'',       //contact phone
+            deliver_type:'送货上门',        //送货方式    送货上门 / 柜台自提
+            payment_type:'在线支付',        //支付方式   传值：“1”—在线支付；“2”—货到付款
+            deliver_time:'只在周末送货',        //送货时间   选项1：只在周末送货 选项2：每日17:00~20:00送货 选项3:不限
             order_message:'',       //订单留言(可以为空)
             order_invoice_type:'',  //发票类型  个人， 公司(可以为空)
             order_invoice_title:'', //公司类型发票的抬头(可以为空)
@@ -306,10 +279,11 @@ angular.module('person.controllers', [])
             *}
             */
             items:[],
-            receiver_name:'王晓明'
+            receiver_name:''
         }
+
         // 当前订单的产品对象
-        orderPros.getProsInfo(function(data){
+        orderFill.getProsInfo(function(data){
             $scope.orderProsInfo = data;
          });
         // 商品结算信息
@@ -321,39 +295,64 @@ angular.module('person.controllers', [])
             integral:0,
             amount:0
         }
-        // 根据订单填写对象填写表单
-        for(var index in $scope.orderProsInfo.pros){
-            var pro = $scope.orderProsInfo.pros[index];
-            $scope.formData.items.push({
-                pid:parseInt(pro.product_id),
-                quantity:pro.quantity,
-                // TODO:xjc 在这里可能要对价格做处理
-                final_price:parseFloat(pro.product_sell_price),
-                product_weight:parseFloat(pro.product_weight)
-            })
-        }
-        // 计算总价格和总重量
-        var ai = $scope.accoutnInfo;
-        $scope.formData.items.forEach(function(item){
-            ai.product_weight_all += (item.product_weight * item.quantity);
-            ai.product_price_all += (item.final_price * item.quantity);
+
+        // 选择列表选项信息
+        orderFill.getSelectAttrsInfo(function(selectAttrsInfo){
+            $scope.selectAttrsInfo = selectAttrsInfo;
         })
-        ai.amount = ai.product_price_all + ai.send_price - ai.send_price_redu;
+        // 填写表单对象
+        function fillOrder(){
+            // 填写地址
+            var fd = $scope.formData;
+            fd.deliver_address = localStorage.address_detail;
+            fd.deliver_phone = localStorage.receiver_phone;
+            fd.receiver_name = localStorage.receiver_name;
+            
+            // 根据订单填写对象填写表单
+            for(var index in $scope.orderProsInfo.pros){
+                var pro = $scope.orderProsInfo.pros[index];
+                $scope.formData.items.push({
+                    pid:parseInt(pro.product_id),
+                    quantity:pro.quantity,
+                    // TODO:xjc 在这里可能要对价格做处理
+                    final_price:parseFloat(pro.product_sell_price),
+                    product_weight:parseFloat(pro.product_weight)
+                })
+            }
+        };
+        fillOrder();
+
+        function calcuAmount(){
+            // 计算总价格和总重量和运费
+            var ai = $scope.accoutnInfo;
+            $scope.formData.items.forEach(function(item){
+                ai.product_price_all += (item.final_price * item.quantity);
+            })
+            orderFill.calcuDeliverPrice($scope.formData.items,function(data){
+                ai.send_price = data.charge;
+                ai.product_weight_all = data.weight
+                ai.amount = ai.product_price_all + ai.send_price - ai.send_price_redu;
+            })
+        };
+        calcuAmount();
+
 
         $scope.submit = function(){
-            $http.post(api+"/orders/checkout",$scope.formData).success(function(data){
-                console.log('submit',data);
-                if(data.code === 0){
-                    // TODO:xjc 跳转到预定成功页面
-                }else{
-                    // TODO:订单失败页面
-                    $ionicPopup.alert({
-                        title: '',
-                        template: '对不起，订单提交失败',
-                        okText: '好的'
-                    });
-                }
-            })
+            
         }
+        // 判断是否有默认地址
+        $scope.hasDefaultAddress = function(){
+            if($scope.formData.deliver_address && $scope.formData.receiver_name &&$scope.formData.deliver_phone){
+                return true;
+            }
+            return false;
+        }
+        // 去选择地址
+        $scope.toSelectAddress = function(){
+            $location.path('/account/addresses');
+        }
+    })
+    .controller('orderSuc', function($scope){
+
     })
 ;

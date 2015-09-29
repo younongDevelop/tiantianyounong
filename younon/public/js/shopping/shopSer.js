@@ -186,7 +186,7 @@ angular.module('shop.services', [])
         }
         
     })
-    .factory('orderPros',function(){
+    .factory('orderFill',function($http){
         // 将要结算并生产订单的产品
         var prosInfo = {pros:[{
                 commentcount: "28",
@@ -217,18 +217,163 @@ angular.module('shop.services', [])
                 sku_attrval: "10斤",
                 quantity:2
             }]};
+        // 下拉框选项数据
+        var selectAttrsInfo = {selectAttrs:[{
+            "attr_id": 1,
+            "attr_desc": "送货时间",
+            "attr_value": {
+                "3": "每日15:00~19:00送货",
+                "2": "每日9:00~15:00送货",
+                "1": "只在周末送货",
+                "4": "送货时间不限"
+            },
+            "attr_type": "deliver_time"
+            }, {
+                "attr_id": 2,
+                "attr_desc": "送货方式",
+                "attr_value": {
+                    "2": "柜台自取",
+                    "1": "送货上门"
+                },
+                "attr_type": "deliver_type"
+            }, {
+                "attr_id": 3,
+                "attr_desc": "支付方式",
+                "attr_value": {
+                    "2": "货到付款",
+                    "1": "在线支付"
+                },
+                "attr_type": "pay_type"
+            }, {
+                "attr_id": 4,
+                "attr_desc": "发票类型",
+                "attr_value": {
+                    "3": "公司发票",
+                    "2": "个人发票",
+                    "1": "否"
+                },
+                "attr_type": "invoice_type"
+            }, {
+                "attr_id": 5,
+                "attr_desc": "重量运费",
+                "attr_value": {
+                    "20": "10",
+                    "10": "0",
+                    "10000": "20"
+                },
+                "attr_type": "deliver_charges"
+            }, {
+                "attr_id": 6,
+                "attr_desc": "运费减免",
+                "attr_value": {
+                    "1": "100"
+                },
+                "attr_type": "deliver_free"
+            }, {
+                "attr_id": 7,
+                "attr_desc": "商品状态",
+                "attr_value": {
+                    "3": "已审核未通过",
+                    "2": "已审核通过",
+                    "1": "已创建",
+                    "5": "已下架",
+                    "4": "已上架"
+                },
+                "attr_type": "prod_status"
+            }]};
+        // 即将被使用的地址对象
+        var addressInfo = {
+            address:{
+                "address_id": 1,
+                "city_name": "苏州市",
+                "district_name": "园区",
+                "community_name": "中海7区",
+                "city_id": 2,
+                "district_id": 3,
+                "community_id": 4,
+                "address_room": "20#903",
+                "address_detail": "江苏省苏州市园区中海7区20#903",
+                "receiver_name": "于慧勇",
+                "receiver_phone": "2132425235322",
+                "version": 77,
+                "status": 0
+            }
+        };
+
+        // 载入下拉框选项数据
+        function loadSelectAttrsInfo(){
+            $http.get(api+'/attributes').success(function(data){
+                if(data.code === 0){
+                    selectAttrsInfo.selectAttrs = data.result;
+                }
+            })
+        }
         return {
-            // 获取
+            /**
+            * @desc 获取将要结算的商品
+            */ 
             getProsInfo:function(cb){
                 cb && cb(prosInfo);
             },
-            // 清除
-            clearPros:function(){
-                prosInfo.pros = [];
-            },
-            // 替换
+            /**
+            * @desc 重置将要结算的商品
+            */
             replacePros:function(pros){
                 prosInfo.pros  = pros
+            },
+            /**
+            * @desc 计算运费
+            * @func calcuDeliverPrice
+            * @param {array} pros 商品信息
+            *[{
+            *    "pid":"1",
+            *    "quantity":"5",
+            *    "final_price":"22.89",
+            *    "product_weight":"2"
+            *},]
+            * @param {function} cb 回调函数，传入计算结果
+            *   {
+            *        weight:27.0, //总重量
+            *        charge:2000  //运费
+            *    }
+            */
+            calcuDeliverPrice:function(pros,cb){
+                $http.post(api+'/orders/charge',pros).success(function(data){
+                    if(data.code === 0){
+                        cb && cb(data.results);
+                    }
+                })
+            },
+            /**
+            * @desc 获取列表选项
+            */
+            getSelectAttrsInfo:function(cb){
+                cb&&cb(selectAttrsInfo);
+            },
+            /**
+            * @desc 获取地址信息
+            */
+            getAddressInfo:function(cb){
+                cb&&cb(addressInfo)
+            },
+            /**
+            * @desc 设置地址对象
+            */
+            setAddressInfo:function(address){
+                addressInfo.address = address;
+            },
+            /**
+            * @desc 提交表单
+            */ 
+            submit:function(formData,suc,fail){
+                $http.post(api+"/orders/checkout", formData).success(function(data){
+                    console.log('submit',data);
+                    if(data.code === 0){
+                        suc && suc(data);
+                    }else{
+                        fail && fail(data);
+                    }
+                })
             }
         }
         
