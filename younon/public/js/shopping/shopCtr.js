@@ -59,7 +59,7 @@ angular.module('shop.controllers', [])
         $scope.search($scope.searchStr);
     })
 
-    .controller("detailCtrl",function($scope, detail, cart, orderFill, $ionicSlideBoxDelegate,$stateParams,$location, $ionicPopup){
+    .controller("detailCtrl",function($scope, detail, cart, orderOp, $ionicSlideBoxDelegate,$stateParams,$location, $ionicPopup){
         var proid = $stateParams.proid;
 
         $scope.number=[];
@@ -100,8 +100,56 @@ angular.module('shop.controllers', [])
         $scope.buyNow = function(selectNumber){
             var pro  = $scope.proDetailInfo.proDetail;
             pro.quantity = selectNumber;
-            orderFill.replacePros([pro]);
-            $location.path('/account/orderFill/'+pro.product_id);
+            orderOp.initOrder([pro]);
+            $location.path('/shopping/orderFill');
         }
 
-    });
+    })
+    .controller('orderFill', function($scope, orderOp, errMap, accountOrders, $http, $ionicPopup,$location){
+        var errorMap=errMap.getMap();
+        // 绑定数据
+            // 下拉选项
+        $scope.selectAttrsInfo = orderOp.getSelectAttrsInfo();
+            // 表单
+        $scope.formData = orderOp.getFormData();
+            // 订单商品
+        $scope.orderProsInfo = orderOp.getProsInfo();
+            // 结算信息
+        $scope.amountInfo = orderOp.getAmountInfo();
+        // 绑定事件
+            // 提交表单
+        $scope.submit = function(){
+            orderOp.submitOrder(function(data){
+                // 添加到未完成订单
+                var order = data.results;
+                order.order_status = "待支付";
+                accountOrders.addUndoneOrder(order);
+                $ionicPopup.alert({
+                    title: '表单提交成功',
+                    template:errorMap[data],
+                    okText: '好的'
+                });
+            },function(param){
+                $ionicPopup.alert({
+                    title: '表单提交失败',
+                    template:errorMap[param],
+                    okText: '好的'
+                });
+            })
+        }
+            // 选择地址
+        $scope.toSelectAddress = function(){
+            $location.path('/account/addresses');
+        }
+        // 判断地址是否为空
+        $scope.hasDefaultAddress = function(){
+            var fd = $scope.formData;
+            if(fd.deliver_address && fd.deliver_phone && fd.receiver_name){
+                return true;
+            }
+            return false;
+        }
+    })
+    .controller('orderSuc', function($scope){
+
+    })
