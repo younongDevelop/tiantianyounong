@@ -259,6 +259,7 @@ angular.module('person.controllers', [])
             });
 
     })
+
     .controller('orderFill', function($scope, orderPros, $http, $ionicPopup){
         // 选择列表选项信息
         $scope.selectData = {
@@ -289,12 +290,13 @@ angular.module('person.controllers', [])
         };
         //表单对象
         $scope.formData = {
-            customer_id:(customerId+''),         //customer id
-            deliver_address:'中国山城',     //deliver address
-            deliver_phone:'18258266829',       //contact phone
-            deliver_type:'1',        //送货方式    送货上门 / 柜台自提
+
+            customer_id:customerId,         //customer id
+            deliver_address:localStorage.address_detail,     //deliver address
+            deliver_phone:localStorage.receiver_phone,       //contact phone
+            deliver_type:'送货上门',        //送货方式    送货上门 / 柜台自提
             payment_type:'1',        //支付方式   传值：“1”—在线支付；“2”—货到付款
-            deliver_time:'1',        //送货时间   选项1：只在周末送货 选项2：每日17:00~20:00送货 选项3:不限
+            deliver_time:'只在周末送货',        //送货时间   选项1：只在周末送货 选项2：每日17:00~20:00送货 选项3:不限
             order_message:'',       //订单留言(可以为空)
             order_invoice_type:'',  //发票类型  个人， 公司(可以为空)
             order_invoice_title:'', //公司类型发票的抬头(可以为空)
@@ -307,7 +309,9 @@ angular.module('person.controllers', [])
             *}
             */
             items:[],
-            receiver_name:'王晓明'
+            receiver_name:localStorage.receiver_name,
+            deliver_charges:'0',
+            ischecked:'4'
         }
         // 当前订单的产品对象
         orderPros.getProsInfo(function(data){
