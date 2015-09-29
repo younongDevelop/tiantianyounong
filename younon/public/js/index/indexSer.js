@@ -1,7 +1,7 @@
 
 angular.module('index.services', [])
 
-.factory('cart', function($http) {
+.factory('cart', function($http,util) {
 
         var goods = [];
         var goodsNumber={number:0,sum:0,numberArr:[]};
@@ -30,7 +30,6 @@ angular.module('index.services', [])
                     var obj = JSON.parse(item.product_images);
                     item.image=obj.small;
                 })
-
                 changeGoodsNumber();
             }).error(function (res) {
                 console.log(res);
@@ -42,6 +41,33 @@ angular.module('index.services', [])
         return {
             getGoods: function (cb) {
                 cb(goods);
+            },
+            /**
+            * @desc 请求服务器获取最新的购物车数据
+            * @func getGoodsUpToDate
+            * @param {function} suc 请求成功后调用的回调函数
+            * @param {function} fail 请求失败后调用的回调函数
+            */
+            getGoodsUpToDate:function(suc, fail){
+                $http.get(api+'/basket/'+customerId+'/0/100/0').success(function (data) {
+                    var goods = [];
+                    if(data.code===0){
+                        for (var i in data.results) {
+                            if(data.results[i].statue!=0){goods.push(data.results[i]);}
+                        }
+                    }
+                    console.log(goods);
+
+                    goods.forEach(function(item){
+                        item.product_images = util.parseImgUrls(item.product_images);
+                        item.image=item.product_images.small;
+                        item.product_id = item.prod_sku_id;
+                    })
+                    suc && suc(goods);
+                }).error(function (res) {
+                    console.log(res);
+                    fail && fail(res);
+                });
             },
             getGoodsNumber:function(cb){
                 cb(goodsNumber);

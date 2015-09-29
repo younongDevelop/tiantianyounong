@@ -281,7 +281,7 @@ angular.module('person.controllers', [])
             }],
             payWay:[{
                 value:'1',
-                show:'在线支付'
+                show:'在线支付' 
             },{
                 value:'2',
                 show:'货到付款'
@@ -310,7 +310,18 @@ angular.module('person.controllers', [])
             receiver_name:'王晓明'
         }
         // 当前订单的产品对象
-        $scope.orderProsInfo = orderPros.getProsInfo();
+        orderPros.getProsInfo(function(data){
+            $scope.orderProsInfo = data;
+         });
+        // 商品结算信息
+        $scope.accoutnInfo = {
+            product_weight_all:0,
+            product_price_all:0,
+            send_price:1000,
+            send_price_redu:0,
+            integral:0,
+            amount:0
+        }
         // 根据订单填写对象填写表单
         for(var index in $scope.orderProsInfo.pros){
             var pro = $scope.orderProsInfo.pros[index];
@@ -322,9 +333,17 @@ angular.module('person.controllers', [])
                 product_weight:parseFloat(pro.product_weight)
             })
         }
+        // 计算总价格和总重量
+        var ai = $scope.accoutnInfo;
+        $scope.formData.items.forEach(function(item){
+            ai.product_weight_all += (item.product_weight * item.quantity);
+            ai.product_price_all += (item.final_price * item.quantity);
+        })
+        ai.amount = ai.product_price_all + ai.send_price - ai.send_price_redu;
+
         $scope.submit = function(){
-            debugger;
             $http.post(api+"/orders/checkout",$scope.formData).success(function(data){
+                console.log('submit',data);
                 if(data.code === 0){
                     // TODO:xjc 跳转到预定成功页面
                 }else{

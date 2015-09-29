@@ -192,35 +192,35 @@ angular.module('shop.services', [])
                 commentcount: "28",
                 product_id: "21",
                 product_images:{
-                    small:'abc',
+                    small:'./img/slide1.jpg',
                     list:['abc3','abc2','abc1'],
                 },
                 product_name: "黑猪肉",
                 product_origin: "南京",
                 product_original_price: "2000",
                 product_sell_price: "2900",
-                product_weight: "0.00",
+                product_weight: "10.00",
                 sku_attrval: "10斤",
                 quantity:1
             },{
                 commentcount: "28",
                 product_id: "11",
                 product_images:{
-                    small:'abc',
+                    small:'./img/slide1.jpg',
                     list:['abc3','abc2','abc1'],
                 },
                 product_name: "苹果",
                 product_origin: "南京",
                 product_original_price: "2000",
                 product_sell_price: "2900",
-                product_weight: "0.00",
+                product_weight: "10.00",
                 sku_attrval: "10斤",
                 quantity:2
             }]};
         return {
             // 获取
-            getProsInfo:function(){
-                return prosInfo;
+            getProsInfo:function(cb){
+                cb && cb(prosInfo);
             },
             // 清除
             clearPros:function(){
