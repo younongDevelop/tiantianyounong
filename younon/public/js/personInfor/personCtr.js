@@ -309,7 +309,9 @@ angular.module('person.controllers', [])
             receiver_name:'王晓明'
         }
         // 当前订单的产品对象
-        $scope.orderProsInfo = orderPros.getProsInfo();
+        orderPros.getProsInfo(function(data){
+            $scope.orderProsInfo = data;
+         });
         // 商品结算信息
         $scope.accoutnInfo = {
             product_weight_all:0,

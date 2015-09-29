@@ -199,7 +199,7 @@ angular.module('shop.services', [])
                 product_origin: "南京",
                 product_original_price: "2000",
                 product_sell_price: "2900",
-                product_weight: "0.00",
+                product_weight: "10.00",
                 sku_attrval: "10斤",
                 quantity:1
             },{
@@ -213,14 +213,14 @@ angular.module('shop.services', [])
                 product_origin: "南京",
                 product_original_price: "2000",
                 product_sell_price: "2900",
-                product_weight: "0.00",
+                product_weight: "10.00",
                 sku_attrval: "10斤",
                 quantity:2
             }]};
         return {
             // 获取
-            getProsInfo:function(){
-                return prosInfo;
+            getProsInfo:function(cb){
+                cb && cb(prosInfo);
             },
             // 清除
             clearPros:function(){
