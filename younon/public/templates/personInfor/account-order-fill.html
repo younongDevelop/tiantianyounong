@@ -1,0 +1,125 @@
+<ion-view view-title="天天有农">
+    <ion-content>
+    	<ul>
+    		<li class="fill-person-info">
+    			<ul class="list">
+    				<li class="item fill-info-title">
+    					<i class="ion-person"></i>
+    					个人信息
+    				</li>
+    				<li class="item fill-info-item">
+    					<div class="row">
+    						<div class="col col-33">收货人</div>
+    						<div class="col col-66"><input type="text" readonly="readonly" value="" ng-model="formData.receiver_name"></div>
+    					</div>
+    				</li>
+    				<li class="item fill-info-item">
+    					<div class="row">
+    						<div class="col col-33">收货地址</div>
+    						<div class="col col-66"><input type="text" readonly="readonly" value="" ng-model="formData.deliver_address"></div>
+    					</div>
+    				</li>
+    			</ul>
+    		</li>
+    		<li class="fill-send-info">
+    			<ul class="list">
+    				<li class="item fill-info-title">
+    					<i class="ion-ios-paperplane"></i>
+    					送货信息
+    				</li>
+    				<li class="item fill-info-item">
+    					<div class="row">
+    						<div class="col col-33">送货方式</div>
+    						<div class="col col-66">
+    							<select class="fr"
+				                    ng-model="formData.deliver_type"
+				                    ng-options="way.value as way.show for way in selectData.sendWay"
+				                    ng-change="changeNumber(data.numberArr[$index],$index)">
+				              	</select>
+    						</div>
+    					</div>
+    				</li>
+    				<li class="item fill-info-item">
+    					<div class="row">
+    						<div class="col col-33">送货时间</div>
+    						<div class="col col-66">
+    							<select class="fr"
+				                    ng-model="formData.deliver_time"
+				                    ng-options="way.value as way.show for way in selectData.sendTime"
+				                    ng-change="changeNumber(data.numberArr[$index],$index)">
+				              	</select>
+    						</div>
+    					</div>
+    				</li>
+    			</ul>
+    		</li>
+    		<li class="fill-pay-way">
+    			<ul class="list">
+    				<li class="item fill-info-title">
+    					<i class="ion-card"></i>
+    					支付信息
+    				</li>
+    				<li class="item fill-info-item">
+    					<div class="row">
+    						<div class="col col-33">支付方式</div>
+    						<div class="col col-66">
+    							<select class="fr"
+				                    ng-model="formData.payment_type"
+				                    ng-options="way.value as way.show for way in selectData.payWay"
+				                    ng-change="changeNumber(data.numberArr[$index],$index)">
+				              	</select>
+    						</div>
+    					</div>
+    				</li>
+    			</ul>    		
+    		</li>
+    		<li class="fill-pro-info">
+    			<ul class="list">
+    				<li class="item fill-info-title">
+    					<i class="ion-ios-calculator"></i>
+    					商品详情
+    				</li>
+    				<li class="item fill-pro-list">
+    					<ul>
+    						<li class="fill-pro-item row" ng-repeat="pro in orderProsInfo.pros">
+    							<div class="col col-25">
+    								<img ng-src="{{pro.product_images.small}}" alt="" class="fill-pro-img">
+    							</div>
+    							<div class="col col-50">
+    								<h3 class="fill-pro-title">{{pro.product_name}}</h3>
+    								<p class="fill-pro-price">抢购价：￥{{pro.product_sell_price/100}}</p>
+    							</div>
+    							<div class="col col-25">
+    								<div class="fill-pro-quantity">x{{pro.quantity}}</div>
+    							</div>
+    						</li>
+    					</ul>
+    				</li>
+    				<li class="item fill-account-info">
+    					<ul>
+    						<li class="fill-account-item row"><div class="col">商品总重</div><div class="col">1000kg</div></li>
+    						<li class="fill-account-item row"><div class="col">商品总金额</div><div class="col">￥10000.00</div></li>
+    						<li class="fill-account-item row"><div class="col">运费</div><div class="col">￥10.00</div></li>
+    						<li class="fill-account-item row"><div class="col">运费减免</div><div class="col">￥10.00</div></li>
+    						<li class="fill-account-item row"><div class="col">赠送积分</div><div class="col">200积分</div></li>
+    					</ul>
+    				</li>
+    				<li class="item fill-submit row">
+    					<div class="col col-66">
+    						<span>总金额</span>
+    						<span class="fill-amount">￥100000.00</span>
+    					</div>
+    					<div class="col col-33"><button class="button fill-btn-submit" ng-click="submit()">提交订单</button></div>
+    				</li>
+    			</ul> 
+    		</li>
+    	</ul>
+        <!-- 个人信息 -->
+        <!-- 送货信息 -->
+        <!-- 支付方式 -->
+        <!-- 商品详情 -->
+        	<!-- 商品详情 -->
+        	<!-- 结算信息 -->
+        	<!-- 提交订单 -->
+    </ion-content>
+</ion-view>

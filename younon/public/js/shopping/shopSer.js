@@ -186,3 +186,50 @@ angular.module('shop.services', [])
         }
         
     })
+    .factory('orderPros',function(){
+        // 将要结算并生产订单的产品
+        var prosInfo = {pros:[{
+                commentcount: "28",
+                product_id: "21",
+                product_images:{
+                    small:'abc',
+                    list:['abc3','abc2','abc1'],
+                },
+                product_name: "黑猪肉",
+                product_origin: "南京",
+                product_original_price: "2000",
+                product_sell_price: "2900",
+                product_weight: "0.00",
+                sku_attrval: "10斤",
+                quantity:1
+            },{
+                commentcount: "28",
+                product_id: "11",
+                product_images:{
+                    small:'abc',
+                    list:['abc3','abc2','abc1'],
+                },
+                product_name: "苹果",
+                product_origin: "南京",
+                product_original_price: "2000",
+                product_sell_price: "2900",
+                product_weight: "0.00",
+                sku_attrval: "10斤",
+                quantity:2
+            }]};
+        return {
+            // 获取
+            getProsInfo:function(){
+                return prosInfo;
+            },
+            // 清除
+            clearPros:function(){
+                prosInfo.pros = [];
+            },
+            // 替换
+            replacePros:function(pros){
+                prosInfo.pros  = pros
+            }
+        }
+        
+    })

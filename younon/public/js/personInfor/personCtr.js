@@ -259,4 +259,83 @@ angular.module('person.controllers', [])
             });
 
     })
+    .controller('orderFill', function($scope, orderPros, $http, $ionicPopup){
+        // 选择列表选项信息
+        $scope.selectData = {
+            sendWay:[{
+                value:'1',
+                show:'送货上门'
+            },{
+                value:'2',
+                show:'柜台自提'
+            }],
+            sendTime:[{
+                value:'1',
+                show:'只在周末送货'
+            },{
+                value:'2',
+                show:'每日17:00~20:00'
+            },{
+                value:'3',
+                show:'不限'
+            }],
+            payWay:[{
+                value:'1',
+                show:'在线支付'
+            },{
+                value:'2',
+                show:'货到付款'
+            }]
+        };
+        //表单对象
+        $scope.formData = {
+            customer_id:(customerId+''),         //customer id
+            deliver_address:'中国山城',     //deliver address
+            deliver_phone:'18258266829',       //contact phone
+            deliver_type:'1',        //送货方式    送货上门 / 柜台自提
+            payment_type:'1',        //支付方式   传值：“1”—在线支付；“2”—货到付款
+            deliver_time:'1',        //送货时间   选项1：只在周末送货 选项2：每日17:00~20:00送货 选项3:不限
+            order_message:'',       //订单留言(可以为空)
+            order_invoice_type:'',  //发票类型  个人， 公司(可以为空)
+            order_invoice_title:'', //公司类型发票的抬头(可以为空)
+            /*
+            * item{
+            *    pid:11,                  //product id
+            *    quantity:2,                 //商品购买数量
+            *    final_price:1.00,           //最终价格
+            *    product_weight:1.12,        //商品重量
+            *}
+            */
+            items:[],
+            receiver_name:'王晓明'
+        }
+        // 当前订单的产品对象
+        $scope.orderProsInfo = orderPros.getProsInfo();
+        // 根据订单填写对象填写表单
+        for(var index in $scope.orderProsInfo.pros){
+            var pro = $scope.orderProsInfo.pros[index];
+            $scope.formData.items.push({
+                pid:parseInt(pro.product_id),
+                quantity:pro.quantity,
+                // TODO:xjc 在这里可能要对价格做处理
+                final_price:parseFloat(pro.product_sell_price),
+                product_weight:parseFloat(pro.product_weight)
+            })
+        }
+        $scope.submit = function(){
+            debugger;
+            $http.post(api+"/orders/checkout",$scope.formData).success(function(data){
+                if(data.code === 0){
+                    // TODO:xjc 跳转到预定成功页面
+                }else{
+                    // TODO:订单失败页面
+                    $ionicPopup.alert({
+                        title: '',
+                        template: '对不起，订单提交失败',
+                        okText: '好的'
+                    });
+                }
+            })
+        }
+    })
 ;
