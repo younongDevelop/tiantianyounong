@@ -135,10 +135,12 @@ angular.module('person.services', [])
     .factory('accountOrders', function($http) {
         var undoneOrders=[];
         var doneOrders=[];
+        var finishOrders=[];
         var orderDetail={};
         var statueArrMap={
             1:undoneOrders,
-            2:doneOrders
+            2:doneOrders,
+            3:finishOrders
         };
         return{
             getUndoneOrders:function(cb){
@@ -146,6 +148,9 @@ angular.module('person.services', [])
             },
             getDoneOrders:function(cb){
                 cb(doneOrders);
+            },
+            getFinishOrders:function(cb){
+                cb(finishOrders);
             },
             loadOrders:function(page,pageSize,version,statue,cb){
                 $http.get(api+'/orders/'+customerId+'/'+statue+'/'+page+'/'+pageSize+'/'+version).success(function(data){

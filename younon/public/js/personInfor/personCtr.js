@@ -13,7 +13,8 @@ angular.module('person.controllers', [])
 
         var getDataMap={
             1:accountOrders.getUndoneOrders,
-            2:accountOrders.getDoneOrders
+            2:accountOrders.getDoneOrders,
+            3:accountOrders.getFinishOrders
         };
         $scope.statue=$stateParams.statue;
 
@@ -260,4 +261,105 @@ angular.module('person.controllers', [])
 
     })
 
+    .controller('orderFill', function($scope, orderPros, $http, $ionicPopup){
+        // 选择列表选项信息
+        $scope.selectData = {
+            sendWay:[{
+                value:'1',
+                show:'送货上门'
+            },{
+                value:'2',
+                show:'柜台自提'
+            }],
+            sendTime:[{
+                value:'1',
+                show:'只在周末送货'
+            },{
+                value:'2',
+                show:'每日17:00~20:00'
+            },{
+                value:'3',
+                show:'不限'
+            }],
+            payWay:[{
+                value:'1',
+                show:'在线支付' 
+            },{
+                value:'2',
+                show:'货到付款'
+            }]
+        };
+        //表单对象
+        $scope.formData = {
+
+            customer_id:customerId,         //customer id
+            deliver_address:localStorage.address_detail,     //deliver address
+            deliver_phone:localStorage.receiver_phone,       //contact phone
+            deliver_type:'送货上门',        //送货方式    送货上门 / 柜台自提
+            payment_type:'1',        //支付方式   传值：“1”—在线支付；“2”—货到付款
+            deliver_time:'只在周末送货',        //送货时间   选项1：只在周末送货 选项2：每日17:00~20:00送货 选项3:不限
+            order_message:'',       //订单留言(可以为空)
+            order_invoice_type:'',  //发票类型  个人， 公司(可以为空)
+            order_invoice_title:'', //公司类型发票的抬头(可以为空)
+            /*
+            * item{
+            *    pid:11,                  //product id
+            *    quantity:2,                 //商品购买数量
+            *    final_price:1.00,           //最终价格
+            *    product_weight:1.12,        //商品重量
+            *}
+            */
+            items:[],
+            receiver_name:localStorage.receiver_name,
+            deliver_charges:'0',
+            ischecked:'4'
+        }
+        // 当前订单的产品对象
+        orderPros.getProsInfo(function(data){
+            $scope.orderProsInfo = data;
+         });
+        // 商品结算信息
+        $scope.accoutnInfo = {
+            product_weight_all:0,
+            product_price_all:0,
+            send_price:1000,
+            send_price_redu:0,
+            integral:0,
+            amount:0
+        }
+        // 根据订单填写对象填写表单
+        for(var index in $scope.orderProsInfo.pros){
+            var pro = $scope.orderProsInfo.pros[index];
+            $scope.formData.items.push({
+                pid:parseInt(pro.product_id),
+                quantity:pro.quantity,
+                // TODO:xjc 在这里可能要对价格做处理
+                final_price:parseFloat(pro.product_sell_price),
+                product_weight:parseFloat(pro.product_weight)
+            })
+        }
+        // 计算总价格和总重量
+        var ai = $scope.accoutnInfo;
+        $scope.formData.items.forEach(function(item){
+            ai.product_weight_all += (item.product_weight * item.quantity);
+            ai.product_price_all += (item.final_price * item.quantity);
+        })
+        ai.amount = ai.product_price_all + ai.send_price - ai.send_price_redu;
+
+        $scope.submit = function(){
+            $http.post(api+"/orders/checkout",$scope.formData).success(function(data){
+                console.log('submit',data);
+                if(data.code === 0){
+                    // TODO:xjc 跳转到预定成功页面
+                }else{
+                    // TODO:订单失败页面
+                    $ionicPopup.alert({
+                        title: '',
+                        template: '对不起，订单提交失败',
+                        okText: '好的'
+                    });
+                }
+            })
+        }
+    })
 ;
