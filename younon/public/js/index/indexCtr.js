@@ -43,7 +43,7 @@ angular.module('index.controllers', [])
         }
 
         if(!token.timestamp){
-            getToken($location.absUrl().split('#')[0],$http);
+            getToken($location.absUrl().split('#')[0],$http,weixin);
         }
 
         $scope.show = false;
