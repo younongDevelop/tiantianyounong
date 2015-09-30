@@ -109,11 +109,12 @@ angular.module('shop.services', [])
         }
     })
     .factory('detail',function($http, $stateParams, util){
+        // 初始化结束之后调用的方法
+        var afterInit;
         // 商品详情信息
         var proDetailInfo = {proDetail:null};
         // 载入商品详情信息
-        function loadDetail(suc){
-            var proid = $stateParams.proid;
+        function loadDetail(proid,suc){
             var urlTmpl = '/?product_id={product_id}&field=product_id+product_orgin+product_name+product_description+product_images+product_vendor+product_price+product_sell_price+product_score+product_comment_volume+product_delivery_sites+product_attributes&from=weixin&wf=product&groupbyparams=none'
             var url = urlTmpl.replace("{product_id}",proid);
             $http.get(search+url).success(function(data){
@@ -137,16 +138,26 @@ angular.module('shop.services', [])
             getDetail:function(cb){
                 cb && cb(proDetailInfo);
             },
-            loadDetail:loadDetail
+            loadDetail:loadDetail,
+            // 初始化详情数据
+            initDetail:function(proid){
+                loadDetail(proid, function(){
+                    afterInit && afterInit();
+                })
+            },
+            // 设置初始化结束以后调用的方法
+            setAfterInit:function(fn){
+                afterInit = fn;
+            }
         }
         
     })
-    .factory('orderOp',function($http){
+    .factory('orderOp',function($http, cart){
         // 待提交的表单对象模板
         var formData = {
             customer_id:(customerId+''),         //customer id
-            deliver_address:'',     //deliver address
-            deliver_phone:'',       //contact phone
+            deliver_address:localStorage.address_detail,     //deliver address
+            deliver_phone:localStorage.receiver_phone,       //contact phone
             deliver_type:'送货上门',        //送货方式    送货上门 / 柜台自提
             payment_type:'1',        //支付方式   传值：“1”—在线支付；“2”—货到付款
             deliver_time:'1',        //送货时间   选项1：只在周末送货 选项2：每日17:00~20:00送货 选项3:不限
@@ -161,42 +172,23 @@ angular.module('shop.services', [])
             *    product_weight:1.12,        //商品重量
             *}
             */
-            items:[{
-                final_price: 2900,
-                pid: 11,
-                product_weight: 0,
-                quantity: 1
-            }],
-            receiver_name:'',
+            items:[],
+            receiver_name:localStorage.receiver_name,
             deliver_charges:'0',
-            ischecked:'1'
+            ischecked:'0'
         }
         // 订单商品模板
-        var prosInfo = {pros:[{
-                commentcount: "28",
-                product_id: "11",
-                product_images:{
-                    small:'./img/slide1.jpg',
-                    list:['abc3','abc2','abc1'],
-                },
-                product_name: "苹果",
-                product_origin: "南京",
-                product_original_price: "2000",
-                product_sell_price: "2900",
-                product_weight: "10.00",
-                sku_attrval: "10斤",
-                quantity:2
-            }]};
+        var prosInfo = {pros:[]};
         // 表单的中的下拉选择项
         var selectAttrsInfo = {selectAttrs:[]};
         // 商品结算信息
         var amountInfo = {
-            product_weight_all:1,
-            product_price_all:2,
-            send_price:3,
-            send_price_redu:4,
-            integral:5,
-            amount:6
+            product_weight_all:0,
+            product_price_all:0,
+            send_price:0,
+            send_price_redu:0,
+            integral:0,
+            amount:0
         }
         // 载入下拉框数据
         function loadSelectAttrsInfo(){
@@ -245,6 +237,7 @@ angular.module('shop.services', [])
             amountInfo.send_price_redu = 0;
             amountInfo.integral = 0;
             amountInfo.amount = 0;
+
         }
         return {
             // 绑定数据
@@ -259,6 +252,18 @@ angular.module('shop.services', [])
             },
             getAmountInfo:function(){
                 return amountInfo;
+            },
+            // 判断是否来自购物车
+            isFromCart:function(){
+                var cartsNumber;
+                cart.getGoods(function(goods){
+                    cartsNumber = goods.length;
+                })
+                if((cartsNumber+'') === formData.ischecked){
+                    return true;
+                }else{
+                    return false;
+                }
             },
             // 填写地址
             fillAddress:function(address){

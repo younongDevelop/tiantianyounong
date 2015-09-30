@@ -7,12 +7,17 @@
     					<i class="ion-person"></i>
     					个人信息
     				</li>
-                    <li class="item fill-info-item" ng-if="hasDefaultAddress()">
-                        <ul>
-                            <li>收货人<span class="item-note">{{formData.receiver_name}}</span></li>
-                            <li>电话<span class="item-note">{{formData.deliver_phone}}</span></li>
-                            <li>收货地址<span class="item-note">{{formData.deliver_address}}</span></li>
-                        </ul>
+                    <li class="item fill-info-item row" ng-if="hasDefaultAddress()" ng-click="toSelectAddress()">
+                        <div class="col col-90">
+                            <ul>
+                                <li>收货人<span class="item-note">{{formData.receiver_name}}</span></li>
+                                <li>电话<span class="item-note">{{formData.deliver_phone}}</span></li>
+                                <li>收货地址<span class="item-note">{{formData.deliver_address}}</span></li>
+                            </ul>    
+                        </div>
+                        <div class="col col-10">
+                            <span class="item-note" style="margin-top: 20px;"><i class="ion-chevron-right"></i></span>
+                        </div>
                     </li>
                     <li class="item fill-info-item" ng-if="!hasDefaultAddress()" ng-click="toSelectAddress()">
                         请选择地址<span class="item-note"><i class="ion-chevron-right"></i></span>

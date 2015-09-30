@@ -139,6 +139,12 @@ angular.module('index.services', [])
             },
             hasMore: function () {
                 return isMore;
+            },
+            clearGoods:function() {
+                while(goods.length>0){
+                    goods.pop();
+                }
+                changeGoodsNumber();
             }
         }
 })
@@ -161,14 +167,14 @@ angular.module('index.services', [])
                     $http.get(url).success(function(data){
                         thisCate.pros = data.search_response && data.search_response.books;
                         // 将图片地址string转化为object
-                        // for(var i in thisCate.pros){
-                        //     var pro = thisCate.pros[i];
-                        //     try{
-                        //         pro.product_images = JSON.parse(pro.product_images);
-                        //     }catch(e){
-                        //         pro.product_images = {small:null,list:null};
-                        //     }
-                        // }
+                        for(var i in thisCate.pros){
+                            var pro = thisCate.pros[i];
+                            try{
+                                pro.product_images = JSON.parse(pro.product_images);
+                            }catch(e){
+                                pro.product_images = {small:null,list:null};
+                            }
+                        }
                     })
                 })();
             }

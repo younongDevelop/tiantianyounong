@@ -8,7 +8,7 @@ angular.module('index.controllers', [])
         });
     })
 
-.controller('indexCtrl', function($scope, cate, cart, $ionicSlideBoxDelegate, $timeout, $location, $ionicPopup, $rootScope) {
+.controller('indexCtrl', function($scope, cate, cart, detail,$interval, $ionicSlideBoxDelegate, $timeout, $location, $ionicPopup, $rootScope) {
     
         $scope.searchStr = "";
         $scope.cates = [];
@@ -42,9 +42,11 @@ angular.module('index.controllers', [])
             }]
         }
         // 控制幻灯片自动滑动
-        setInterval(function(){
-            $ionicSlideBoxDelegate.next();
-        },4000);
+        var slideHandle = $ionicSlideBoxDelegate.$getByHandle('indexSlide');
+        $interval(function(){
+            slideHandle.next();
+        },3000);
+
         // 添加购物车
         $scope.addGood = function(pro){
             // var pro = $scope.hotprosInfo.hotpros[index];
@@ -90,6 +92,7 @@ angular.module('index.controllers', [])
         }
         // 跳转到详情页
         $scope.jumpDetail = function(proid){
+            detail.initDetail(proid);
             $location.path('/shopping/detail/'+proid);
         }
     })

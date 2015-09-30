@@ -61,6 +61,7 @@ p.list-pro-price{
 }
 .detail-number-select{
 	line-height: 34px;
+    padding-left: 10px;
 }
 .detail-number-select select{
 	margin-top: 6px;
@@ -75,6 +76,10 @@ p.list-pro-price{
     padding-top: 1px;
     padding-bottom: 1px;
 }
+.detail-image-detail-header{
+    margin-bottom: 20px;
+}
+
 
 .fill-info-item .row{
     padding: 0;
@@ -126,4 +131,39 @@ p.list-pro-price{
 .fill-pro-quantity{
     font-size: 1.2rem;
     padding-top: 5px;
+}
+
+.order-suc{
+    background-color:rgb(244,245,246);
+}
+
+.order-suc-header{
+    background-color:rgb(244,245,246);
+}
+.order-suc-img{
+    margin:0 auto;
+    font-size: 5rem;
+    width: 5rem;
+    color:green;
+    margin-bottom: 10px;
+}
+.order-suc-status{
+    text-align: center; 
+}
+.order-suc-pay{
+    line-height: 47px;
+}
+.order-suc-footer{
+    border-bottom: none;
+    background-color:rgb(244,245,246);
+    text-align:center;
+}
+.order-suc-footer p{
+    font-size: 10px;
+}
+.order-suc-detail li{
+    margin-bottom: 5px;
+}
+.order-suc-btn-pay{
+    float: right;
 }

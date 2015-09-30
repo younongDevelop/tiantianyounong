@@ -2,7 +2,7 @@
     <ion-content>
     	<div class="index-content">
     		<!-- 轮播组件 -->
-			<ion-slide-box does-continue="true">
+			<ion-slide-box does-continue="true" delegate-handle="indexSlide">
 				<ion-slide ng-repeat="slide in slideInfo.slides">
 					<div class="index-slide-item">
 						<a href="{{slide.url}}">
@@ -31,7 +31,7 @@
 			<li class="item index-hot">
 				<h2>热卖商品</h2>
 		      	<div class="row">
-		      		<div class="col col-50" ng-repeat="pro in hotprosInfo.hotpros">
+		      		<div class="col col-50 index-pro-item" ng-repeat="pro in hotprosInfo.hotpros">
 		      			<div class="index-pro padding-bottom">
 		      				<a href="javascript:void(0);" ng-click="jumpDetail(pro.prod_sku_id)">
 		      					<img ng-src="{{ pro.imgUrl }}" alt="">
@@ -52,10 +52,10 @@
 			    <li class="item index-cate-item" ng-repeat="cate in catesInfo.cates">
 			      	<h2>{{cate.name}}</h2>
 			      	<div class="row">
-			      		<div class="col col-50" ng-repeat="pro in cate.pros">
+			      		<div class="col col-50 index-pro-item" ng-repeat="pro in cate.pros">
 			      			<div class="index-pro padding-bottom">
 			      				<a href="javascript:void(0);" ng-click="jumpDetail(pro.product_id);">
-			      					<img ng-src="{{ pro.img }}" alt="">
+			      					<img ng-src="{{ pro.product_images.small }}" alt="">
 			      				</a>
 			      				<h3 class="index-pro-title padding-left padding-right">{{pro.product_name}}</h3>
 			      				<p class="index-pro-des padding-horizontal">{{pro.sku_attrval}}</p>

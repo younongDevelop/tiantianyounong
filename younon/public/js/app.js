@@ -67,6 +67,15 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
                 }
             }
         })
+      .state('tab.orderSuc', {
+          url: '/orderSuc/{orderid}',
+          views: {
+              'tab-index': {
+                  templateUrl: 'templates/shopping/shopping-order-suc.html',
+                  controller:"orderSuc"
+              }
+          }
+      })
         //index路由结束
 
 
@@ -114,15 +123,7 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
               }
           }
       })
-      .state('shopping.orderSuc', {
-          url: '/orderSuc',
-          views: {
-              'shopping': {
-                  templateUrl: 'templates/shopping/shopping-order-suc.html',
-                  controller:"orderSuc"
-              }
-          }
-      })
+
         //shopping路由结束
 
       .state('account', {

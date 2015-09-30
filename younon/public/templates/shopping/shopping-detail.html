@@ -2,7 +2,7 @@
     <ion-content>
     	<div class="detail-content">
     		<!-- 图片轮播展示 -->
-			<ion-slide-box does-continue="true" class="detail-slide-box">
+			<ion-slide-box does-continue="true" class="detail-slide-box" delegate-handle="detailSlide">
 				<ion-slide ng-repeat="imgUrl in proDetailInfo.proDetail.product_images.list">
 					<div class="detail-slide-item">
 						<img src="{{imgUrl}}" alt="">
@@ -31,6 +31,7 @@
 					</div>
 		    	</li>
 		    	<li class="detail-image-detail item">
+		    		<div class="detail-image-detail-header">图文详情</div>
 	    			<ul>
 	    				<li ng-repeat="url in imgDetail.imgUrls">
 	    					<img src="{{url}}" alt="">

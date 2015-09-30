@@ -59,7 +59,7 @@ angular.module('shop.controllers', [])
         $scope.search($scope.searchStr);
     })
 
-    .controller("detailCtrl",function($scope, detail, cart, orderOp, $ionicSlideBoxDelegate,$stateParams,$location, $ionicPopup){
+    .controller("detailCtrl",function($scope, detail, $interval, cart, orderOp, $ionicSlideBoxDelegate,$stateParams,$location, $ionicPopup){
         var proid = $stateParams.proid;
 
         $scope.number=[];
@@ -85,14 +85,27 @@ angular.module('shop.controllers', [])
                 });
             })
         }
-        // 
-        detail.loadDetail(function(){
-            $ionicSlideBoxDelegate.update();
+        // 轮播
+
+        var slideHandle = $ionicSlideBoxDelegate.$getByHandle('detailSlide');
+        window.timer && $interval.cancel(window.timer); 
+        window.timer = $interval(function(){
+            if(slideHandle.currentIndex() >= ($scope.proDetailInfo.proDetail.product_images.list.length-1)){
+                slideHandle.slide(0);
+            }else{
+                slideHandle.next();
+            }
+        },2000);
+        // detail.loadDetail(function(){
+        //     slideHandle.update();
+        // });
+        detail.setAfterInit(function(){
+            slideHandle.update();
         });
         detail.getDetail(function(proDetailInfo){
             $scope.proDetailInfo = proDetailInfo;
         });
-        // 点击搜索事件
+        // 点击前往购物车事件
         $scope.gotoCart = function(){
             $location.path('/tab/cart');
         }
@@ -105,7 +118,7 @@ angular.module('shop.controllers', [])
         }
 
     })
-    .controller('orderFill', function($scope, orderOp, errMap, accountOrders, $http, $ionicPopup,$location){
+    .controller('orderFill', function($scope, orderOp, errMap, accountOrders, cart,$http, $ionicPopup,$location){
         var errorMap=errMap.getMap();
         // 绑定数据
             // 下拉选项
@@ -124,11 +137,13 @@ angular.module('shop.controllers', [])
                 var order = data.results;
                 order.order_status = "待支付";
                 accountOrders.addUndoneOrder(order);
-                $ionicPopup.alert({
-                    title: '表单提交成功',
-                    template:errorMap[data],
-                    okText: '好的'
-                });
+                // 跳转到订单成功页
+                $location.path('/tab/orderSuc/'+order.order_id);
+                // 如果是购物车订单，则清空购物车
+                if(orderOp.isFromCart()){
+
+                    cart.clearGoods();
+                }
             },function(param){
                 $ionicPopup.alert({
                     title: '表单提交失败',
@@ -150,6 +165,9 @@ angular.module('shop.controllers', [])
             return false;
         }
     })
-    .controller('orderSuc', function($scope){
-
+    .controller('orderSuc', function($scope,accountOrders, $stateParams){
+        var orderid = $stateParams.orderid;
+        accountOrders.getOrderDetail(orderid,function(data){
+            $scope.orderDetail = data;
+        })
     })
