@@ -20,7 +20,7 @@ angular.module('shop.controllers', [])
         list.getProListInfo(function(proListInfo){
         	$scope.proListInfo = proListInfo;
         });
-        console.log("list");
+
         $scope.search = function(searchStr){
             list.setKeyword(searchStr);
             list.loadAgain(function(){

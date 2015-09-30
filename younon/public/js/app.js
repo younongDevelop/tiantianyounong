@@ -4,6 +4,9 @@ var api='rest/';
 var search='search/';
 var pageNumber=10;
 var customerId=11;
+var openid='';
+var token='';
+var appid='wx248d78d070b8fb35';
 
 
 angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin.controllers', 'admin.services','person.controllers', 'person.services','shop.controllers', 'shop.services','common.util',])
