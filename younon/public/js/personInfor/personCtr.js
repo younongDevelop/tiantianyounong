@@ -73,6 +73,9 @@ angular.module('person.controllers', [])
 
         };
 
+
+
+
         $scope.pay=function(){
             //accountOrders.changeOrderStatue($stateParams.orderId,'pay',function(data){
             //    $ionicPopup.alert({
@@ -84,8 +87,6 @@ angular.module('person.controllers', [])
             //});
 
         };
-
-        console.log($stateParams.orderId);
 
 
     })

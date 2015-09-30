@@ -58,4 +58,8 @@
         <button class="button " ng-click="cancelOrder()">取消订单</button>
         <button class="button " ng-click="pay()">去付款</button>
     </div>
+    <div class="bar bar-footer " ng-if="statue=='unship'">
+        <button class="button " ng-click="close()">关闭订单</button>
+        <button class="button " ng-click="send()">发货</button>
+    </div>
 </ion-view>
