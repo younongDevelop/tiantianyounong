@@ -204,4 +204,50 @@ angular.module('index.services', [])
         }
 
     }
-});
+})
+    .factory('weixin',function($http){
+
+        return{
+            getToken:function(data,cb){
+                $http.post('/node/token',data).success(function(data){
+                    cb(data);
+                });
+            },
+            getOpenId:function(data,cb){
+                $http.post('/node/openid',data).success(function(data){
+                    cb(data);
+                });
+            },
+            getInformation:function(data,cb){
+                $http.post('/node/information',data).success(function(data){
+                    cb(data);
+                });
+            },
+            getGroup:function(data,cb){
+                $http.post('/node/group',data).success(function(data){
+                    cb(data);
+                });
+            },
+            weixinPay:function(data,cb){
+                $http.post('/node/pay',data).success(function(data){
+                    cb(data);
+                    wx.chooseWXPay({
+                        timestamp: data.timeStamp,
+                        nonceStr: data.nonceStr,
+                        package: data.package,
+                        signType: data.signType,
+                        paySign: data.paySign,
+                        success: function (res) {
+                        }
+                    });
+                });
+
+            }
+
+        }
+
+
+
+    });
+
+

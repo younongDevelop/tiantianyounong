@@ -41,4 +41,34 @@ router.get('/adminOrders/:statue/:page/:size', function(req, res, next) {
     });
 });
 
+
+
+router.put('/adminOrders/changeStatue/:orderId/:statueId', function(req, res, next) {
+
+    var statueId = req.params.statueId;
+    var orderId = req.params.orderId;
+    var statueMap={
+        3:'已支付已发货',
+        4:'未付款已发货',
+        13:'管理员关闭'
+    };
+
+    store.getPool().getConnection(function (err, conn) {
+        var querySQL = "update orders set order_status_id="+statueId+",order_status='"+statueMap[statueId]+
+            "' where order_id = "+orderId;
+        console.log(querySQL);
+        conn.query(querySQL, function (err, rows) {
+            conn.release();
+            if (err){
+                console.log(err);
+                res.json(500, {error: err});
+            }else{
+                res.json(200);
+            }
+            res.end();
+        });
+    });
+});
+
+
 module.exports = router;

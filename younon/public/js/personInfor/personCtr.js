@@ -51,7 +51,7 @@ angular.module('person.controllers', [])
         }
     })
 
-    .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup) {
+    .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,adminGetOrders) {
 
         $scope.statue=$stateParams.statue;
 
@@ -73,6 +73,37 @@ angular.module('person.controllers', [])
 
         };
 
+        $scope.close=function(){
+            accountOrders.adminChangeOrder($stateParams.orderId,13,function(data,statue){
+                if(statue){
+                    adminGetOrders.changeOrderStatue($stateParams.orderId);
+                }
+                $ionicPopup.alert({
+                    title: '',
+                    template:errorMap[data],
+                    okText: '好的'
+                });
+            });
+
+        }
+
+        $scope.send=function(){
+            var statueId={
+                9:4,
+                2:3
+            }
+            accountOrders.adminChangeOrder($stateParams.orderId,statueId[$scope.orderDetail.order_status_id],function(data,statue){
+
+                if(statue){
+                    adminGetOrders.changeOrderStatue($stateParams.orderId);
+                }
+                $ionicPopup.alert({
+                    title: '',
+                    template:errorMap[data],
+                    okText: '好的'
+                });
+            })
+        }
         $scope.pay=function(){
             //accountOrders.changeOrderStatue($stateParams.orderId,'pay',function(data){
             //    $ionicPopup.alert({
@@ -84,8 +115,6 @@ angular.module('person.controllers', [])
             //});
 
         };
-
-        console.log($stateParams.orderId);
 
 
     })

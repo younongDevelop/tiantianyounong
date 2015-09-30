@@ -1,6 +1,69 @@
+var signback = function (data) {
+    wx.config({
+        debug:true,
+        appId: appid,
+        timestamp: data.timestamp,
+        nonceStr: data.nonceStr,
+        signature: data.signature,
+        jsApiList: ['chooseWXPay']
+    });
+    wx.ready(function () {
+    });
+    wx.error(function (res) {
+
+    });
+}
+
+var getToken=function(url,$http,weixin){
+    var json = {url: url};
+    weixin.getToken(json,function(data){
+        token=data;
+        signback(data);
+    })
+}
+var getOpenId=function($http,weixin,callback){
+    var jsonCode = {uid: customerId};
+    weixin.getOpenId(jsonCode,function(data){
+        openid=data.open_id;
+        callback();
+    })
+
+}
+
+
 angular.module('index.controllers', [])
 
-    .controller('indexBaseCtrl', function($scope,cart,$http) {
+    .controller('indexBaseCtrl', function($scope,cart,$http,$location,weixin) {
+
+        var str = $location.absUrl().split('#')[0];
+        str = str.split('?')[1];
+        if(str){
+            str =str.split('=')[1];
+            customerId=str;
+        }
+
+        if(!token.timestamp){
+            getToken($location.absUrl().split('#')[0],$http,weixin);
+        }
+
+        $scope.show = false;
+        $scope.nickname = '昵称';
+        $scope.headimgurl = '../img/ionic.png';
+
+        var getInformation = function () {
+            var json = {openid: openid};
+            weixin.getInformation(json,function(data){
+                if (data.nickname) {$scope.nickname = data.nickname;}
+                if (data.headimgurl) $scope.headimgurl = data.headimgurl;
+            })
+            weixin.getGroup(json,function(data){
+                if (data.groupid === 2) {
+                    $scope.show = true;
+                }
+            })
+
+        }
+        getOpenId($http,weixin,getInformation);
 
         cart.getGoodsNumber(function(data){
             console.log(data);
