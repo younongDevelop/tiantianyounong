@@ -230,7 +230,7 @@ angular.module('index.services', [])
             },
             weixinPay:function(data,cb){
                 $http.post('/node/pay',data).success(function(data){
-                    cb(data);
+
                     wx.chooseWXPay({
                         timestamp: data.timeStamp,
                         nonceStr: data.nonceStr,
@@ -238,6 +238,9 @@ angular.module('index.services', [])
                         signType: data.signType,
                         paySign: data.paySign,
                         success: function (res) {
+
+                            cb(data);
+
                         }
                     });
                 });

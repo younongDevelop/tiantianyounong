@@ -51,7 +51,7 @@ angular.module('person.controllers', [])
         }
     })
 
-    .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,adminGetOrders) {
+    .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,adminGetOrders,weixin,$ionicBackdrop) {
 
         $scope.statue=$stateParams.statue;
 
@@ -104,7 +104,29 @@ angular.module('person.controllers', [])
                 });
             })
         }
+
         $scope.pay=function(){
+            $ionicBackdrop.retain();
+            var name='';
+            $scope.orderDetail.items.forEach(function(item){
+                if(name){
+                    name=item.product_name;
+                }else{
+                    name=name+','+item.product_name;
+                }
+
+            });
+
+            var psyJson = {openid: openid, orderId: $scope.orderDetail.order_no,
+                money: $scope.orderDetail.order_total,productName:name};
+            weixin.weixinPay(psyJson,function(data){
+                $ionicBackdrop.release();
+                accountOrders.changeOrderStatue($stateParams.orderId,'pay',function(data){
+                });
+
+
+            })
+
             //accountOrders.changeOrderStatue($stateParams.orderId,'pay',function(data){
             //    $ionicPopup.alert({
             //        title: '',

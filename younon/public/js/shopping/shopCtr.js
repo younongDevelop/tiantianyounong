@@ -170,9 +170,28 @@ angular.module('shop.controllers', [])
             return false;
         }
     })
-    .controller('orderSuc', function($scope,accountOrders, $stateParams){
+    .controller('orderSuc', function($scope,accountOrders, $stateParams,weixin,$ionicBackdrop){
         var orderid = $stateParams.orderid;
+        
         accountOrders.getOrderDetail(orderid,function(data){
             $scope.orderDetail = data;
         })
+        $scope.toPay=function(){
+            var name='';
+            var psyJson = {openid: openid, orderId: $scope.orderDetail.order_no,
+                money: $scope.orderDetail.order_total,productName:name};
+            weixin.weixinPay(psyJson,function(data){
+                $scope.orderDetail.items.forEach(function(item){
+                    if(name){
+                        name=item.product_name;
+                    }else{
+                        name=name+','+item.product_name;
+                    }
+                });
+                $ionicBackdrop.release();
+                accountOrders.changeOrderStatue($stateParams.orderId,'pay',function(data){
+                });
+            })
+        }
+
     })
