@@ -11,6 +11,11 @@ angular.module('admin.services', [])
             getOrders:function(cb){
                 cb(orders);
             },
+            changeOrderStatue:function(orderId){
+               for(var i=0;i<orders.length;i++){
+                   orders.splice(i,1);
+               }
+            },
             loadOrdersArr:function(statue,page,size,cb){
                 if(!orderStatue){
                     orderStatue=statue;

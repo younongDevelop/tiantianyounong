@@ -200,6 +200,35 @@ angular.module('person.services', [])
                     cb(errMAp[statue]);
                 });
             },
+            adminChangeOrder:function(orderId,statueId,cb){
+                $http.put('/adminOrders/changeStatue/'+orderId+'/'+statueId).success(function(data){
+                    if(data=200){
+                        var cbMap={
+                            3:'ADMIN_SEND_SUCCESS',
+                            4:'ADMIN_SEND_SUCCESS',
+                            13:'ADMIN_CLOSE_SUCCESS'
+                        };
+                        cb(cbMap[statueId],true);
+                    }else{
+
+                        var cbMap={
+                            3:'ADMIN_SEND_FAILURE',
+                            4:'ADMIN_SEND_FAILURE',
+                            13:'ADMIN_CLOSE_FAILURE'
+                        };
+                        cb(cbMap[statueId],false);
+
+                    }
+
+                }).error(function(res){
+                    var cbMap={
+                        3:'ADMIN_SEND_FAILURE',
+                        4:'ADMIN_SEND_FAILURE',
+                        13:'ADMIN_CLOSE_FAILURE'
+                    };
+                    cb(cbMap[statueId],false);
+                })
+            },
             getOrderDetail:function(orderId,cb){
                 $http.get(api+'/orders/info/'+orderId).success(function(data){
                     if(data.code===0){
@@ -257,7 +286,11 @@ angular.module('person.services', [])
             CANCEL_ORDER_SUCCESS:'订单取消成功',
             CANCEL_ORDER_FAILURE:'订单取消失败',
             ORDER_PAY_SUCCESS:'订单支付成功',
-            ORDER_PAY_FAILURE:'订单支付失败'
+            ORDER_PAY_FAILURE:'订单支付失败',
+            ADMIN_CLOSE_SUCCESS:'关闭成功',
+            ADMIN_CLOSE_FAILURE:'关闭失败',
+            ADMIN_SEND_SUCCESS:'发货成功',
+            ADMIN_SEND_FAILURE:'发货失败'
         };
         return {
            getMap:function(){
