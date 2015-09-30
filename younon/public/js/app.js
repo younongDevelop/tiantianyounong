@@ -105,6 +105,24 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
 
           }
       })
+      .state('shopping.orderFill', {
+          url: '/orderFill',
+          views: {
+              'shopping': {
+                  templateUrl: 'templates/shopping/shopping-order-fill.html',
+                  controller:"orderFill"
+              }
+          }
+      })
+      .state('shopping.orderSuc', {
+          url: '/orderSuc',
+          views: {
+              'shopping': {
+                  templateUrl: 'templates/shopping/shopping-order-suc.html',
+                  controller:"orderSuc"
+              }
+          }
+      })
         //shopping路由结束
 
       .state('account', {
@@ -158,15 +176,7 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
               }
           }
       })
-      .state('account.orderFill', {
-          url: '/orderFill',
-          views: {
-              'tab-account': {
-                  templateUrl: 'templates/personInfor/account-order-fill.html',
-                  controller:"orderFill"
-              }
-          }
-      })
+
       //person路由结束
 
       .state('admin', {
@@ -200,10 +210,6 @@ angular.module('common.util', []).factory("util",function(){
             urlObj = JSON.parse(urlsStr);
             var list = []
             urlObj.list = urlObj.list.split(",");
-            // TODO:XJC for test 
-            // for(var i in urlObj.list){
-            //   urlObj.list[i] += i;
-            // }
             return urlObj
         }catch(e){
             urlObj = {small:null,list:[]};

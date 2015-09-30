@@ -213,6 +213,9 @@ angular.module('person.services', [])
                 }).error(function(res){
                     console.log(res);
                 })
+            },
+            addUndoneOrder:function(order){
+                undoneOrders.unshift(order);
             }
         }
     })

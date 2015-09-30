@@ -91,7 +91,7 @@ angular.module('person.controllers', [])
 
     })
 
-    .controller('addressesCtrl', function($scope,$ionicLoading, $ionicListDelegate,personAddress,errMap,$ionicPopup) {
+    .controller('addressesCtrl', function($scope,$ionicLoading, $ionicListDelegate,personAddress,errMap,$ionicPopup,orderOp) {
         var errorMap=errMap.getMap();
         personAddress.getSelectedId(function(id){
             $scope.selectedId=id;
@@ -145,6 +145,7 @@ angular.module('person.controllers', [])
 
         $scope.selectAddr=function(item){
             personAddress.selectAddress(item);
+            orderOp.fillAddress(item);
         }
     })
 

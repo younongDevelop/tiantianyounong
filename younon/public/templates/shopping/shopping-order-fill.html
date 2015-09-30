@@ -7,18 +7,16 @@
     					<i class="ion-person"></i>
     					个人信息
     				</li>
-    				<li class="item fill-info-item">
-    					<div class="row">
-    						<div class="col col-33">收货人</div>
-    						<div class="col col-66"><input type="text" readonly="readonly" value="" ng-model="formData.receiver_name"></div>
-    					</div>
-    				</li>
-    				<li class="item fill-info-item">
-    					<div class="row">
-    						<div class="col col-33">收货地址</div>
-    						<div class="col col-66"><input type="text" readonly="readonly" value="" ng-model="formData.deliver_address"></div>
-    					</div>
-    				</li>
+                    <li class="item fill-info-item" ng-if="hasDefaultAddress()">
+                        <ul>
+                            <li>收货人<span class="item-note">{{formData.receiver_name}}</span></li>
+                            <li>电话<span class="item-note">{{formData.deliver_phone}}</span></li>
+                            <li>收货地址<span class="item-note">{{formData.deliver_address}}</span></li>
+                        </ul>
+                    </li>
+                    <li class="item fill-info-item" ng-if="!hasDefaultAddress()" ng-click="toSelectAddress()">
+                        请选择地址<span class="item-note"><i class="ion-chevron-right"></i></span>
+                    </li>
     			</ul>
     		</li>
     		<li class="fill-send-info">
@@ -33,7 +31,7 @@
     						<div class="col col-66">
     							<select class="fr"
 				                    ng-model="formData.deliver_type"
-				                    ng-options="way.value as way.show for way in selectData.sendWay"
+				                    ng-options="value as value for (key,value) in selectAttrsInfo.selectAttrs[1].attr_value"
 				                    ng-change="changeNumber(data.numberArr[$index],$index)">
 				              	</select>
     						</div>
@@ -45,7 +43,7 @@
     						<div class="col col-66">
     							<select class="fr"
 				                    ng-model="formData.deliver_time"
-				                    ng-options="way.value as way.show for way in selectData.sendTime"
+				                    ng-options="key as value for (key,value) in selectAttrsInfo.selectAttrs[0].attr_value"
 				                    ng-change="changeNumber(data.numberArr[$index],$index)">
 				              	</select>
     						</div>
@@ -65,7 +63,7 @@
     						<div class="col col-66">
     							<select class="fr"
 				                    ng-model="formData.payment_type"
-				                    ng-options="way.value as way.show for way in selectData.payWay"
+				                    ng-options="key as value for (key,value) in selectAttrsInfo.selectAttrs[2].attr_value"
 				                    ng-change="changeNumber(data.numberArr[$index],$index)">
 				              	</select>
     						</div>
@@ -97,19 +95,12 @@
     				</li>
     				<li class="item fill-account-info">
     					<ul>
-    						<li class="fill-account-item row"><div class="col">商品总重</div><div class="col">{{accoutnInfo.product_weight_all}}kg</div></li>
-    						<li class="fill-account-item row"><div class="col">商品总金额</div><div class="col">￥{{accoutnInfo.product_price_all/100}}</div></li>
-    						<li class="fill-account-item row"><div class="col">运费</div><div class="col">￥{{accoutnInfo.send_price/100}}</div></li>
-    						<li class="fill-account-item row"><div class="col">运费减免</div><div class="col">￥{{accoutnInfo.send_price_redu/100}}</div></li>
-    						<li class="fill-account-item row"><div class="col">赠送积分</div><div class="col">{{accoutnInfo.integral}}积分</div></li>
+    						<li class="fill-account-item row"><div class="col">商品总重</div><div class="col">{{amountInfo.product_weight_all}}kg</div></li>
+    						<li class="fill-account-item row"><div class="col">商品总金额</div><div class="col">￥{{amountInfo.product_price_all/100}}</div></li>
+    						<li class="fill-account-item row"><div class="col">运费</div><div class="col">￥{{amountInfo.send_price/100}}</div></li>
+    						<li class="fill-account-item row"><div class="col">运费减免</div><div class="col">￥{{amountInfo.send_price_redu/100}}</div></li>
+    						<li class="fill-account-item row"><div class="col">赠送积分</div><div class="col">{{amountInfo.integral}}积分</div></li>
     					</ul>
-    				</li>
-    				<li class="item fill-submit row">
-    					<div class="col col-66">
-    						<span>总金额</span>
-    						<span class="fill-amount">￥{{accoutnInfo.amount/100}}</span>
-    					</div>
-    					<div class="col col-33"><button class="button fill-btn-submit" ng-click="submit()">提交订单</button></div>
     				</li>
     			</ul> 
     		</li>
@@ -122,4 +113,11 @@
         	<!-- 结算信息 -->
         	<!-- 提交订单 -->
     </ion-content>
+    <div class="bar bar-footer fill-submit row">
+        <div class="col col-66">
+            <span>总金额</span>
+            <span class="fill-amount">￥{{amountInfo.amount/100}}</span>
+        </div>
+        <div class="col col-33"><button class="button fill-btn-submit" ng-click="submit()">提交订单</button></div>
+    </div>
 </ion-view>
