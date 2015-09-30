@@ -1,6 +1,10 @@
 .list-pro-item{
 	padding:0;
 }
+.list-pro-item img{
+    width: 80px;
+    height: 80px;
+}
 .list-detail{
 	padding-left: 20px;
 }
@@ -21,9 +25,12 @@ p.list-pro-price{
 	height: 5rem;
 }
 .list-cart-btn{
-	position: relative;
-	top:20px;
-	font-size: 2rem;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    height: 100%;
+    padding-top: 35px;
+    font-size: 2rem;
 }
 .detail-slide-box{
 	height: 8rem;
