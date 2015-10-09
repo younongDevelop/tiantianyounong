@@ -88,6 +88,10 @@ angular.module('shop.controllers', [])
         // 轮播
 
         var slideHandle = $ionicSlideBoxDelegate.$getByHandle('detailSlide');
+        
+        // window.slideHandle = slideHandle;
+
+
         window.timer && $interval.cancel(window.timer); 
         window.timer = $interval(function(){
             if(slideHandle.currentIndex() >= ($scope.proDetailInfo.proDetail.product_images.list.length-1)){
@@ -96,14 +100,15 @@ angular.module('shop.controllers', [])
                 slideHandle.next();
             }
         },2000);
-        // detail.loadDetail(function(){
-        //     slideHandle.update();
-        // });
+        detail.loadDetail(proid,function(){
+            slideHandle.update();
+        });
         detail.setAfterInit(function(){
             slideHandle.update();
         });
         detail.getDetail(function(proDetailInfo){
             $scope.proDetailInfo = proDetailInfo;
+            // window.detail = $scope.proDetailInfo;
         });
         // 点击前往购物车事件
         $scope.gotoCart = function(){
