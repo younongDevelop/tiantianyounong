@@ -6,7 +6,7 @@
 				<ion-slide ng-repeat="slide in slideInfo.slides">
 					<div class="index-slide-item">
 						<a href="{{slide.url}}">
-							<img src="{{slide.imgSrc}}" alt="">	
+							<img src="{{slide.imgSrc}}" alt="">
 						</a>
 					</div>
 				</ion-slide>
@@ -49,9 +49,10 @@
 			</li>
 			<!-- 产品分类展示 -->
 			<ul class="list index-cate-list">
-			    <li class="item index-cate-item" ng-repeat="cate in catesInfo.cates">
+			    <li class="item index-cate-item item-icon-left item-icon-right" ng-repeat="cate in catesInfo.cates" ng-click="gotoCategoryPart(cate.id)">
 			      	<h2>{{cate.name}}</h2>
-			      	<div class="row">
+			      	<i class="icon ion-ios-arrow-right"></i>
+			      	<!-- <div class="row">
 			      		<div class="col col-50 index-pro-item" ng-repeat="pro in cate.pros">
 			      			<div class="index-pro padding-bottom">
 			      				<a href="javascript:void(0);" ng-click="jumpDetail(pro.product_id);">
@@ -65,7 +66,7 @@
 			      				</div>
 			      			</div>
 			      		</div>
-			      	</div>
+			      	</div> -->
 			    </li>
 			</ul>			    		
     	</div>

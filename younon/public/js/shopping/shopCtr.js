@@ -16,12 +16,13 @@ angular.module('shop.controllers', [])
 
 	.controller('listCtrl',function($scope,list,cart,$stateParams,$location,$ionicPopup){
         $scope.searchStr = $stateParams.search;
+        $scope.categoryid = $stateParams.categoryid;
 		// 绑定列表数据
         list.getProListInfo(function(proListInfo){
         	$scope.proListInfo = proListInfo;
         });
-
         $scope.search = function(searchStr){
+            list.setCategoryid($scope.categoryid);
             list.setKeyword(searchStr);
             list.loadAgain(function(){
                 $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -56,6 +57,7 @@ angular.module('shop.controllers', [])
         $scope.jumpDetail = function(proid){
             $location.path('/shopping/detail/'+proid);
         }
+
         $scope.search($scope.searchStr);
     })
 

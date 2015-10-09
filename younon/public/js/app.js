@@ -99,7 +99,7 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
           }
       })
       .state('tab.list', {
-          url: '/list/{search}',
+          url: '/list/{search}/{categoryid}',
           views: {
             'tab-index':{
                   templateUrl: 'templates/shopping/shopping-list.html',
