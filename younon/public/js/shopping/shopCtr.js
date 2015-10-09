@@ -174,7 +174,7 @@ angular.module('shop.controllers', [])
     })
     .controller('orderSuc', function($scope,accountOrders, $stateParams,weixin,$ionicBackdrop){
         var orderid = $stateParams.orderid;
-        
+
         accountOrders.getOrderDetail(orderid,function(data){
             $scope.orderDetail = data;
         })
