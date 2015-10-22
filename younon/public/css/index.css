@@ -1,4 +1,10 @@
 
+
+.slider-pager{
+    bottom:1rem;
+}
+
+
 .index-cart{
 
 }
@@ -15,7 +21,7 @@
 }
 
 .index-slide-item{
-	height: 8rem;
+	height: 100%;
 	background-color: white;
 }
 .index-slide-item img{

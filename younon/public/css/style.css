@@ -7,3 +7,22 @@ a{
 .fr{float: right;}
 .attention{color:red !important}
 a{text-decoration: none;color: #444}
+.item-thumbnail-left{
+    padding-left:17rem;
+}
+
+.ion-record{
+    font-size: 1.5rem;
+}
+.slider-pager .slider-pager-page{
+    width:1.2rem;
+}
+
+.tabs-icon-top .tab-nav{
+    background-color:#39bf50
+}
+.tabs-icon-top .tab-nav .tab-item-active{
+    color: #ffffff !important;
+}
+
+

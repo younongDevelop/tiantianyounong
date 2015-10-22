@@ -2,74 +2,73 @@
     <ion-content>
     	<div class="index-content">
     		<!-- 轮播组件 -->
-			<ion-slide-box does-continue="true" delegate-handle="indexSlide">
+			<ion-slide-box does-continue="true" delegate-handle="indexSlide" ng-if="slideInfo.slides.length"  style="height: 22rem">
 				<ion-slide ng-repeat="slide in slideInfo.slides">
 					<div class="index-slide-item">
-						<a href="{{slide.url}}">
-							<img src="{{slide.imgSrc}}" alt="">
-						</a>
+							<img ng-src="{{slide.imgSrc}}">
 					</div>
 				</ion-slide>
 			</ion-slide-box>
             <!-- 搜索框 -->
-            <div class="search padding-bottom padding-top">
-                <div class="row">
+            <div class="search padding-bottom padding-top" style="background-color: #fff;padding:0;height: 8.5rem;">
+                <div class="row" style="padding:1rem">
                     <div class="col col-75">
-                        <label class="item item-input">
-                            <i class="icon ion-search placeholder-icon"></i>
-                            <input type="text" placeholder="请输入商品关键字" ng-model="searchStr">
+                        <label class="item item-input" style="border-radius: 4px;border-color: #999;height: 5rem;" >
+                            <i class="icon ion-search placeholder-icon" style="font-size: 2.5rem"></i>
+                            <input type="text" placeholder="请输入商品关键字" ng-model="searchStr" style="font-size: 2.5rem
+                            ;line-height: 3rem;height: 4rem">
                         </label>
                     </div>
-                    <div class="col col-25">
-                        <button style="float:right;" class="button button-stable" ng-click="search(searchStr)">
+                    <div class="col col-25" style="padding-top:4px ">
+                        <button style="float:right;background-color: #fff;border-radius: 4px;border-color: #999;
+                        line-height:normal;padding:0;color:#808080;font-size: 2.5rem;height: 5rem;min-height: 0"
+                                class="button button-stable" ng-click="search(searchStr)">
                             搜索
                         </button>
                     </div>
                 </div>
             </div>
-			<!-- 热卖商品呈现 -->
-			<li class="item index-hot">
-				<h2>热卖商品</h2>
-		      	<div class="row">
-		      		<div class="col col-50 index-pro-item" ng-repeat="pro in hotprosInfo.hotpros">
-		      			<div class="index-pro padding-bottom">
-		      				<a href="javascript:void(0);" ng-click="jumpDetail(pro.prod_sku_id)">
-		      					<img ng-src="{{ pro.imgUrl }}" alt="">
-		      				</a>
-		      				<h3 class="index-pro-title padding-horizontal">{{pro.title}}</h3>
-		      				<p class="index-pro-des padding-horizontal">{{pro.prod_sku_values}}</p>
-		      				<div class="index-price padding-horizontal">
-		      					<span class="index-yn-price">￥{{pro.current_price}}</span>
-		      					<i class="icon ion-ios-cart index-cart-btn" ng-click="addHotGood(pro)"></i>
-		      				</div>
-		      			</div>		      				
-		      			
-		      		</div>
-		      	</div>
-			</li>
-			<!-- 产品分类展示 -->
-			<ul class="list index-cate-list">
-			    <li class="item index-cate-item item-icon-left item-icon-right" ng-repeat="cate in catesInfo.cates" ng-click="gotoCategoryPart(cate.id)">
-			      	<h2>{{cate.name}}</h2>
-			      	<i class="icon ion-ios-arrow-right"></i>
-			      	<!-- <div class="row">
-			      		<div class="col col-50 index-pro-item" ng-repeat="pro in cate.pros">
-			      			<div class="index-pro padding-bottom">
-			      				<a href="javascript:void(0);" ng-click="jumpDetail(pro.product_id);">
-			      					<img ng-src="{{ pro.product_images.small }}" alt="">
-			      				</a>
-			      				<h3 class="index-pro-title padding-left padding-right">{{pro.product_name}}</h3>
-			      				<p class="index-pro-des padding-horizontal">{{pro.sku_attrval}}</p>
-			      				<div class="index-price padding-left padding-right">
-			      					<span class="index-yn-price">￥{{pro.product_sell_price/100}}</span>
-			      					<i class="icon ion-ios-cart index-cart-btn" ng-click="addGood(pro)"></i>
-			      				</div>
-			      			</div>
-			      		</div>
-			      	</div> -->
-			    </li>
-			</ul>			    		
-    	</div>
 
+           <!--商品分类的部分-->
+            <ion-slide-box  does-continue="false"  ng-if="categoryArr.length" style="border-top: 1px solid #ccc;min-height: 35px;height: 5.2rem" show-pager="false">
+                <ion-slide ng-repeat="categorites in categoryArr">
+                    <div class="index-slide-item">
+                        <div class="item tabs tabs-secondary" style="border:none;height: 100%">
+                            <div class="tab-item" href="#" ng-repeat="category in categorites" style="font-size: 2.5rem;color:#808080;
+                            max-width: none;text-align: center;width: 20%;display:inline-table;line-height: 6rem" ng-click="getProduct(category.categories_id)">
+                                <span ng-if="!category.show">{{category.category_name}}</span>
+                                <span  ng-if="category.show" style="padding-bottom:5px;border-bottom:0.5rem solid #39bf50;color:#39bf50">{{category.category_name}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+
+            <!--商品list的部分-->
+
+            <ion-list>
+                <ion-item  class="item-thumbnail-left" ng-repeat = "pro in goods" style="background-color:#ffffff;min-height:0;height: 15rem">
+                    <img ng-src="{{pro.prod_images}}" ng-click="jumpDetail(pro.prod_id)"
+                         style="max-width: none;max-height: none;height: 11rem;width: 14rem">
+                    <h2 style="margin:1rem 0 0 2rem;color: #838385;font-size: 2.5rem;">{{pro.prod_name}}</h2>
+                    <p class="attention" style="margin:4rem 0 0 2rem;font-size: 2.5rem;height: 3rem;line-height: 3rem;">￥{{pro.prod_price}}</p>
+                    <div class="fr list-cart-btn" style="padding-top:6rem">
+                        <i class="icon ion-ios-cart list-cart-btn " style="color:#39bf50;margin-right: 1.8rem;font-size: 4.5rem;padding-top:5rem" ng-click="addGoods($index)"></i>
+                        <p style="margin-top:3.5rem;color:#39bf50;font-size: 2rem;line-height:2rem">加入购物车</p>
+                    </div>
+                </ion-item>
+
+                <ion-infinite-scroll icon="ion-loading-c" ng-if="hasMore()" on-infinite="loadMore()" distance="10%">
+                </ion-infinite-scroll>
+            </ion-list>
+            <div ng-if="goods.length == 0;" style="text-align: center">
+                <div >
+
+                    <span>该类目下暂无商品</span>
+                </div>
+            </div>
+
+    	</div>
     </ion-content>
 </ion-view>

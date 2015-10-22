@@ -24,11 +24,8 @@ angular.module('index.services', [])
                         if(data.results[i].statue!=0){goods.push(data.results[i]);}
                     }
                 }
-                console.log(goods);
-
                 goods.forEach(function(item){
-                    var obj = JSON.parse(item.product_images);
-                    item.image=obj.small;
+                    item.image='http://120.131.70.188:3003/'+item.product_images;
                 })
                 changeGoodsNumber();
             }).error(function (res) {
@@ -149,47 +146,48 @@ angular.module('index.services', [])
         }
 })
 .factory('cate',function($http){
-    var catesInfo = {cates:[]};
-    var hotprosInfo = {hotpros:[]};
-    function load(){
-        var searchUrl = '/search/?field=product_id+product_url+prod_sku_id+product_name+product_images+sku_attrval+product_original_price+product_sell_price+product_origin+product_weight+commentcount&n=40&wf=product&from=weixin&categoryid={categoryid}&ranker_type='
-        // 记录将要发送的请求数
-        // 载入列别数据
-        $http.get('/rest/categories').success(function(data){
-            console.log('/rest/categories',data);
-            var cates = catesInfo.cates = data.results;
-            // reqRecond = cates.length;
-            for(var index in cates){
-                var cate = cates[index];
-                var url = searchUrl.replace("{categoryid}", cate.id);
-                (function(){
-                    var thisCate = cate;
-                    $http.get(url).success(function(data){
-                        thisCate.pros = data.search_response && data.search_response.books;
-                        // 将图片地址string转化为object
-                        for(var i in thisCate.pros){
-                            var pro = thisCate.pros[i];
-                            try{
-                                pro.product_images = JSON.parse(pro.product_images);
-                            }catch(e){
-                                pro.product_images = {small:null,list:null};
-                            }
+    var cates=[];
+      var  goods=[];
+        var cateId='';
+
+        function loadProducts(categoryId,page,pageSize,cb){
+            if(page == 1){goods.splice(0,goods.length);}
+            $http.get('/shop/getGoods/'+page+'/'+pageSize+'/'+categoryId).success(function(data){
+                if(cb){cb(data);}
+                console.log(data);
+                for(var i=0;i<data.results.length;i++){
+                    data.results[i].prod_images='http://120.131.70.188:3003/'+data.results[i].prod_images;
+                    goods.push(data.results[i]);
+                }
+                console.log(goods);
+            }).error(function(err){
+                console.log(err);
+            })
+        }
+
+    function loadCategory(cb) {
+        $http.get('/shop/getCategory').success(function (data) {
+           var catesInfo = data.results;
+            var arr=[];
+            for(var i=1;i<=catesInfo.length;i++){
+                catesInfo[i-1].show=false;
+                if(i==1){
+                    catesInfo[i-1].show=true;
+                    cateId=catesInfo[i-1].categories_id;
+                }
+                arr.push(catesInfo[i-1]);
+                if(i%5 === 0|| i == catesInfo.length){
+                            cates.push(arr);
+                            arr=[];
                         }
-                    })
-                })();
+
             }
+            cb && cb(cates);
+        }).error(function(err){
+            console.log(err);
         })
     }
-    //载入热卖数据
-    function loadHot(){
-        $http.get(api+"/hotSale/0/10").success(function(data){
-            if(data.code === 0){
-                hotprosInfo.hotpros = data.results;
-            }
-        })
-    }
-    load();
-    loadHot();
+
     return {
         /**
         * @desc 获取分类数据,分类数据中包含产品数据
@@ -197,14 +195,48 @@ angular.module('index.services', [])
         * @param {function} cb 回调函数
         */ 
         getCates: function(cb){
-            cb && cb(catesInfo);
+            loadCategory(cb)
         },
-        getHotPros:function(cb){
-            cb && cb(hotprosInfo);    
+        getGoods:function(cb){
+            cb && cb(goods);
+        },
+        loadGoods:function(cateid,page,pageSize,cb){
+            if(!cateid){cateid=cateId};
+            loadProducts(cateid,page,pageSize,cb);
         }
 
     }
 })
+
+
+    .factory('others',function($http){
+
+        return {
+
+            getCarousel: function(cb){
+
+                $http.get('/shop/getCarousel').success(function(data){
+                    var carousel=[];
+                    if(data.results.imgUrl)carousel=data.results.imgUrl.split(',')
+                    cb(null,carousel)
+
+                }).error(function(err){
+                    cb(err,null);
+                })
+
+
+            },
+            getHotPros:function(cb){
+                cb && cb(hotprosInfo);
+            }
+
+        }
+    })
+
+
+
+
+
     .factory('weixin',function($http){
 
         return{
@@ -244,13 +276,8 @@ angular.module('index.services', [])
                         }
                     });
                 });
-
             }
-
         }
-
-
-
     });
 
 
