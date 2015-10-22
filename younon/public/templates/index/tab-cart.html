@@ -1,18 +1,31 @@
-<ion-view class="index-cart">
+<ion-view class="index-cart" style="background-color: #efeff4">
   <ion-content>
       <ion-list>
-          <ion-item ng-repeat="item in cartGoods" class="item-thumbnail-left" >
-              <img ng-src="{{item.image}}">
-              <h2 style="margin-top:10px">{{item.product_name}}</h2>
-              <p class="attention">￥{{item.product_sell_price/100}}</p>
-              <p class="fl">{{item.prod_sku_values}}</p>
+          <ion-item ng-repeat="item in cartGoods"  style="height: 19rem;padding:0;margin-top:1rem">
+              <div style="width:7.2rem;float: left;margin-top:5.9rem;">
+                  <i class="ion-ios-circle-outline" style="color:#39bf50;font-size: 3.2rem;margin-left:2rem" ng-show="!item.select" ng-click="selectOne($index)"></i>
+                  <i class="ion-ios-checkmark" style="color:#39bf50;font-size: 3.2rem;margin-left:2rem" ng-show="item.select" ng-click="selectOne($index)"></i>
+              </div>
+              <img ng-src="{{item.prod_images}}" style="width:15rem;height: 11rem;float: left;margin-top:2rem">
+              <div style="float: left;">
+                  <div style="margin:3rem 0 0 2rem;font-size: 2.6rem;color: #4c4c4c;line-height: 2.6rem">{{item.prod_name}}</div>
+                  <div style="margin:4rem 0 0 2rem;font-size: 2.2rem;color: #4c4c4c;float: left;height: 3rem;
+                  text-align: center;line-height: 2.6rem">
+                      <span style="float: left">数量</span>
+                      <div style="float: left;border: 1px solid #a6a6a6;height: 3rem;border-radius: 0.4rem;margin-left: 1.5rem;min-height: 20px">
+                          <i class="ion-ios-minus-empty" style="color: #1a1a1a;font-size: 3rem;width: 3rem;float: left;height: 100%;min-width: 20px" ng-click="minus($index)"></i>
+                          <div style="width: 4rem;float: left;height: 100%;border-left:1px solid #a6a6a6;border-right:1px solid #a6a6a6;min-width: 20px">{{item.quantity}}</div>
+                          <i class="ion-ios-plus-empty" style="color: #1a1a1a;font-size: 3rem;width: 3rem;float: left;height: 100%;min-width: 20px" ng-click="add($index)"></i>
+                      </div>
 
-              <select class="fr"
-                      ng-model="data.numberArr[$index]"
-                      ng-options="o as o for o in number"
-                      ng-change="changeNumber(data.numberArr[$index],$index)">
-              </select>
-              <p class="fr">数量：</p>
+                  </div>
+
+              </div>
+              <div style="height: 4.1rem;width:100%;float: left;margin-top:2rem">
+                  <div style="float: right;color: #4c4c4c;font-size:2.2rem ">小计：<span class="attention" style="font-size:2.2rem;line-height: 4.1rem;margin-right:3rem">￥{{item.quantity*item.prod_price}}</span></div>
+
+              </div>
+
               <ion-option-button class="button-assertive" ng-click="del($index)">
                   删除
               </ion-option-button>
@@ -21,10 +34,13 @@
 
   </ion-content>
 
-    <div class="bar bar-footer" style="margin-bottom:49px">
-        <div class="pull-left" style="line-height: 34px">总价(不含运费):<span class="attention">￥{{data.sum}}</span></div>
-        <button class="button pull-right" ng-click="accountCart()">结算</button>
-
+    <div class="bar bar-footer" style="margin-bottom:49px;padding:0;height: 7rem">
+        <i ng-show="!selected" class="ion-ios-circle-outline" style="color:#39bf50;font-size: 3.2rem;margin:0 2rem;line-height: 7rem" ng-click="selectAll()"></i>
+        <i ng-show="selected" class="ion-ios-checkmark" style="color:#39bf50;font-size: 3.2rem;margin:0 2rem;line-height: 7rem" ng-click="selectAll()"></i>
+        <div class="pull-left" style="line-height: 7rem;color: #262626;font-size: 2.2rem">全选</div>
+        <div class="pull-left" style="line-height: 7rem;color:#4c4c4c;font-size: 2.2rem;margin-left:7rem">合计:<span class="attention" style="margin:0 2rem">￥{{data.sum}}</span>(不含运费)</div>
+        <button class="button pull-right" ng-click="accountCart()" style="height: 100%;top: 0;width: 18rem;
+        background-color: #d95c5c;color: #ffffff;font-size: 3rem;border:0;right: 0;border-radius: 0">去结算</button>
     </div>
 
 </ion-view>

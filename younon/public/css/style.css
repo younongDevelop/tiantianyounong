@@ -11,6 +11,10 @@ a{text-decoration: none;color: #444}
     padding-left:17rem;
 }
 
+.item-right-editable .item-content{
+    padding:0;
+}
+
 .ion-record{
     font-size: 1.5rem;
 }

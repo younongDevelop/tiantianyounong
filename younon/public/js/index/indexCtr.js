@@ -153,11 +153,8 @@ angular.module('index.controllers', [])
         }
 
         // 添加购物车
-        $scope.addGood = function(pro){
-            // var pro = $scope.hotprosInfo.hotpros[index];
-            // 兼容到购物车商品对象
-            pro.quantity = 1;
-            pro.prod_sku_values=pro.sku_attrval;
+        $scope.addGoods = function(pro){
+            pro.quantity=1;
 
             cart.addGoods(pro,function(res){
                 // 添加成功后
@@ -182,7 +179,6 @@ angular.module('index.controllers', [])
         //分页
 
         var loadMore = function (data) {
-            console.log(data);
             page++;
             if (data.results.length < pageSize) {
                 isMore = false;
@@ -205,28 +201,12 @@ angular.module('index.controllers', [])
             // 在重新完全载入数据后，需要发送一个scroll.infiniteScrollComplete事件，告诉directive，我们完成了这个动作，系统会清理scroller和为下一次的载入数据，重新绑定这一事件。
             $scope.$broadcast('scroll.infiniteScrollComplete');
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     })
 
 .controller('cartCtrl', function($scope,cart,orderOp,$ionicListDelegate,$ionicPopup,$location) {
-
+        $scope.selected=false;
         $scope.number=[];
+        var goodsId=[];
         for(var i=1;i<51;i++){
             $scope.number.push(i);
         }
@@ -238,7 +218,13 @@ angular.module('index.controllers', [])
         });
 
        $scope.del=function(index){
-       cart.deleteGoods(index,function(){
+           var item={
+               customersId:customerId,
+               prod_id:$scope.cartGoods[index].prod_id
+           }
+           var items=[];
+           items.push(item);
+       cart.deleteGoods(items,function(){
            $ionicPopup.alert({
                title: '',
                template: '删除失败',
@@ -248,8 +234,8 @@ angular.module('index.controllers', [])
        });
    }
 
-        $scope.changeNumber=function(number,index){
-            cart.changeNumber(number,index,function(){
+        var changeNumber=function(index,quantity){
+            cart.changeNumber(index,quantity,function(){
                  $ionicPopup.alert({
                     title: '',
                     template: '修改失败',
@@ -258,13 +244,66 @@ angular.module('index.controllers', [])
                 return;
             });
         }
+
+        $scope.minus = function(index){
+            if($scope.cartGoods[index].quantity>1){
+                var number=$scope.cartGoods[index].quantity;
+                changeNumber(index,--number);
+            }
+
+        }
+
+        $scope.add = function(index){
+            var number=$scope.cartGoods[index].quantity;
+            changeNumber(index,++number);
+
+        }
+
+        $scope.selectAll = function(){
+            $scope.selected=!$scope.selected;
+            if($scope.selected){
+                for(var i in $scope.cartGoods){
+                    $scope.cartGoods[i].select=true;
+                    var exit=false;
+                    if(goodsId.length !=0 ){
+                        for(var m in goodsId){
+                            if(goodsId[m] == $scope.cartGoods[i].prod_id){
+                                exit=true;
+                            }
+                            if(m == (goodsId.length-1) && !exit){
+                                goodsId.push($scope.cartGoods[i].prod_id);
+                            }
+                        }
+                    }else{
+                        goodsId.push($scope.cartGoods[i].prod_id);
+                    }
+                }
+            }else{
+                for(var i in $scope.cartGoods){
+                    $scope.cartGoods[i].select=false;
+                    goodsId=[];
+                }
+            }
+
+        }
+
+        $scope.selectOne=function(index){
+            $scope.cartGoods[index].select=!$scope.cartGoods[index].select;
+            if($scope.cartGoods[index].select){
+                goodsId.push($scope.cartGoods[index].prod_id);
+            }else{
+                for(var i in goodsId){
+                    if($scope.cartGoods[index].prod_id == goodsId[i]){
+                        goodsId.splice(i,1);
+                    }
+                }
+            }
+
+        }
+
+        
         $scope.accountCart = function(){
-            cart.getGoodsUpToDate(function(goods){
-                orderOp.initOrder(goods);
-                $location.path('/shopping/orderFill');
-            },function(){
-                $ionicPopup.alert("对不起，结算失败 再试试把");
-            })
+
         }
 })
 

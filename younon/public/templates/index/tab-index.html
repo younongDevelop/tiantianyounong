@@ -34,7 +34,7 @@
                 <ion-slide ng-repeat="categorites in categoryArr">
                     <div class="index-slide-item">
                         <div class="item tabs tabs-secondary" style="border:none;height: 100%">
-                            <div class="tab-item" href="#" ng-repeat="category in categorites" style="font-size: 2.5rem;color:#808080;
+                            <div class="tab-item" href="#" ng-repeat="category in categorites" style="font-size: 2.6rem;color:#808080;
                             max-width: none;text-align: center;width: 20%;display:inline-table;line-height: 6rem" ng-click="getProduct(category.categories_id)">
                                 <span ng-if="!category.show">{{category.category_name}}</span>
                                 <span  ng-if="category.show" style="padding-bottom:5px;border-bottom:0.5rem solid #39bf50;color:#39bf50">{{category.category_name}}</span>
@@ -50,11 +50,11 @@
             <ion-list>
                 <ion-item  class="item-thumbnail-left" ng-repeat = "pro in goods" style="background-color:#ffffff;min-height:0;height: 15rem">
                     <img ng-src="{{pro.prod_images}}" ng-click="jumpDetail(pro.prod_id)"
-                         style="max-width: none;max-height: none;height: 11rem;width: 14rem">
-                    <h2 style="margin:1rem 0 0 2rem;color: #838385;font-size: 2.5rem;">{{pro.prod_name}}</h2>
+                         style="max-width: none;max-height: none;height: 11rem;width: 14rem;margin:2rem 2rem;top:0">
+                    <h2 style="margin:2rem 0 0 2rem;color: #838385;font-size: 2.5rem;">{{pro.prod_name}}</h2>
                     <p class="attention" style="margin:4rem 0 0 2rem;font-size: 2.5rem;height: 3rem;line-height: 3rem;">￥{{pro.prod_price}}</p>
                     <div class="fr list-cart-btn" style="padding-top:6rem">
-                        <i class="icon ion-ios-cart list-cart-btn " style="color:#39bf50;margin-right: 1.8rem;font-size: 4.5rem;padding-top:5rem" ng-click="addGoods($index)"></i>
+                        <i class="icon ion-ios-cart list-cart-btn " style="color:#39bf50;margin-right: 1.8rem;font-size: 4.5rem;padding-top:5rem" ng-click="addGoods(pro)"></i>
                         <p style="margin-top:3.5rem;color:#39bf50;font-size: 2rem;line-height:2rem">加入购物车</p>
                     </div>
                 </ion-item>

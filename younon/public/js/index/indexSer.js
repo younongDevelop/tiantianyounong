@@ -11,21 +11,20 @@ angular.module('index.services', [])
             goodsNumber.numberArr=[];
             for (var i in goods) {
                 goodsNumber.number=goodsNumber.number+goods[i].quantity;
-                goodsNumber.sum=goodsNumber.sum+goods[i].quantity*goods[i].product_sell_price/100;
+                goodsNumber.sum=goodsNumber.sum+goods[i].quantity*goods[i].prod_price;
                 goodsNumber.numberArr.push(goods[i].quantity);
             }
-            console.log(goodsNumber);
         }
         var load=function () {
-            $http.get(api+'/basket/'+customerId+'/0/100/0').success(function (data) {
+            $http.get('/shop/getBasket/'+customerId).success(function (data) {
 
-                if(data.code===0){
                     for (var i in data.results) {
-                        if(data.results[i].statue!=0){goods.push(data.results[i]);}
+                        data.results[i].select=false;
+                        goods.push(data.results[i]);
                     }
-                }
+                console.log(goods);
                 goods.forEach(function(item){
-                    item.image='http://120.131.70.188:3003/'+item.product_images;
+                    item.prod_images='http://120.131.70.188:3003/'+item.prod_images;
                 })
                 changeGoodsNumber();
             }).error(function (res) {
@@ -39,33 +38,6 @@ angular.module('index.services', [])
             getGoods: function (cb) {
                 cb(goods);
             },
-            /**
-            * @desc 请求服务器获取最新的购物车数据
-            * @func getGoodsUpToDate
-            * @param {function} suc 请求成功后调用的回调函数
-            * @param {function} fail 请求失败后调用的回调函数
-            */
-            getGoodsUpToDate:function(suc, fail){
-                $http.get(api+'/basket/'+customerId+'/0/100/0').success(function (data) {
-                    var goods = [];
-                    if(data.code===0){
-                        for (var i in data.results) {
-                            if(data.results[i].statue!=0){goods.push(data.results[i]);}
-                        }
-                    }
-                    console.log(goods);
-
-                    goods.forEach(function(item){
-                        item.product_images = util.parseImgUrls(item.product_images);
-                        item.image=item.product_images.small;
-                        item.product_id = item.prod_sku_id;
-                    })
-                    suc && suc(goods);
-                }).error(function (res) {
-                    console.log(res);
-                    fail && fail(res);
-                });
-            },
             getGoodsNumber:function(cb){
                 cb(goodsNumber);
             },
@@ -77,57 +49,54 @@ angular.module('index.services', [])
             * @param {function} err 添加失败后的回调函数
             */
             addGoods:function(pro,suc,err){
-                var pid = parseInt(pro.product_id);
+                var pid = parseInt(pro.prod_id);
                 var addInfo = {
-                    cid:customerId,
-                    pid:pro.product_id,
+                    customersId:customerId,
+                    prod_id:pro.prod_id,
                     quantity:pro.quantity
                 }
-                $http.post(api+'/basket/add',addInfo).success(function(res){
-                    if(res.code === 0 ){
-                        suc && suc(res);
+                $http.post('/shop/addBasket',addInfo).success(function(data){
+                    var lock=false;
+
                         // 如果商品存在于购物车，更新购物车的单商品数量
                         for(var i in goods){
                             var good = goods[i];
-                            if(good.prod_sku_id === pid){
+                            if(good.prod_id === pid){
                                 good.quantity+=addInfo.quantity;
-                                good.version = res.results;
                                 changeGoodsNumber();
-                                return
+                                lock = true;
+                               break;
                             }
                         }
+                    if(lock) {return;}
                         // 如果商品不存在 将商品加入购物车模型
-                        pro.prod_sku_id = pro.product_id;
-                        pro.version = res.results;                   
+                        pro.select=false;
                         goods.unshift(pro);
                         changeGoodsNumber();
                         return;
-                    }
-                    err && err(res);
+
                 }).error(function(res){
                     err && err(res);
                 })
             },
-            deleteGoods:function(index,cb){
-                $http.put(api+'/basket/del/'+customerId+'/'+goods[index].prod_sku_id).success(function (data) {
-                    console.log(data);
-                    if(data.code===0){
-                        goods.splice(index,1);
-                        changeGoodsNumber();
+            deleteGoods:function(data,cb){
+                $http.post('/shop/delBasket',data).success(function (resData) {
+                    for(var i in data){
+                        for(var m in goods){
+                            if(data[i].prod_id == goods[m].prod_id){
+                                goods.splice(m,1);
+                            }
+                        }
                     }
+                        changeGoodsNumber();
                 }).error(function (res) {
                     cb();
                 });
             },
-            changeNumber:function(number,index,cb){
-                $http.put(api+'/basket/chg/'+customerId+'/'+goods[index].prod_sku_id+'/'+number).success(function (data) {
-                   console.log(data);
-                    if(data.code===0){
-                        goods[index].quantity=number;
-                        console.log(goods[index].quantity);
+            changeNumber:function(index,quantity,cb){
+                $http.get('/shop/chgBasket/'+customerId+'/'+goods[index].prod_id+'/'+quantity).success(function (data) {
+                        goods[index].quantity=quantity;
                         changeGoodsNumber();
-                    }
-
                 }).error(function (res) {
                     console.log(res);
                     changeGoodsNumber();
