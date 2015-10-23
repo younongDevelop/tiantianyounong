@@ -167,14 +167,10 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
       })
 
 
-      .state('account.addresses', {
+      .state('addresses', {
           url: '/addresses',
-          views: {
-              'tab-account': {
-                  templateUrl: 'templates/personInfor/account-addresses.html',
-                  controller: 'addressesCtrl'
-              }
-          }
+          templateUrl: 'templates/personInfor/account-addresses.html',
+          controller: 'addressesCtrl'
       })
 
       .state('account.addrChg', {
@@ -186,13 +182,9 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
               }
           }
       })
-      .state('account.about', {
+      .state('about', {
           url: '/about',
-          views: {
-              'tab-account': {
-                  templateUrl: 'templates/personInfor/account-about.html'
-              }
-          }
+          templateUrl: 'templates/personInfor/account-about.html'
       })
 
       //person路由结束

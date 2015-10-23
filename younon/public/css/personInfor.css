@@ -4,18 +4,21 @@
     min-height: 0;
     line-height: 20px;
 }
-.address-item .item-content{
-    padding:10px;
-}
+
 
 .list .aadressSelect{
     height: 40px;
     border: 1px solid #ddd;
     margin: 10px;
 }
+.account-address .list{
+    background-color: #efeff4;
+
+}
 
 .account-address .list:last-child{
-    padding-bottom:49px;
+
+    padding-bottom:7rem;
 }
 
 .orders-item .item{

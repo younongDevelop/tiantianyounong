@@ -1,25 +1,22 @@
-<ion-view class="account-address" cache-view="false">
-    <ion-content>
+<ion-view class="account-address">
+    <ion-content style="background-color: #efeff4;">
         <ion-list ng-if="addresses.length > 0">
-            <ion-item ng-repeat="address in addresses"  style="margin-bottom:20px;" class="address-item">
-                <div style="height:40px;border-bottom:1px solid #ddd;line-height: 40px;margin-bottom:20px">
-                    <i ng-if="address.address_id==selectedId.id" class="icon ion-ios-checkmark-outline" style="font-size: 25px"></i>
-                    <a href="#/account/addrChg/{{address.address_id}}"><button class="button button-light change-address-button fr">修改</button></a>
+            <ion-item ng-repeat="address in addresses"  style="margin-top:2rem;height: 10rem">
+                <div style="width:7.2rem;float: left;margin-top:3.4rem;color:#39bf50;font-size: 3.2rem;height: 100%">
+                    <i class="ion-ios-circle-outline" style="margin:0 2rem" ng-show="!address.select" ng-click="selectAddr(address)"></i>
+                    <i class="ion-ios-checkmark" style="margin:0 2rem" ng-show="address.select" ng-click="selectAddr(address)"></i>
                 </div>
-                <div ng-click="selectAddr(address)">
-                    <div>
-                        <span>收货人</span>
-                <span class="item-note">{{address.receiver_name}}</span>
+                <div style="margin-top:2rem;color: #4c4c4c">
+                    <div style="font-size: 2.6rem;margin-top:2rem;line-height: 2.6rem">
+                        <span style="margin-right: 6rem">{{address.receiver_name}}</span>
+                        <span>{{address.receiver_phone}}</span>
+
                     </div>
-                    <div>
-                        <span>电话</span>
-                        <span class="item-note">{{address.receiver_phone}}</span>
-                    </div>
-                    <div>
-                        <span>地址</span>
-                        <span class="item-note">{{address.address_detail}}</span>
-                    </div>
-                    </div>
+                    <div style="font-size: 2.2rem;line-height: 2.2rem;margin-top:1rem">{{address.address_detail}} </div>
+
+                </div>
+
+
 
                 <ion-option-button class="button-assertive" ng-click="delAddress($index)">
                     删除
@@ -35,8 +32,9 @@
         </div>
     </ion-content>
 
-    <a href="#/account/addrChg/add"><div class="bar bar-footer" style="margin-bottom:49px;text-align: center;">
-        <div class="title"><i class="ion-ios-plus-outline" style="margin-right:5px"></i>新增地址</div>
+    <a href="#/account/addrChg/add"><div class="bar bar-footer" style="height: 7rem;display: inline;background-image: none;
+    background-color: #39bf50;font-size: 3rem;line-height: 7rem;color: #ffffff;text-align: center;padding:0">
+       新增地址
     </div></a>
 
 </ion-view>

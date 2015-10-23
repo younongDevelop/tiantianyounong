@@ -162,11 +162,11 @@ angular.module('person.controllers', [])
             }
             if($scope.addresses.length===0&&isMore){
 
-                personAddress.loadAddress(page,pageSize,version,loadMore);
+                personAddress.loadAddress(page,pageSize,loadMore);
             }
 
         };
-        personAddress.loadAddress(page,pageSize,version,loadMore);
+        personAddress.loadAddress(page,pageSize,loadMore);
         $scope.moreDataCanBeLoaded = function () {
             if (isMore) {
                 return true;
@@ -194,6 +194,11 @@ angular.module('person.controllers', [])
         }
 
         $scope.selectAddr=function(item){
+            console.log(item);
+            for(var i in $scope.addresses){
+                $scope.addresses[i].select=false;
+            }
+            item.select=true;
             personAddress.selectAddress(item);
             orderOp.fillAddress(item);
         }

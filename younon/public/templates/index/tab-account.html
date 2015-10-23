@@ -1,40 +1,62 @@
 <ion-view>
   <ion-content>
-
-
-      <div class="list">
-          <div  style="margin-bottom: 30px;height:70px;border-bottom:1px solid #ddd ">
-              <img ng-src="{{headimgurl}}" class="fl" width="50px" height="50px" style="margin:10px 10px">
-              <p style="padding:30px 10px;float:left">{{nickname}}</p>
-              <div class="icon-left ion-ios-star-outline index-person">0积分</div>
+      <div class="list" style="background-color: #efeff4;padding: 0">
+          <div  style="height: 20rem;background-image: url('../../img/back.png')">
+              <img ng-src="{{headimgurl}}" class="fl" style="width:14rem;height:14rem;margin:3rem 0 3rem 10rem;border-radius:14rem ">
+              <div style="float: left;height: 100%">
+                  <div style="margin:6.9rem 0 0 3rem;color: #4c4c4c;font-size: 3rem;line-height: 3rem;height: 3rem;">{{nickname}}</div>
+                  <div style="margin:2rem 0 0 3rem;font-size: 2.4rem;color:#4c4c4c;float: left;line-height: 2.4rem;height: 2.4rem ">0积分</div>
+              </div>
           </div>
 
 
-          <a class="item item-icon-left item-icon-right" href="#/account/orders/1">
-              <i class="icon ion-document"></i>
-              待支付订单
-              <i class="icon ion-ios-arrow-right"></i>
-          </a>
-          <a class="item item-icon-left item-icon-right" href="#/account/orders/2">
-              <i class="icon ion-clipboard"></i>
-              待收货订单
-              <i class="icon ion-ios-arrow-right"></i>
-          </a>
-          <a class="item item-icon-left item-icon-right" href="#/account/orders/3">
-              <i class="icon ion-ios-list-outline"></i>
-              已完成订单
-              <i class="icon ion-ios-arrow-right"></i>
-          </a>
-          <a class="item item-icon-left item-icon-right" href="#/account/addresses">
-              <i class="icon ion-ios-home-outline"></i>
-              我的地址
-              <i class="icon ion-ios-arrow-right"></i>
-          </a>
-          <a class="item item-icon-left item-icon-right" href="#/account/about">
-              <i class="icon ion-ios-information-outline"></i>
-              关于
-              <i class="icon ion-ios-arrow-right"></i>
-          </a>
+          <ion-list>
+              <ion-item   style="height: 10rem;padding:0;margin-top:2rem;line-height: 10rem" class="border-top-bottom" >
+                  <div style="margin:2rem 2.5rem 2rem 3.5rem;width:6rem;height: 6rem;border-radius: 6rem;
+                  background-color:#60d9d5;text-align: center;line-height: 6rem;float: left">
+                      <i class="ion-document-text" style="color: #ffffff;font-size: 4rem"></i>
+                  </div>
+                  <div style="color: #4c4c4c;font-size: 2.6rem;float: left;">
+                      我的订单
+                  </div>
+                  <div style="color: #999999;margin-right: 4rem;float: right;font-size: 3rem;">
+                      <i class="ion-chevron-right"></i>
+                  </div>
+              </ion-item>
+
+              <a href="#/addresses">
+              <ion-item   style="height: 10rem;padding:0;line-height: 10rem" class="border-top-bottom" >
+                  <div style="margin:2rem 2.5rem 2rem 3.5rem;width:6rem;height: 6rem;border-radius: 6rem;
+                  background-color:#84a9ec;text-align: center;line-height: 6rem;float: left">
+                      <i class="ion-ios-location-outline" style="color: #ffffff;font-size: 4rem"></i>
+                  </div>
+                  <div style="color: #4c4c4c;font-size: 2.6rem;float: left;">
+                      收货地址
+                  </div>
+                  <div style="color: #999999;margin-right: 4rem;float: right;font-size: 3rem;">
+                      <i class="ion-chevron-right"></i>
+                  </div>
+              </ion-item>
+              </a>
+
+              <a href="#/about">
+                  <ion-item   style="height: 10rem;padding:0;line-height: 10rem" class="border-top-bottom" >
+                  <div style="margin:2rem 2.5rem 2rem 3.5rem;width:6rem;height: 6rem;border-radius: 6rem;
+                  background-color:#60d9d5;text-align: center;line-height: 6rem;float: left">
+                      <i class="ion-ios-information-outline" style="color: #ffffff;font-size: 4rem"></i>
+                  </div>
+                  <div style="color: #4c4c4c;font-size: 2.6rem;float: left;">
+                     关于
+                  </div>
+                  <div style="color: #999999;margin-right: 4rem;float: right;font-size: 3rem;">
+                      <i class="ion-chevron-right"></i>
+                  </div>
+              </ion-item>
+              </a>
+          </ion-list>
+
+
+
 
       </div>
   </ion-content>

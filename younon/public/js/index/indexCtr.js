@@ -48,7 +48,7 @@ angular.module('index.controllers', [])
 
         $scope.show = false;
         $scope.nickname = '昵称';
-        $scope.headimgurl = '../img/ionic.png';
+        $scope.headimgurl = '../img/slide1.jpg';
 
         var getInformation = function () {
             var json = {openid: openid};
@@ -301,7 +301,7 @@ angular.module('index.controllers', [])
 
         }
 
-        
+
         $scope.accountCart = function(){
 
         }

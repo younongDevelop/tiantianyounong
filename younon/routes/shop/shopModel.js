@@ -128,11 +128,7 @@ shopModel.addBasket = function(goods,cb){
 //删除购物车商品
 shopModel.delBasket = function(goods,cb){
     var prod_id ='';
-
-
-
     if(goods.length>1){
-
         for(var i=0;i<goods.length;i++){
             if(i==0){
                 prod_id=prod_id+'('+goods[i].prod_id+',';
@@ -142,14 +138,12 @@ shopModel.delBasket = function(goods,cb){
                 prod_id=prod_id+goods[i].prod_id+',';
             }
         }
-
     }else{
         prod_id ='('+goods[0].prod_id+')';
     }
 
     store.getPool().getConnection(function (err, conn) {
         var querySQL = 'update customers_baskets set status = 0  where customer_id = '+goods[0].customersId+' and prod_sku_id in ' + prod_id;
-
         conn.query(querySQL,null, function (err, rows) {
             console.log(querySQL);
             conn.release();

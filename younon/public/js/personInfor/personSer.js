@@ -61,12 +61,14 @@ angular.module('person.services', [])
                     console.log(res);
                 });
             },
-            loadAddress:function(page,pageSize,version,cb){
-                $http.get(api+'/addresses/'+customerId+'/'+page+'/'+pageSize+'/'+version).success(function(data,status,headers) {
-                    console.log(data);
-                    if(data.code===0){
+            loadAddress:function(page,pageSize,cb){
+                $http.get('/person/getAddress/'+customerId+'/'+page+'/'+pageSize).success(function(data,status,headers) {
                         for (var i in data.results) {
-                            if(data.results[i].status!=0){addresses.push(data.results[i]);}
+                            addresses.push(data.results[i]);
+                            addresses[i].select=false;
+                            if(localStorage.address_id ==data.results[i].address_id){
+                                addresses[i].select=true;
+                            }
                         }
                         if(!localStorage.address_id&&addresses[0]){
                             selectedId.id=addresses[0].address_id,
@@ -75,8 +77,9 @@ angular.module('person.services', [])
                                 localStorage.receiver_phone=addresses[0].receiver_phone;
                                 localStorage.address_detail=addresses[0].address_detail;
                         }
+
                         cb(data.results);
-                    }
+
                 }).error(function (res) {
                     console.log(res);
                 });
@@ -97,13 +100,8 @@ angular.module('person.services', [])
                 })
             },
             delAddress:function(index,cb){
-                $http.put(api+'/addresses/del/'+addresses[index].address_id).success(function(res){
-                        if(res.code===0){
-                            cb('DEL_SUCCESS');
+                $http.get('/person/delAddress/'+addresses[index].address_id).success(function(res){
                             addresses.splice(index,1);
-                        }else{
-                            cb('DEL_FAILURE');
-                        }
                 }).error(function(){
                     cb('DEL_FAILURE');
                 })
