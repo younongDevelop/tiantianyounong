@@ -33,18 +33,15 @@ angular.module('person.services', [])
                 cb(addresses);
             },
             getCity:function(cb){
-
-                $http.get(api+'/cities').success(function(data) {
-                    if(data.code===0){
+                $http.get('/person/getCity').success(function(data) {
                         cities=data.results;
                         cb(cities);
-                    }
                 }).error(function (res) {
                     console.log(res);
                 });
             },
             loadDistrict:function(cityId,cb){
-                $http.get(api+'/districts/'+cityId).success(function(data) {
+                $http.get('/person/getDistrict/'+cityId).success(function(data) {
                     districts=data.results;
                     cb(districts);
                     console.log(districts);
@@ -53,7 +50,16 @@ angular.module('person.services', [])
                 });
             },
             loadCommunity:function(districtId,cb){
-                $http.get(api+'/communities/'+districtId).success(function(data) {
+                $http.get('/person/getCommunity/'+districtId).success(function(data) {
+                    community=data.results;
+                    console.log(community);
+                    cb(community);
+                }).error(function (res) {
+                    console.log(res);
+                });
+            },
+            loadSince:function(districtId,cb){
+                $http.get('/person/getSince/'+districtId).success(function(data) {
                     community=data.results;
                     console.log(community);
                     cb(community);
@@ -85,7 +91,7 @@ angular.module('person.services', [])
                 });
                 },
             addAddress:function(data,cb){
-                $http.post(api+'/addresses/add',data).success(function(res){
+                $http.post('/person/addAddress',data).success(function(res){
                     console.log(res);
                     if(res.code===0){
                         //addresses.unshift();
@@ -107,11 +113,9 @@ angular.module('person.services', [])
                 })
             },
             changeAddress:function(data,cb){
-                $http.post(api+'/addresses/chg',data).success(function(res){
-                    if(res.code===0){
+                $http.post('/person/updateAddress',data).success(function(res){
                         changeAddress(data);
                         cb('CHANGE_SUCCESS');
-                    }
                 }).error(function(res){
                     cb('CHANGE_FAILURE');
                 })

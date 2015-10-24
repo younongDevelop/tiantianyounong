@@ -71,7 +71,8 @@ function getCity(req,res){
 
 //获取区列表
 function getDistrict(req,res){
-    personModel.getDistrict(function(err,data){
+    var cityId=req.params.cityId;
+    personModel.getDistrict(cityId,function(err,data){
         if (!!err) {
             console.log(err);
             return res.json(500, {error: err});
@@ -83,7 +84,8 @@ function getDistrict(req,res){
 
 //获取小区列表
 function getCommunity(req,res){
-    personModel.getCommunity(function(err,data){
+    var districtId=req.params.districtId;
+    personModel.getCommunity(districtId,function(err,data){
         if (!!err) {
             console.log(err);
             return res.json(500, {error: err});
@@ -95,7 +97,8 @@ function getCommunity(req,res){
 
 //获取自提点列表
 function getSince(req,res){
-    personModel.getSince(function(err,data){
+    var districtId=req.params.districtId;
+    personModel.getSince(districtId,function(err,data){
         if (!!err) {
             console.log(err);
             return res.json(500, {error: err});
@@ -111,9 +114,9 @@ router.post('/addAddress',addAddress); //新增用户地址
 router.get('/delAddress/:address_id',delAddress); //删除用户地址
 
 router.get('/getCity',getCity);//获取城市列表
-router.get('/getDistrict',getDistrict);//获取区列表
-router.get('/getCommunity',getCommunity);//获取小区列表
-router.get('/getSince',getSince);//获取自提点列表
+router.get('/getDistrict/:cityId',getDistrict);//获取区列表
+router.get('/getCommunity/:districtId',getCommunity);//获取小区列表
+router.get('/getSince/:districtId',getSince);//获取自提点列表
 
 
 

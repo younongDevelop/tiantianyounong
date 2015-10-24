@@ -173,14 +173,10 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
           controller: 'addressesCtrl'
       })
 
-      .state('account.addrChg', {
+      .state('addrChg', {
           url: '/addrChg/{param}',
-          views: {
-              'tab-account': {
-                  templateUrl: 'templates/personInfor/account-addrChg.html',
-                  controller: 'addrChgCtrl'
-              }
-          }
+          templateUrl: 'templates/personInfor/account-addrChg.html',
+          controller: 'addrChgCtrl'
       })
       .state('about', {
           url: '/about',

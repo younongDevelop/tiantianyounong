@@ -8,8 +8,9 @@
 
 .list .aadressSelect{
     height: 40px;
-    border: 1px solid #ddd;
     margin: 10px;
+    border: none;
+
 }
 .account-address .list{
     background-color: #efeff4;
@@ -24,5 +25,9 @@
 .orders-item .item{
     padding:0;
     border:0;
+}
+
+.addrChg .list:last-child{
+    margin-bottom: 8rem;
 }
 

@@ -84,8 +84,8 @@ personModel.delAddress=function(address_id,cb){
 //获取城市列表
 personModel.getCity=function(cb) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "update address set status = 0 where address_id = ?";
-        conn.query(querySQL, address_id, function (err, rows) {
+        var querySQL = "select city_id,city_name from cities";
+        conn.query(querySQL, null, function (err, rows) {
             conn.release();
             if (err) {
                 console.log(err);
@@ -98,10 +98,10 @@ personModel.getCity=function(cb) {
 }
 
 //获取区列表
-personModel.getDistrict=function(cb) {
+personModel.getDistrict=function(cityId,cb) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "update address set status = 0 where address_id = ?";
-        conn.query(querySQL, address_id, function (err, rows) {
+        var querySQL = "select district_id,district_name from districts where city_id = ?";
+        conn.query(querySQL, cityId, function (err, rows) {
             conn.release();
             if (err) {
                 console.log(err);
@@ -115,10 +115,10 @@ personModel.getDistrict=function(cb) {
 
 
 //获取小区列表
-personModel.getCommunity=function(cb) {
+personModel.getCommunity=function(districtId,cb) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "update address set status = 0 where address_id = ?";
-        conn.query(querySQL, address_id, function (err, rows) {
+        var querySQL = "select comm_id,comm_name from communities where district_id = ? and since_statue =0";
+        conn.query(querySQL,districtId, function (err, rows) {
             conn.release();
             if (err) {
                 console.log(err);
@@ -132,10 +132,10 @@ personModel.getCommunity=function(cb) {
 
 
 //获取自提点列表
-personModel.getSince=function(cb) {
+personModel.getSince=function(districtId,cb) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "update address set status = 0 where address_id = ?";
-        conn.query(querySQL, address_id, function (err, rows) {
+        var querySQL = "select comm_id,comm_name from communities where district_id = ? and since_statue =1";
+        conn.query(querySQL, districtId, function (err, rows) {
             conn.release();
             if (err) {
                 console.log(err);

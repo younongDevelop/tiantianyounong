@@ -1,38 +1,51 @@
 <ion-view>
-    <ion-content>
-        <div class="list" style="padding:20px">
-            <label class="item item-input">
-                <span class="input-label">收货人</span>
+    <ion-content class="addrChg">
+        <div class="list" style="margin-top:1rem;">
+            <label class="item item-input border-top-style">
+                <span class="input-label">收货人:</span>
                 <input type="text" ng-model="address.receiver_name">
             </label>
-            <label class="item item-input">
-                <span class="input-label">电话号码</span>
+            <label class="item item-input border-top-style">
+                <span class="input-label">联系方式:</span>
                 <input type="text" ng-model="address.receiver_phone">
             </label>
-            <select class="input-box aadressSelect fl"
+            <label class="item item-input border-top-style">
+                <span class="input-label">省:</span>
+            <select class=" aadressSelect fl"
                     ng-model="address.city_id"
                     ng-options="o.city_id as o.city_name for o in cities"
                     ng-change="getDistrict(address.city_id)" style="width:35%;">
             </select>
+                <span class="input-label">市:</span>
             <select class="input-box aadressSelect"
                     ng-model="address.district_id"
                     ng-options="o.district_id as o.district_name for o in districts"
                     ng-change="getCommunity(address.district_id)" style="width:40%">
             </select>
+                </label>
+            <label class="item item-input border-top-style">
+                <span class="input-label">区:</span>
             <select class="input-box aadressSelect"
                     ng-model="address.community_id"
                     ng-options="o.comm_id as o.comm_name for o in community" style="width:80%;">
             </select>
-            <label class="item item-input">
-                <span class="input-label">详细地址</span>
+                </label>
+            <label class="item item-input border-top-bottom">
+                <span class="input-label">详细地址:</span>
                 <input type="text" ng-model="address.address_room">
             </label>
 
-            <button class="button button-block button-positive" ng-click="submit()">
-                Submit
-            </button>
+
+
         </div>
 
 
+
+
     </ion-content>
+    <div class="bar bar-footer" style="height: 7rem;display: inline;background-image: none;
+    background-color: #39bf50;font-size: 3rem;line-height: 7rem;color: #ffffff;
+    text-align: center;padding:0" ng-click="submit()">
+        保存
+    </div>
 </ion-view>
