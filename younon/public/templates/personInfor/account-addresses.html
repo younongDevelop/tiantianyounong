@@ -6,18 +6,14 @@
                     <i class="ion-ios-circle-outline" style="margin:0 2rem" ng-show="!address.select" ng-click="selectAddr(address)"></i>
                     <i class="ion-ios-checkmark" style="margin:0 2rem" ng-show="address.select" ng-click="selectAddr(address)"></i>
                 </div>
-                <div style="margin-top:2rem;color: #4c4c4c">
+                <a href="#/addrChg/{{address.address_id}}"><div style="margin-top:2rem;color: #4c4c4c">
                     <div style="font-size: 2.6rem;margin-top:2rem;line-height: 2.6rem">
                         <span style="margin-right: 6rem">{{address.receiver_name}}</span>
                         <span>{{address.receiver_phone}}</span>
 
                     </div>
                     <div style="font-size: 2.2rem;line-height: 2.2rem;margin-top:1rem">{{address.address_detail}} </div>
-
-                </div>
-
-
-
+                </div></a>
                 <ion-option-button class="button-assertive" ng-click="delAddress($index)">
                     删除
                 </ion-option-button>

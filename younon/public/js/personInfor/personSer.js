@@ -44,7 +44,6 @@ angular.module('person.services', [])
                 $http.get('/person/getDistrict/'+cityId).success(function(data) {
                     districts=data.results;
                     cb(districts);
-                    console.log(districts);
                 }).error(function (res) {
                         console.log(res);
                 });
@@ -52,7 +51,6 @@ angular.module('person.services', [])
             loadCommunity:function(districtId,cb){
                 $http.get('/person/getCommunity/'+districtId).success(function(data) {
                     community=data.results;
-                    console.log(community);
                     cb(community);
                 }).error(function (res) {
                     console.log(res);
@@ -66,6 +64,15 @@ angular.module('person.services', [])
                 }).error(function (res) {
                     console.log(res);
                 });
+            },
+            findAddress:function(address_id,cb){
+                $http.get('/person/findAddress/'+address_id).success(function(data) {
+                    console.log(data.results);
+                    cb(data.results);
+                }).error(function (res) {
+                    console.log(res);
+                });
+
             },
             loadAddress:function(page,pageSize,cb){
                 $http.get('/person/getAddress/'+customerId+'/'+page+'/'+pageSize).success(function(data,status,headers) {
@@ -92,13 +99,14 @@ angular.module('person.services', [])
                 },
             addAddress:function(data,cb){
                 $http.post('/person/addAddress',data).success(function(res){
-                    console.log(res);
-                    if(res.code===0){
-                        //addresses.unshift();
+                    console.log(res.results);
+                        addresses.unshift({
+                            address_id: res.results,
+                                address_detail:data.city_name+data.district_name+data.community_name+data.address_room,
+                    receiver_name:data.receiver_name,
+                        receiver_phone:data.receiver_phone
+                        });
                         cb('ADD_SUCCESS');
-                    }else{
-                        cb('ADD_FAILURE');
-                    }
 
                 }).error(function(res){
                     cb('ADD_FAILURE');

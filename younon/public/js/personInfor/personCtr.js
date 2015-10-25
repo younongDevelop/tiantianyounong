@@ -148,7 +148,6 @@ angular.module('person.controllers', [])
         });
         var page = 1;
         var pageSize=10;
-        var version=0;
         var isMore = false;
         personAddress.getAddresses(function(data){
             $scope.addresses=data;
@@ -160,11 +159,6 @@ angular.module('person.controllers', [])
             } else {
                 isMore = true;
             }
-            if($scope.addresses.length===0&&isMore){
-
-                personAddress.loadAddress(page,pageSize,loadMore);
-            }
-
         };
         personAddress.loadAddress(page,pageSize,loadMore);
         $scope.moreDataCanBeLoaded = function () {
@@ -175,10 +169,8 @@ angular.module('person.controllers', [])
             }
         }
         $scope.getMore = function () {
-            if (page > 1) {
                 isMore = false;
-                personAddress.loadAddress(page,pageSize,version,loadMore);
-            }
+                personAddress.loadAddress(page,pageSize,loadMore);
             // 在重新完全载入数据后，需要发送一个scroll.infiniteScrollComplete事件，告诉directive，我们完成了这个动作，系统会清理scroller和为下一次的载入数据，重新绑定这一事件。
             $scope.$broadcast('scroll.infiniteScrollComplete');
         }
@@ -222,24 +214,44 @@ angular.module('person.controllers', [])
 
         personAddress.getCity(function(cities){
             $scope.cities=cities;
-            getDistricts(cities[0].city_id);
-            $scope.address.city_name=cities[0].city_name;
+            if($stateParams.param =='add') {getDistricts(cities[0].city_id);
+            $scope.address.city_name=cities[0].city_name;}
         });
 
         var getDistricts =function(cityId){
             personAddress.loadDistrict(cityId,function(districts){
                 $scope.districts=districts;
-                $scope.address.district_id=districts[0].district_id;
-                getCommunity(districts[0].district_id);
-                $scope.address.district_name=districts[0].district_name;
+
+                    $scope.address.district_id=districts[0].district_id;
+                    getCommunity(districts[0].district_id);
+                    $scope.address.district_name=districts[0].district_name;
+
+            });
+        };
+
+        var findDistricts =function(cityId,data){
+            personAddress.loadDistrict(cityId,function(districts){
+                $scope.districts=districts;
+                $scope.address.district_id=data.district_id;
+                $scope.address.district_name=data.district_name;
+
             });
         };
 
         var getCommunity =function(districtId){
             personAddress.loadCommunity(districtId,function(community){
                 $scope.community=community;
-                $scope.address.community_id=community[0].comm_id;
-                $scope.address.community_name=community[0].community_name;
+                    $scope.address.community_id=community[0].comm_id;
+                    $scope.address.community_name=community[0].community_name;
+
+            });
+        };
+
+        var findCommunity =function(districtId,data){
+            personAddress.loadCommunity(districtId,function(community){
+                $scope.community=community;
+                $scope.address.community_id=data.community_id;
+                $scope.address.community_name=data.community_name;
             });
         };
 
@@ -295,6 +307,7 @@ angular.module('person.controllers', [])
             }else{
                 //地址修改的部分
                 $scope.address.customer_id=customerId;
+
                 personAddress.addAddress($scope.address,function(data){
                     attention(errorMap[data]);
                 });
@@ -302,17 +315,15 @@ angular.module('person.controllers', [])
 
         }
             //地址修改的部分
-            personAddress.getAddresses(function(data){
-                data.forEach(function(item){
-                    if(item.address_id==$stateParams.param){
-                        $scope.address.city_id=item.city_id;
-                        $scope.address.district_id=item.district_id;
-                        $scope.address.community_id=item.community_id;
-                        $scope.address.address_room=item.address_room;
-                        $scope.address.receiver_phone=item.receiver_phone;
-                        $scope.address.receiver_name=item.receiver_name;
-                    }
-                })
+            personAddress.findAddress($stateParams.param,function(data){
+                findDistricts(data.city_id,data);
+                findCommunity(data.district_id,data);
+                $scope.address.city_id=data.city_id;
+                $scope.address.district_id=data.district_id;
+                $scope.address.community_id=data.community_id;
+                $scope.address.address_room=data.address_room;
+                $scope.address.receiver_phone=data.receiver_phone;
+                $scope.address.receiver_name=data.receiver_name;
             });
 
     })

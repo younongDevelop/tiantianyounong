@@ -9,7 +9,7 @@ var personModel = module.exports;
 personModel.getAddress=function(customerId,page,pageSize,cb){
     var start=(parseInt(page)-1)*parseInt(pageSize);
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "select address_id,address_detail,receiver_name,receiver_phone from address where status = 1 and customer_id = ? order by version desc limit "+start+","+pageSize;
+        var querySQL = "select address_id,address_detail,receiver_name,receiver_phone from address where status = 1 and customer_id = ? order by address_id desc limit "+start+","+pageSize;
         conn.query(querySQL, customerId,function (err, rows) {
             conn.release();
             if (err){
@@ -21,6 +21,24 @@ personModel.getAddress=function(customerId,page,pageSize,cb){
         });
     });
 }
+
+
+//查询用户用户地址
+personModel.findAddress=function(addressId,cb){
+    store.getPool().getConnection(function (err, conn) {
+        var querySQL = "select address_id,city_id,district_id,city_name,district_name,community_name,community_id,address_room,receiver_name,receiver_phone from address where address_id = ? "
+        conn.query(querySQL, addressId,function (err, rows) {
+            conn.release();
+            if (err){
+                console.log(err);
+                cb(err,null)
+            }else{
+                cb(null,rows);
+            }
+        });
+    });
+}
+
 
 //用户地址修改
 
@@ -58,6 +76,7 @@ personModel.addAddress=function(data,cb){
                 console.log(err);
                 cb(err,null)
             }else{
+                console.log(rows)
                 cb(null,rows);
             }
         });

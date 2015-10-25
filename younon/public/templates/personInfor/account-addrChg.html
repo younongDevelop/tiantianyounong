@@ -10,25 +10,37 @@
                 <input type="text" ng-model="address.receiver_phone">
             </label>
             <label class="item item-input border-top-style">
-                <span class="input-label">省:</span>
+                <div style="width:50%;float: left;line-height: 8rem">
+                <span class="input-label" style="float: left">市:</span>
+
             <select class=" aadressSelect fl"
                     ng-model="address.city_id"
                     ng-options="o.city_id as o.city_name for o in cities"
-                    ng-change="getDistrict(address.city_id)" style="width:35%;">
+                    ng-change="getDistrict(address.city_id)"
+                    style="width:21rem;height: 4rem;margin-top: 2rem;">
+
             </select>
-                <span class="input-label">市:</span>
+                    <i class="ion-ios-arrow-down" style="right:34rem"></i>
+
+                    </div>
+                <div style="width:50%;float: left;height: 100%;line-height: 8rem;" class="border-left-style">
+                <span class="input-label" style="float: left;margin-left: 2rem">区:</span>
             <select class="input-box aadressSelect"
                     ng-model="address.district_id"
                     ng-options="o.district_id as o.district_name for o in districts"
-                    ng-change="getCommunity(address.district_id)" style="width:40%">
+                    ng-change="getCommunity(address.district_id)"
+                    style="line-height: 4rem;height: 4rem;margin-top:2rem;width:21rem">
             </select>
+                    <i class="ion-ios-arrow-down"></i>
+                    </div>
                 </label>
             <label class="item item-input border-top-style">
-                <span class="input-label">区:</span>
+                <span class="input-label">小区:</span>
             <select class="input-box aadressSelect"
                     ng-model="address.community_id"
                     ng-options="o.comm_id as o.comm_name for o in community" style="width:80%;">
             </select>
+                <i class="ion-ios-arrow-down" ></i>
                 </label>
             <label class="item item-input border-top-bottom">
                 <span class="input-label">详细地址:</span>

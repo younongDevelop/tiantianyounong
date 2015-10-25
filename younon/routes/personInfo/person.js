@@ -20,6 +20,19 @@ function getAddress (req, res){
     });
 };
 
+//查询用户详细地址
+function findAddress (req,res){
+    var address_id=req.params.address_id;
+    personModel.findAddress(address_id,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data[0]});
+    });
+
+}
+
 //修改用户地址
 function updateAddress(req,res){
     var data=req.body;
@@ -41,7 +54,7 @@ function addAddress(req,res){
             console.log(err);
             return res.json(500, {error: err});
         }
-        return res.json(200, {results: data[0]});
+        return res.json(200, {results: data.insertId});
     });
 }
 
@@ -112,6 +125,7 @@ router.get('/getAddress/:customerId/:page/:pageSize',getAddress); //获取用户
 router.post('/updateAddress',updateAddress); //修改用户地址
 router.post('/addAddress',addAddress); //新增用户地址
 router.get('/delAddress/:address_id',delAddress); //删除用户地址
+router.get('/findAddress/:address_id',findAddress);//查询用户用户地址
 
 router.get('/getCity',getCity);//获取城市列表
 router.get('/getDistrict/:cityId',getDistrict);//获取区列表
