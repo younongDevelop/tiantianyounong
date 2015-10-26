@@ -67,6 +67,8 @@
     font-size: 2.2rem;
     color: #666666;
     line-height: 6.4rem;
+    background-color: #fff;
+    z-index: 0;
 }
 
 .text-div div{
@@ -77,5 +79,6 @@
     float: left;
     font-size: 2.6rem;
     color: #4c4c4c;
+
 }
 

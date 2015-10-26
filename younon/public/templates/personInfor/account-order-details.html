@@ -1,9 +1,9 @@
 
 <ion-view>
     <ion-content style="background-color: #efeff4">
-        <div class="list" style="margin-bottom: 7rem">
+        <div class="list" style="margin-bottom: 8rem;float: left">
             <div style="margin-top:1rem;height: 12.8rem;background-color: #fff;z-index: 0" class="border-top-bottom">
-                <div style="height: 50%" class="text-div">
+                <div  class="text-div">
                     <div class="left-div">
                         配送方式
                     </div>
@@ -11,7 +11,7 @@
                         {{orderDetail.deliver_type}}
                     </div>
                 </div>
-                <div style="height: 50%" class="text-div border-top-style">
+                <div  class="text-div border-top-style">
                     <div class="fl">
                        送货时间
                     </div>
@@ -23,7 +23,6 @@
 
             <div style="margin-top:1rem;height: 12.8rem;background-color: #fff;z-index: 0;
             font-size: 2.6rem;color: #4c4c4c" class="border-top-bottom">
-
                 <div style="width:8rem;height: 100%" class="fl">
                     <i class="ion-ios-location-outline" style="color:#39bf50;font-size: 4rem;margin-left:3rem;line-height: 12.8rem"></i>
                 </div>
@@ -31,22 +30,68 @@
                     <span>{{orderDetail.receiver_name}}</span>
                     <span style="margin-left:6.4rem">{{orderDetail.deliver_phone}}</span>
                 </div>
-
                 <div style="margin-top:3.4rem;" class="fl">
                     {{orderDetail.deliver_address}}
                 </div>
-
             </div>
 
 
+            <div  class="text-div border-top-bottom" style="margin-top:1rem">
+                <div class="left-div">
+                   支付方式
+                </div>
+                <div class="fr">
+                    {{orderDetail.payment_type}}
+                </div>
+            </div>
+
+
+            <ion-list style="margin-top:1rem;float: left;width: 100%">
+                <ion-item ng-repeat="item in orderDetail.items"  style="margin-bottom:1rem;height: 19.4rem;padding: 0" class="border-style">
+                        <div style="height:15.2rem;" class="border-bottom-style">
+                            <img ng-src="{{item.prod_images}}" style="margin:2rem;height: 11.2rem;
+                        width:15rem;float: left">
+                            <div style="float: left;">
+                                <div style="margin:3rem 0 0 2rem;font-size: 2.6rem;color: #4c4c4c;line-height: 2.6rem;
+                            text-overflow:ellipsis;overflow: hidden;white-space:nowrap;width:36rem">{{item.prod_name}}</div>
+                                <div style="margin:4rem 0 0 2rem;font-size: 2.2rem;color: #4c4c4c;float: left;height: 3rem;
+                  text-align: center;line-height: 2.6rem;">
+                                    <span style="float: left">数量</span>
+                                </div>
+                            </div>
+                            <div style="float: right;margin-right: 2rem;font-size: 2.2rem;margin-top: 10rem ">x{{item.product_quantity}}</div>
+                        </div>
+
+                        <div style="float: right;color: #4c4c4c;font-size:2.2rem;margin-right: 2rem">小计：
+                        <span class="attention" style="font-size:2.2rem;line-height: 4.1rem;    ">
+                            ￥{{item.final_price*item.product_quantity}}
+                        </span>
+                        </div>
+                </ion-item>
+            </ion-list>
+
+            <div style="margin-top:1rem;height: 30.4rem;margin-bottom:9rem;margin:0;float: left;
+            width:100%;font-size: 2.4rem !important;color: #666666" class="text-div border-top-bottom">
+                <div style="padding:2rem 2rem 0 2rem;float: left;width: 100%;margin:0;line-height: 2rem" ng-repeat="detail in information">
+                    <div class="fl" style="margin:0">{{detail.title}}</div>
+                    <div class="fr attention" style="margin:0" ng-if="detail.attention">{{detail.content}}</div>
+                    <div class="fr" style="margin:0" ng-if="!detail.attention">{{detail.content}}</div>
+
+                </div>
+            </div>
         </div>
     </ion-content>
-    <div class="bar bar-footer " ng-if="statue==1">
-        <button class="button " ng-click="cancelOrder()">取消订单</button>
-        <button class="button " ng-click="pay()">去付款</button>
-    </div>
-    <div class="bar bar-footer " ng-if="statue=='unship'">
-        <button class="button " ng-click="close()">关闭订单</button>
-        <button class="button " ng-click="send()">发货</button>
+
+    <div class="bar bar-footer" style="padding:0;height: 7rem;background-image: none">
+        <div class="pull-left" style="line-height: 7rem;color: #4c4c4c;font-size: 2.2rem;margin-left:2rem">
+            实付：
+            <span class="attention" style="font-size: 2.8rem">￥{{orderDetail.order_total}}</span>
+        </div>
+
+        <button class="button pull-right" ng-click="cancelOrder()" style="height: 100%;top: 0;width: 16rem;
+        background-color: #666666;color: #ffffff;font-size: 3rem;border:0;right: 16rem;border-radius: 0">取消订单</button>
+
+        <button class="button pull-right" ng-click="pay()" style="height: 100%;top: 0;width: 16rem;
+        background-color: #d95c5c;color: #ffffff;font-size: 3rem;border:0;right: 0;border-radius: 0">去付款</button>
     </div>
 </ion-view>

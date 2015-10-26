@@ -62,8 +62,19 @@ angular.module('person.controllers', [])
         var errorMap=errMap.getMap();
         accountOrders.getOrderDetail($stateParams.orderId,function(data){
             $scope.orderDetail=data;
-            console.log(data);
-
+            $scope.orderDetail.money=0;
+            $scope.orderDetail.weight=0;
+            for(var i in $scope.orderDetail.items){
+                if(!$scope.orderDetail.items[i].prod_weight){
+                    $scope.orderDetail.items[i].prod_weight=0;
+                }
+                $scope.orderDetail.money=$scope.orderDetail.money+$scope.orderDetail.items[i].final_price*$scope.orderDetail.items[i].product_quantity;
+                $scope.orderDetail.weight=$scope.orderDetail.weight+$scope.orderDetail.items[i].prod_weight*$scope.orderDetail.items[i].product_quantity;
+            }
+            $scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"创建时间",content:$scope.orderDetail.date_purchased},
+                {title:"商品总重",content:$scope.orderDetail.weight},{title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true},
+                {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},{title:"运费减免",content:'￥'+($scope.orderDetail.order_total-$scope.orderDetail.deliver_charges-$scope.orderDetail.money),attention:true},
+                {title:"赠送积分",content:'0积分'},];
         });
 
         $scope.cancelOrder=function(){
