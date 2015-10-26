@@ -62,3 +62,20 @@
     right: 2rem;
 }
 
+.text-div{
+    height: 6.4rem;
+    font-size: 2.2rem;
+    color: #666666;
+    line-height: 6.4rem;
+}
+
+.text-div div{
+    margin:0 2rem;
+}
+
+.text-div .left-div{
+    float: left;
+    font-size: 2.6rem;
+    color: #4c4c4c;
+}
+

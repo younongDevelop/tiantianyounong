@@ -7,6 +7,7 @@ var customerId=11;
 var openid='';
 var token='';
 var appid='wx248d78d070b8fb35';
+var imgIP='http://120.131.70.188:3003/';
 
 (function (doc, win) {
     var docEl = doc.documentElement,
@@ -158,7 +159,7 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
       })
 
       .state('orderDetails', {
-          url: '/orderDetails/{orderId}/{statue}',
+          url: '/orderDetails/{orderId}',
           templateUrl: 'templates/personInfor/account-order-details.html',
           controller: 'accountOrderDetails'
       })

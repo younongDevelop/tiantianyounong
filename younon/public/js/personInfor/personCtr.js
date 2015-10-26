@@ -57,7 +57,7 @@ angular.module('person.controllers', [])
 
     .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,adminGetOrders,weixin,$ionicBackdrop) {
 
-        $scope.statue=$stateParams.statue;
+
 
         var errorMap=errMap.getMap();
         accountOrders.getOrderDetail($stateParams.orderId,function(data){

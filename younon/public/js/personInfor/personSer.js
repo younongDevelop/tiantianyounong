@@ -242,15 +242,13 @@ angular.module('person.services', [])
                 })
             },
             getOrderDetail:function(orderId,cb){
-                $http.get(api+'/orders/info/'+orderId).success(function(data){
-                    if(data.code===0){
+                $http.get('/person/findOrder/'+orderId).success(function(data){
                         orderDetail=data.results;
                         orderDetail.items.forEach(function(item){
-                            var obj = JSON.parse(item.product_images);
-                            item.image=obj.small;
+                            item.prod_images=imgIP+item.prod_images;
                         })
                         cb(orderDetail);
-                    }
+
                 }).error(function(res){
                     console.log(res);
                 })

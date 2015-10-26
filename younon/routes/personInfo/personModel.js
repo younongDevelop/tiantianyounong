@@ -202,7 +202,7 @@ personModel.getOrders=function(customerId,statue,page,pageSize,cb) {
 function getItems (orderId,cb){
 
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "select product_quantity,prod_name,prod_images from order_items left join products on order_items.prod_sku_id = products.prod_id where " +
+        var querySQL = "select product_quantity,final_price,prod_name,prod_images,products.prod_weight from order_items left join products on order_items.prod_sku_id = products.prod_id where " +
             "order_id = ?;"
         conn.query(querySQL, orderId, function (err, rows) {
             conn.release();
@@ -220,14 +220,20 @@ function getItems (orderId,cb){
 //获取订单详情
 personModel.findOrder=function(orderId,cb) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "select comm_id,comm_name from communities where district_id = ? and since_statue =1";
-        conn.query(querySQL, districtId, function (err, rows) {
+        var querySQL = "select deliver_type,deliver_time,receiver_name,deliver_phone,deliver_address,order_no,date_purchased" +
+            ",order_total,deliver_charges,payment_methods.payment_type from orders left join payment_methods on orders.payment_type = payment_methods.payment_method_id " +
+            " where order_id = ?";
+        conn.query(querySQL,orderId, function (err, rows) {
             conn.release();
             if (err) {
                 console.log(err);
                 cb(err, null)
             } else {
-                cb(null, rows);
+                getItems(orderId,function(err,data,orderId){
+                    rows[0].date_purchased=moment(rows[0].date_purchased).format("YYYY年MM月DD日 HH:mm");
+                    rows[0].items=data;
+                    cb(null, rows[0]);
+                })
             }
         });
     });

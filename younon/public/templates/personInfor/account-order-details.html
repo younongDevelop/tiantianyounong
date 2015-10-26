@@ -1,57 +1,44 @@
 
 <ion-view>
-    <ion-content>
-        <div class="list" style="margin-bottom: 40px">
-            <div class="item item-divider">
-                收货人信息
+    <ion-content style="background-color: #efeff4">
+        <div class="list" style="margin-bottom: 7rem">
+            <div style="margin-top:1rem;height: 12.8rem;background-color: #fff;z-index: 0" class="border-top-bottom">
+                <div style="height: 50%" class="text-div">
+                    <div class="left-div">
+                        配送方式
+                    </div>
+                    <div class="fr">
+                        {{orderDetail.deliver_type}}
+                    </div>
+                </div>
+                <div style="height: 50%" class="text-div border-top-style">
+                    <div class="fl">
+                       送货时间
+                    </div>
+                    <div class="fr">
+                        {{orderDetail.deliver_time}}
+                    </div>
+                </div>
             </div>
-            <div class="item">
-                收货人
-             <span class="item-note">{{orderDetail.receiver_name}}</span>
-            </div>
-            <div class="item">
-                联系电话
-                <span class="item-note">{{orderDetail.deliver_phone}}</span>
-            </div>
-            <div class="item">
-                收货地址
-                <span class="item-note">{{orderDetail.deliver_address}}</span>
+
+            <div style="margin-top:1rem;height: 12.8rem;background-color: #fff;z-index: 0;
+            font-size: 2.6rem;color: #4c4c4c" class="border-top-bottom">
+
+                <div style="width:8rem;height: 100%" class="fl">
+                    <i class="ion-ios-location-outline" style="color:#39bf50;font-size: 4rem;margin-left:3rem;line-height: 12.8rem"></i>
+                </div>
+                <div style="margin-top:3.4rem;" class="fl">
+                    <span>{{orderDetail.receiver_name}}</span>
+                    <span style="margin-left:6.4rem">{{orderDetail.deliver_phone}}</span>
+                </div>
+
+                <div style="margin-top:3.4rem;" class="fl">
+                    {{orderDetail.deliver_address}}
+                </div>
+
             </div>
 
 
-            <div class="item item-divider">
-                订单信息
-            </div>
-            <div class="item">
-                订单号
-                <span class="item-note">{{orderDetail.order_no}}</span>
-            </div>
-            <div class="item">
-                订单金额
-                <span class="item-note attention">￥{{orderDetail.order_total}}</span>
-            </div>
-            <div class="item">
-                下单时间
-                <span class="item-note">{{orderDetail.date_purchased}}</span>
-            </div>
-            <div class="item">
-                订单状态
-                <span class="item-note">{{orderDetail.order_status}}</span>
-            </div>
-
-
-            <div class="item item-divider">
-                商品信息
-            </div>
-            <ion-list>
-                <ion-item ng-repeat="item in orderDetail.items" class="item-thumbnail-left">
-                    <img ng-src="{{item.image}}">
-                    <h2 style="margin-top:10px">{{item.product_name}}</h2>
-                    <p class="attention">￥{{item.product_sell_price/100}}</p>
-                    <p class="fl">{{item.prod_sku_values}}</p>
-                    <p class="fr"> x{{item.quantity}}</p>
-                </ion-item>
-            </ion-list>
         </div>
     </ion-content>
     <div class="bar bar-footer " ng-if="statue==1">
