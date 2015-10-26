@@ -1,24 +1,55 @@
 <ion-view>
-    <ion-content>
+    <ion-content style="background-color: #efeff4">
+        <div style="height: 9.7rem;">
+
+            <div class="button-bar" style="height: 5.7rem;margin:2rem 1.2rem;width: 60.6rem;">
+                <a class="button" ng-repeat="statue in status" style="padding:0;border-color:#39bf50" ng-click="selectStatue(statue)">
+                    <div ng-if="statue.show" style="font-size: 2.6rem;line-height: 5.7rem;color: #ffffff;background-color: #39bf50">
+                    {{statue.title}}
+                        </div>
+                    <div ng-if="!statue.show" style="font-size: 2.6rem;line-height: 5.7rem;color: #39bf50;background-color: #ffffff">
+                        {{statue.title}}
+                    </div>
+                </a>
+            </div>
+            </div>
+
+
         <ion-list ng-if="orders.length > 0">
-            <ion-item ng-repeat="item in orders"  style="margin-bottom:20px;" class="orders-item">
+            <ion-item ng-repeat="item in orders"  style="margin-bottom:1rem;height: 23.4rem;padding: 0" class="border-style">
                 <a href="#/orderDetails/{{item.order_id}}/{{statue}}">
-                    <div class="item" >
-                    订单号
-                    <span class="item-note">{{item.order_no}}</span>
+                    <div  style="height:4.2rem;font-size:2.2rem;line-height: 4.2rem;" class="border-bottom-style">
+                        <div style="color:#4c4c4c;float: left;margin-left: 2rem">{{item.date_purchased}}</div>
+                        <div style="color:#39bf50;float: right;margin-right: 2rem">{{item.order_status}}</div>
                     </div>
-                    <div class="item" >
-                        商品总金额
-                        <span class="item-note attention">￥{{item.order_total}}</span>
+                    <div style="height:15.2rem;" class="border-bottom-style">
+                        <img ng-src="{{item.items[item.items.length-1].prod_images}}" style="margin:2rem;height: 11.2rem;
+                        width:15rem;float: left">
+
+
+                        <div style="float: left;">
+                            <div style="margin:3rem 0 0 2rem;font-size: 2.6rem;color: #4c4c4c;line-height: 2.6rem;
+                            text-overflow:ellipsis;overflow: hidden;white-space:nowrap;width:36rem">{{item.title}}</div>
+                            <div style="margin:4rem 0 0 2rem;font-size: 2.2rem;color: #4c4c4c;float: left;height: 3rem;
+                  text-align: center;line-height: 2.6rem;">
+                                <span style="float: left">数量</span>
+                            </div>
+                        </div>
+                        <div style="float: right;margin-right: 2rem;font-size: 2.2rem;margin-top: 10rem ">x{{item.quantity}}</div>
                     </div>
-                    <div class="item" >
-                        下单时间
-                        <span class="item-note">{{item.date_purchased}}</span>
+
+                    <div style="float: right;color: #4c4c4c;font-size:2.2rem;margin-right: 2rem">合计：
+                        <span class="attention" style="font-size:2.2rem;line-height: 4.1rem;margin-right:2rem">
+                            ￥{{item.order_total}}
+                        </span>
+                        (含运费
+                          <span class="attention" style="font-size:2.2rem;line-height: 4.1rem;">
+                            ￥{{item.deliver_charges}}
+                        </span>
+                        )
                     </div>
-                    <div class="item" >
-                       订单状态
-                        <span class="item-note">{{item.order_status}}</span>
-                    </div>
+
+
                 </a>
             </ion-item>
             <ion-infinite-scroll icon="ion-loading-c" ng-if="moreDataCanBeLoaded()" on-infinite="getMore()" distance="10%">

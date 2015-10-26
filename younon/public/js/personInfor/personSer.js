@@ -1,6 +1,7 @@
 /**
  * Created by wei on 15/9/21.
  */
+
 angular.module('person.services', [])
     //我的地址相关部分
     .factory('personAddress', function($http) {
@@ -143,34 +144,35 @@ angular.module('person.services', [])
 
     //我的订单相关部分
     .factory('accountOrders', function($http) {
-        var undoneOrders=[];
-        var doneOrders=[];
-        var finishOrders=[];
+        var resultData=[];
+        var stat='';
+
         var orderDetail={};
-        var statueArrMap={
-            1:undoneOrders,
-            2:doneOrders,
-            3:finishOrders
-        };
+
         return{
-            getUndoneOrders:function(cb){
-                cb(undoneOrders);
-            },
-            getDoneOrders:function(cb){
-                cb(doneOrders);
-            },
-            getFinishOrders:function(cb){
-                cb(finishOrders);
-            },
-            loadOrders:function(page,pageSize,version,statue,cb){
-                $http.get(api+'/orders/'+customerId+'/'+statue+'/'+page+'/'+pageSize+'/'+version).success(function(data){
+
+            loadOrders:function(page,pageSize,statue,cb){
+                if(stat!=statue){
+                    resultData=[];
+                    stat=statue;
+                }
+                console.log(resultData);
+                console.log(stat);
+                $http.get('/person/getOrders/'+customerId+'/'+statue+'/'+page+'/'+pageSize).success(function(data){
                     console.log(data);
-                    if(data.code===0){
-                        cb(data.results)
                         data.results.forEach(function(item){
-                            statueArrMap[statue].push(item);
+                            item.title='';
+                            item.quantity=0;
+                            for(var i in item.items){
+                                item.quantity=item.quantity+item.items[i].product_quantity;
+                                item.items[i].prod_images='http://120.131.70.188:3003/'+item.items[i].prod_images;
+                                if(i != item.items.length-1){item.title=item.title+item.items[i].prod_name+',';}
+                                else{item.title=item.title+item.items[i].prod_name}
+                            }
+                            resultData.push(item);
                         })
-                    }
+                    console.log(resultData);
+                    cb(resultData);
                 }).error(function(res){
                     console.log(res);
                 })

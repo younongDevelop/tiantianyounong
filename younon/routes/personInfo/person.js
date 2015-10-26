@@ -121,6 +121,63 @@ function getSince(req,res){
 
 }
 
+
+//获取订单列表
+function getOrders(req,res){
+    var customerId=req.params.customerId;
+    var page=req.params.page;
+    var pageSize=req.params.pageSize;
+    var statue=req.params.statue;
+    personModel.getOrders(customerId,statue,page,pageSize,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    });
+
+}
+
+
+//获取订单详情
+function findOrder(req,res){
+    var orderId=req.params.orderId;
+    personModel.findOrder(orderId,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    });
+
+}
+
+//修改订单状态
+function chgOrder(req,res){
+    var orderId=req.params.orderId;
+    var statue=req.params.statue;
+    personModel.chgOrder(orderId,statue,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    });
+}
+
+//新增订单
+function addOrder(req,res){
+    var data=req.body;
+    personModel.addOrder(data,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    });
+}
+
+
 router.get('/getAddress/:customerId/:page/:pageSize',getAddress); //获取用户所有地址
 router.post('/updateAddress',updateAddress); //修改用户地址
 router.post('/addAddress',addAddress); //新增用户地址
@@ -131,6 +188,10 @@ router.get('/getCity',getCity);//获取城市列表
 router.get('/getDistrict/:cityId',getDistrict);//获取区列表
 router.get('/getCommunity/:districtId',getCommunity);//获取小区列表
 router.get('/getSince/:districtId',getSince);//获取自提点列表
+
+router.get('/getOrders/:customerId/:statue/:page/:pageSize',getOrders);//获取订单列表
+router.get('/findOrder/:orderId',findOrder);//获取订单详情
+router.put('/chgOrder/:orderId/:statue',chgOrder);//修改订单状态
 
 
 

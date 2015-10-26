@@ -150,14 +150,11 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
           controller:'indexBaseCtrl'
       })
 
-      .state('account.orders', {
-          url: '/orders/{statue}',
-          views: {
-              'tab-account': {
-                  templateUrl: 'templates/personInfor/account-orders.html',
-                  controller: 'accountOrdersCtrl'
-              }
-          }
+      .state('orders', {
+          url: '/orders',
+          templateUrl: 'templates/personInfor/account-orders.html',
+          controller: 'accountOrdersCtrl'
+
       })
 
       .state('orderDetails', {

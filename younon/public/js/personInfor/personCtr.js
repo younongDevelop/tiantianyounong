@@ -5,25 +5,32 @@
 angular.module('person.controllers', [])
 
 
-    .controller('accountOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders,$stateParams) {
+    .controller('accountOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders) {
+        $scope.status=[{show:true,statue:'(1)',title:'待支付'},{show:false,statue:'(2,3,4)',title:'待收货'},{show:false,statue:'(14)',
+        title:'待自取'},{show:false,statue:'(5,12)',title:'已完成'}, {show:false,statue:'(6,7,8,11,13)',title:'已取消'}];
         var page=1;
         var pageSize=10;
-        var version=0;
         var isMore = false;
+        var statue=$scope.status[0].statue;
 
-        var getDataMap={
-            1:accountOrders.getUndoneOrders,
-            2:accountOrders.getDoneOrders,
-            3:accountOrders.getFinishOrders
-        };
-        $scope.statue=$stateParams.statue;
+        $scope.selectStatue=function(data){
+            page=1;
+            for(var i in $scope.status){
+                $scope.status[i].show=false;
+            }
+            data.show=true;
 
-        getDataMap[$stateParams.statue](function(data){
-            $scope.orders=data;
+            statue=data.statue;
+            console.log(statue);
 
-        });
+            accountOrders.loadOrders(page,pageSize,statue,loadMore);
+
+        }
 
         var loadMore = function (data) {
+            console.log(data);
+            $scope.orders=data;
+
             page++;
             if (data.length < pageSize) {
                 isMore = false;
@@ -31,8 +38,9 @@ angular.module('person.controllers', [])
                 isMore = true;
             }
         };
-        accountOrders.loadOrders(page,pageSize,version,$stateParams.statue,loadMore);
+        accountOrders.loadOrders(page,pageSize,statue,loadMore);
         $scope.moreDataCanBeLoaded = function () {
+            console.log(isMore);
             if (isMore) {
                 return true;
             } else {
@@ -40,12 +48,8 @@ angular.module('person.controllers', [])
             }
         }
         $scope.getMore = function () {
-            console.log(page);
-            if (page > 1) {
                 isMore = false;
-                accountOrders.loadOrders(page,pageSize,version,$stateParams.statue,loadMore);
-            }
-
+                accountOrders.loadOrders(page,pageSize,statue,loadMore);
             // 在重新完全载入数据后，需要发送一个scroll.infiniteScrollComplete事件，告诉directive，我们完成了这个动作，系统会清理scroller和为下一次的载入数据，重新绑定这一事件。
             $scope.$broadcast('scroll.infiniteScrollComplete');
         }
