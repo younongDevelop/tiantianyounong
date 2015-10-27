@@ -155,8 +155,8 @@ function findOrder(req,res){
 //修改订单状态
 function chgOrder(req,res){
     var orderId=req.params.orderId;
-    var statue=req.params.statue;
-    personModel.chgOrder(orderId,statue,function(err,data){
+    var statueId=req.params.statueId;
+    personModel.chgOrder(orderId,statueId,function(err,data){
         if (!!err) {
             console.log(err);
             return res.json(500, {error: err});
@@ -191,7 +191,7 @@ router.get('/getSince/:districtId',getSince);//获取自提点列表
 
 router.get('/getOrders/:customerId/:statue/:page/:pageSize',getOrders);//获取订单列表
 router.get('/findOrder/:orderId',findOrder);//获取订单详情
-router.put('/chgOrder/:orderId/:statue',chgOrder);//修改订单状态
+router.put('/chgOrder/:orderId/:statueId',chgOrder);//修改订单状态
 
 
 

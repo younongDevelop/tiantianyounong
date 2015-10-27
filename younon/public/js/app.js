@@ -24,7 +24,7 @@ var imgIP='http://120.131.70.188:3003/';
 })(document, window);
 
 
-angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin.controllers', 'admin.services','person.controllers', 'person.services','shop.controllers', 'shop.services','common.util',])
+angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin.controllers', 'admin.services','person.controllers', 'person.services','shop.controllers', 'shop.services','common.util'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -114,11 +114,11 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
           }
       })
       .state('tab.list', {
-          url: '/list/{search}/{categoryid}',
+          url: '/list/{search}',
           views: {
             'tab-index':{
                   templateUrl: 'templates/shopping/shopping-list.html',
-                  controller: 'listCtrl'              
+                  controller: 'listCtrl'
             }
           }
       })

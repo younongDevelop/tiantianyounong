@@ -56,6 +56,50 @@ shopModel.getGoods = function(page,size,categoryid,cb){
     });
 }
 
+
+//查询商品详情
+shopModel.findGood = function(goodId,cb){
+
+    store.getPool().getConnection(function (err, conn) {
+
+        var querySQL ="select prod_id,prod_name,prod_images,prod_price,prod_detail from products where prod_id = "+goodId;
+        conn.query(querySQL, null,function (err, rows) {
+            conn.release();
+            if (err){
+                console.log(err);
+                cb(err,null)
+            }else{
+                cb(null,rows);
+            }
+        });
+    });
+}
+
+//根据关键字查找商品
+
+shopModel.searchGoods = function(page,size,keyword,cb){
+    var start=(parseInt(page)-1)*parseInt(size);
+    if(keyword=='null'){
+        keyword='';
+    }
+    store.getPool().getConnection(function (err, conn) {
+        var like = ' where prod_name like \'%' + keyword  + '%\' and prod_status != 5 ';
+        var querySQL ="select prod_id,prod_name,prod_images,prod_price from products "+like+"order by prod_updatetime desc limit "+start+","+size;
+        console.log(querySQL);
+        conn.query(querySQL, null,function (err, rows) {
+            conn.release();
+            if (err){
+                console.log(err);
+                cb(err,null)
+            }else{
+                cb(null,rows);
+            }
+        });
+    });
+}
+
+
+
 //如果购物车中存在商品则修改数量
 function updateBasket(status,quantity,goods,cb){
     var sql={

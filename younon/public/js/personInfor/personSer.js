@@ -177,37 +177,26 @@ angular.module('person.services', [])
                     console.log(res);
                 })
             },
-            changeOrderStatue:function(orderId,statue,cb){
-                var urlMap={
-                  pay:'/orders/paysuccess/'+orderId,
-                  cancel:'/orders/del/'+orderId
-                };
+            changeOrderStatue:function(orderId,statueId,cb){
                 var errMAp={
-                    pay:'ORDER_PAY_FAILURE',
-                    cancel:'CANCEL_ORDER_FAILURE'
+                    2:'ORDER_PAY_FAILURE',
+                    6:'CANCEL_ORDER_FAILURE',
+                    12:'CUSTOMER_SIGN_FAILURE'
                 };
-                $http.put(api+urlMap[statue]).success(function(data){
+                $http.put('/person/chgOrder/'+orderId+'/'+statueId).success(function(data){
+
+                   for(var i in resultData){
+                       if(resultData[i].order_id == orderId){
+                           resultData.splice(i,1);
+                       }
+                   }
                     var cbMAp={
-                        pay:'ORDER_PAY_SUCCESS',
-                        cancel:'CANCEL_ORDER_SUCCESS'
+                        2:'ORDER_PAY_SUCCESS',
+                        6:'CANCEL_ORDER_SUCCESS',
+                        12:'CUSTOMER_SIGN_SUCCESS'
                     };
-                    var statueMap={
-                        pay:'支付成功',
-                        cancel:'已取消'
-                    };
-                    if(data.code===0){
-                        cb(cbMAp[statue]);
-                        var i=0;
-                        undoneOrders.forEach(function(item){
-                            if(item.order_id==orderId){
-                                undoneOrders.splice(i,1);
-                                orderDetail.order_status=statueMap[statue];
-                            }
-                            i++;
-                        })
-                    }else{
-                        cb(errMAp[statue]);
-                    }
+                        cb(cbMAp[statueId]);
+
                 }).error(function(res){
                     cb(errMAp[statue]);
                 });
@@ -300,7 +289,9 @@ angular.module('person.services', [])
             ADMIN_CLOSE_SUCCESS:'关闭成功',
             ADMIN_CLOSE_FAILURE:'关闭失败',
             ADMIN_SEND_SUCCESS:'发货成功',
-            ADMIN_SEND_FAILURE:'发货失败'
+            ADMIN_SEND_FAILURE:'发货失败',
+            CUSTOMER_SIGN_SUCCESS:'签收成功',
+            CUSTOMER_SIGN_FAILURE:'签收失败',
         };
         return {
            getMap:function(){

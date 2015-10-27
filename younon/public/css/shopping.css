@@ -174,3 +174,7 @@ p.list-pro-price{
 .order-suc-btn-pay{
     float: right;
 }
+
+.list-content .list:last-child{
+    margin-bottom:9rem;
+}

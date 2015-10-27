@@ -82,3 +82,7 @@
 
 }
 
+.order-detail .list:last-child{
+    margin-bottom:1rem;
+}
+

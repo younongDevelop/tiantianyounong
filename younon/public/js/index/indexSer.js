@@ -11,7 +11,7 @@ angular.module('index.services', [])
             goodsNumber.numberArr=[];
             for (var i in goods) {
                 goodsNumber.number=goodsNumber.number+goods[i].quantity;
-                goodsNumber.sum=goodsNumber.sum+goods[i].quantity*goods[i].prod_price;
+                if(goods[i].select)goodsNumber.sum=goodsNumber.sum+goods[i].quantity*goods[i].prod_price;
                 goodsNumber.numberArr.push(goods[i].quantity);
             }
         }
@@ -39,6 +39,7 @@ angular.module('index.services', [])
                 cb(goods);
             },
             getGoodsNumber:function(cb){
+                changeGoodsNumber();
                 cb(goodsNumber);
             },
             /**
@@ -48,7 +49,7 @@ angular.module('index.services', [])
             * @param {function} suc 添加成功后的回调函数
             * @param {function} err 添加失败后的回调函数
             */
-            addGoods:function(pro,suc,err){
+            addGoods:function(pro,cb){
                 var pid = parseInt(pro.prod_id);
                 var addInfo = {
                     customersId:customerId,
@@ -76,7 +77,7 @@ angular.module('index.services', [])
                         return;
 
                 }).error(function(res){
-                    err && err(res);
+                    cb && cb(res);
                 })
             },
             deleteGoods:function(data,cb){
@@ -103,21 +104,23 @@ angular.module('index.services', [])
                     cb();
                 });
             },
-            hasMore: function () {
-                return isMore;
-            },
-            clearGoods:function() {
-                while(goods.length>0){
-                    goods.pop();
-                }
-                changeGoodsNumber();
+            findGood:function(goodId,cb){
+                $http.get('/shop/findGood/'+goodId).success(function (data) {
+                    cb(data.results[0]);
+                }).error(function (res) {
+                    console.log(res);
+
+                });
             }
+
         }
 })
 .factory('cate',function($http){
     var cates=[];
       var  goods=[];
         var cateId='';
+        var keywords='';
+        var searchGoods=[];
 
         function loadProducts(categoryId,page,pageSize,cb){
             if(page == 1){goods.splice(0,goods.length);}
@@ -125,7 +128,7 @@ angular.module('index.services', [])
                 if(cb){cb(data);}
                 console.log(data);
                 for(var i=0;i<data.results.length;i++){
-                    data.results[i].prod_images='http://120.131.70.188:3003/'+data.results[i].prod_images;
+                    data.results[i].prod_images=imgIP+data.results[i].prod_images;
                     goods.push(data.results[i]);
                 }
                 console.log(goods);
@@ -162,18 +165,38 @@ angular.module('index.services', [])
         * @desc 获取分类数据,分类数据中包含产品数据
         * @func getCates
         * @param {function} cb 回调函数
-        */ 
+        */
         getCates: function(cb){
             loadCategory(cb)
         },
         getGoods:function(cb){
             cb && cb(goods);
         },
+        getSearchGoods:function(cb){
+            cb && cb(searchGoods);
+        },
         loadGoods:function(cateid,page,pageSize,cb){
             if(!cateid){cateid=cateId};
             loadProducts(cateid,page,pageSize,cb);
-        }
+        },
+        searchGoods:function(page,size,keyword,cb){
+            console.log();
+            if(keywords != keyword) {
+                keywords=keyword;
+                searchGoods.splice(0,searchGoods.length);
+            }
 
+            $http.get('/shop/searchGoods/'+page+'/'+size+'/'+keyword).success(function(data){
+                if(cb){cb(data);}
+                console.log(data);
+                for(var i=0;i<data.results.length;i++){
+                    data.results[i].prod_images=imgIP+data.results[i].prod_images;
+                    searchGoods.push(data.results[i]);
+                }
+            }).error(function(err){
+                console.log(err);
+            })
+        }
     }
 })
 
@@ -204,6 +227,28 @@ angular.module('index.services', [])
 
 
 
+.directive('compile', function($compile) {
+
+        return function(scope, element, attrs) {
+            scope.$watch(
+                function(scope) {
+                    // watch the 'compile' expression for changes
+                    return scope.$eval(attrs.compile);
+                },
+                function(value) {
+                    // when the 'compile' expression changes
+                    // assign it into the current DOM
+                    element.html(value);
+
+                    // compile the new DOM and link it to the current
+                    // scope.
+                    // NOTE: we only compile .childNodes so that
+                    // we don't get into infinite loop compiling ourselves
+                    $compile(element.contents())(scope);
+                }
+            );
+        };
+    })
 
 
     .factory('weixin',function($http){

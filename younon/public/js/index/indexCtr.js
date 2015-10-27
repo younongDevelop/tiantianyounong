@@ -73,7 +73,7 @@ angular.module('index.controllers', [])
 
     })
 
-.controller('indexCtrl', function($scope, cate, cart, list, detail,$interval, $ionicSlideBoxDelegate,$timeout,$location,
+.controller('indexCtrl', function($scope, cate, cart,$interval, $ionicSlideBoxDelegate,$timeout,$location,
                                   $ionicPopup, $rootScope,$ionicLoading,$ionicListDelegate,others) {
     
         $scope.searchStr = "";
@@ -84,8 +84,6 @@ angular.module('index.controllers', [])
         var isMore =false;
         var page=1;
         var pageSize=3;
-
-        var widt=window.screen.availWidth;
 
         var slideHandle = $ionicSlideBoxDelegate.$getByHandle('indexSlide');
         $interval(function(){
@@ -101,7 +99,7 @@ angular.module('index.controllers', [])
             }else{
                 var imgArr=[];
                 for(var i=0 ;i<data.length;i++){
-                    imgArr.push({imgSrc:'http://120.131.70.188:3003/'+data[i]});
+                    imgArr.push({imgSrc:imgIP+data[i]});
                 }
                 $scope.slideInfo = {
                     number:data.length,
@@ -141,15 +139,7 @@ angular.module('index.controllers', [])
 
         // 点击搜索事件
         $scope.search = function(searchStr){
-            $location.path('/tab/list/'+searchStr+'/');
-        }
-        // 跳转到分类部分
-        $scope.gotoCategoryPart = function(cid){
-            list.setKeyword('');
-            list.setCategoryid(cid);
-            list.loadAgain(function(){
-            });
-            $location.path('/tab/list//'+cid);
+            $location.path('/tab/list/'+searchStr);
         }
 
         // 添加购物车
@@ -172,7 +162,6 @@ angular.module('index.controllers', [])
 
         // 跳转到详情页
         $scope.jumpDetail = function(proid){
-            detail.initDetail(proid);
             $location.path('/shopping/detail/'+proid);
         }
 
@@ -285,6 +274,8 @@ angular.module('index.controllers', [])
                 }
             }
 
+            cart.getGoodsNumber();
+
         }
 
         $scope.selectOne=function(index){
@@ -298,6 +289,8 @@ angular.module('index.controllers', [])
                     }
                 }
             }
+
+            cart.getGoodsNumber();
 
         }
 

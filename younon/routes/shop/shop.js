@@ -43,6 +43,37 @@ function getGoods(req,res){
     })
 }
 
+//查询商品详情
+
+function findGood (req,res){
+
+    var goodId = req.params.goodId;
+    shopModel.findGood(goodId,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    })
+
+}
+
+//根据关键字查找商品
+function searchGoods (req,res){
+    var page = req.params.page;
+    var size = req.params.size;
+    var keyword = req.params.keyword;
+    console.log(keyword);
+    shopModel.searchGoods(page,size,keyword,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    })
+
+}
+
 //购物车添加商品
 
 function addBasket(req,res){
@@ -98,7 +129,12 @@ function chgBasket(req,res){
 
 router.get('/getCarousel',getCarousel); //获取轮播图片
 router.get('/getCategory',getCategory); //获取分类数据
-router.get('/getGoods/:page/:size/:categoryid',getGoods); //获取分类数据
+
+router.get('/getGoods/:page/:size/:categoryid',getGoods); //获取商品数据
+router.get('/findGood/:goodId',findGood); //查找一个商品
+router.get('/searchGoods/:page/:size/:keyword',searchGoods); //根据关键字查找商品
+
+
 router.post('/addBasket',addBasket); //购物车添加商品
 router.post('/delBasket',delBasket); //删除购物车商品
 router.get('/getBasket/:customerId',getBasket); //获取购物车商品

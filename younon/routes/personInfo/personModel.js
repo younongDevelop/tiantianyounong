@@ -220,7 +220,7 @@ function getItems (orderId,cb){
 //获取订单详情
 personModel.findOrder=function(orderId,cb) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "select deliver_type,deliver_time,receiver_name,deliver_phone,deliver_address,order_no,date_purchased" +
+        var querySQL = "select deliver_type,order_status_id,deliver_time,receiver_name,deliver_phone,deliver_address,order_no,date_purchased" +
             ",order_total,deliver_charges,payment_methods.payment_type from orders left join payment_methods on orders.payment_type = payment_methods.payment_method_id " +
             " where order_id = ?";
         conn.query(querySQL,orderId, function (err, rows) {
@@ -241,10 +241,10 @@ personModel.findOrder=function(orderId,cb) {
 
 //修改订单状态
 
-personModel.chgOrder=function(orderId,statue,cb) {
+personModel.chgOrder=function(orderId,statueId,cb) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "select comm_id,comm_name from communities where district_id = ? and since_statue =1";
-        conn.query(querySQL, districtId, function (err, rows) {
+        var querySQL = "update orders LEFT JOIN order_status ON  order_status.order_status_id =  " + statueId +" set orders.order_status_id = "+statueId+", last_modified = now() ,order_status = order_status.status_name  where orders.order_id = "+orderId;
+        conn.query(querySQL, null, function (err, rows) {
             conn.release();
             if (err) {
                 console.log(err);

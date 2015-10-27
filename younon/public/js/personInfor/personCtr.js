@@ -62,6 +62,7 @@ angular.module('person.controllers', [])
         var errorMap=errMap.getMap();
         accountOrders.getOrderDetail($stateParams.orderId,function(data){
             $scope.orderDetail=data;
+            console.log(data);
             $scope.orderDetail.money=0;
             $scope.orderDetail.weight=0;
             for(var i in $scope.orderDetail.items){
@@ -77,8 +78,8 @@ angular.module('person.controllers', [])
                 {title:"赠送积分",content:'0积分'},];
         });
 
-        $scope.cancelOrder=function(){
-            accountOrders.changeOrderStatue($stateParams.orderId,'cancel',function(data){
+        $scope.chgOrder=function(statueId){
+            accountOrders.changeOrderStatue($stateParams.orderId,statueId,function(data){
                 $ionicPopup.alert({
                     title: '',
                     template:errorMap[data],
@@ -88,37 +89,8 @@ angular.module('person.controllers', [])
 
         };
 
-        $scope.close=function(){
-            accountOrders.adminChangeOrder($stateParams.orderId,13,function(data,statue){
-                if(statue){
-                    adminGetOrders.changeOrderStatue($stateParams.orderId);
-                }
-                $ionicPopup.alert({
-                    title: '',
-                    template:errorMap[data],
-                    okText: '好的'
-                });
-            });
 
-        }
 
-        $scope.send=function(){
-            var statueId={
-                9:4,
-                2:3
-            }
-            accountOrders.adminChangeOrder($stateParams.orderId,statueId[$scope.orderDetail.order_status_id],function(data,statue){
-
-                if(statue){
-                    adminGetOrders.changeOrderStatue($stateParams.orderId);
-                }
-                $ionicPopup.alert({
-                    title: '',
-                    template:errorMap[data],
-                    okText: '好的'
-                });
-            })
-        }
 
         $scope.pay=function(){
             $ionicBackdrop.retain();

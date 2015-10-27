@@ -14,32 +14,40 @@ angular.module('shop.controllers', [])
 	    console.log('shoppingCtrl');
 	})
 
-	.controller('listCtrl',function($scope,list,cart,$stateParams,$location,$ionicPopup){
-        $scope.searchStr = $stateParams.search;
-        $scope.categoryid = $stateParams.categoryid;
-		// 绑定列表数据
-        list.getProListInfo(function(proListInfo){
-        	$scope.proListInfo = proListInfo;
-        });
+	.controller('listCtrl',function($scope,cart,$stateParams,$ionicPopup,cate,$location){
+
+
+        if(!$stateParams.search){$stateParams.search=null};
+
+        var isMore =false;
+        var page=1;
+        var pageSize=3;
+
+        // 获取商品
+        cate.getSearchGoods(function(goods){
+            $scope.goods=goods;
+
+        })
+
         $scope.search = function(searchStr){
-            list.setCategoryid($scope.categoryid);
-            list.setKeyword(searchStr);
-            list.loadAgain(function(){
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            });
+            if(!searchStr){searchStr=null};
+            page=1;
+            console.log(searchStr)
+
+            cate.searchGoods(page,pageSize,searchStr,loadMore);
+
         }
-        $scope.hasMore = function(){
-            return list.hasMore();
+
+        // 跳转到详情页
+        $scope.jumpDetail = function(proid){
+            $location.path('/shopping/detail/'+proid);
         }
-        $scope.loadMore = function(){
-            console.log("ddd");
-            list.loadMore(function(){
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            });
-        }
-        $scope.addGoods = function(index){
-            var pro = $scope.proListInfo.proList[index];
-            pro.quantity = 1;
+
+
+        // 添加购物车
+        $scope.addGoods = function(pro){
+            pro.quantity=1;
+
             cart.addGoods(pro,function(res){
                 // 添加成功后
                 console.log("suc",res);
@@ -53,30 +61,67 @@ angular.module('shop.controllers', [])
                 });
             })
         }
-        // 跳转到详情页
-        $scope.jumpDetail = function(proid){
-            $location.path('/shopping/detail/'+proid);
+
+
+        //分页
+
+        var loadMore = function (data) {
+            page++;
+            if (data.results.length < pageSize) {
+                isMore = false;
+            } else {
+                isMore = true;
+            }
+        };
+
+
+        $scope.hasMore = function () {
+            if (isMore) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
-        $scope.search($scope.searchStr);
+        cate.searchGoods(page,pageSize,$stateParams.search,loadMore);
+
+        $scope.loadMore = function () {
+            isMore=false;
+            cate.searchGoods(page,pageSize,$stateParams.search,loadMore);
+            // 在重新完全载入数据后，需要发送一个scroll.infiniteScrollComplete事件，告诉directive，我们完成了这个动作，系统会清理scroller和为下一次的载入数据，重新绑定这一事件。
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+        }
+
+
+
     })
 
-    .controller("detailCtrl",function($scope, detail, $interval, cart, orderOp, $ionicSlideBoxDelegate,$stateParams,$location, $ionicPopup){
+    .controller("detailCtrl",function($scope,cart, orderOp,$stateParams,$location, $ionicPopup){
+
         var proid = $stateParams.proid;
 
-        $scope.number=[];
-        $scope.data.selectNumber = 1;
-        for(var i=1;i<51;i++){
-            $scope.number.push(i);
+        cart.findGood(proid,function(data){
+            data.prod_images=imgIP+data.prod_images;
+            $scope.detail=data;
+            $scope.detail.quantity=1;
+            console.log(data);
+        })
+
+        $scope.minus=function(){
+            if($scope.detail.quantity>1){
+                $scope.detail.quantity--;
+            }
         }
-        // 图文详情模拟数据
-        $scope.imgDetail = {
-            imgUrls:["./img/slide1.jpg","./img/slide2.jpg","./img/slide3.jpg"]
+
+        $scope.add=function(){
+
+                $scope.detail.quantity++;
+
         }
-        $scope.addGoods = function(selectNumber){
-            var pro  = $scope.proDetailInfo.proDetail;
-            pro.quantity = selectNumber;
-            cart.addGoods(pro,function(res){
+
+
+        $scope.addGoods = function(){
+            cart.addGoods($scope.detail,function(res){
                 console.log("suc",res);
             },function(res){
                 console.log("fail",res);
@@ -87,31 +132,7 @@ angular.module('shop.controllers', [])
                 });
             })
         }
-        // 轮播
 
-        var slideHandle = $ionicSlideBoxDelegate.$getByHandle('detailSlide');
-        
-        // window.slideHandle = slideHandle;
-
-
-        window.timer && $interval.cancel(window.timer); 
-        window.timer = $interval(function(){
-            if(slideHandle.currentIndex() >= ($scope.proDetailInfo.proDetail.product_images.list.length-1)){
-                slideHandle.slide(0);
-            }else{
-                slideHandle.next();
-            }
-        },2000);
-        detail.loadDetail(proid,function(){
-            slideHandle.update();
-        });
-        detail.setAfterInit(function(){
-            slideHandle.update();
-        });
-        detail.getDetail(function(proDetailInfo){
-            $scope.proDetailInfo = proDetailInfo;
-            // window.detail = $scope.proDetailInfo;
-        });
         // 点击前往购物车事件
         $scope.gotoCart = function(){
             $location.path('/tab/cart');
