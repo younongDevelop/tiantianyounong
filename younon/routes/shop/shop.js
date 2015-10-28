@@ -125,6 +125,30 @@ function chgBasket(req,res){
     })
 }
 
+//新增订单
+function addOrder(req,res){
+    var data=req.body;
+    shopModel.addOrder(data,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    })
+}
+
+//获取运费
+function getCharge(req,res){
+    var data = req.body;
+    shopModel.getCharge(data,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    })
+}
+
 
 
 router.get('/getCarousel',getCarousel); //获取轮播图片
@@ -139,5 +163,9 @@ router.post('/addBasket',addBasket); //购物车添加商品
 router.post('/delBasket',delBasket); //删除购物车商品
 router.get('/getBasket/:customerId',getBasket); //获取购物车商品
 router.get('/chgBasket/:customerId/:prod_id/:quantity',chgBasket); //修改购物车商品数量
+
+router.post('/addOrder',addOrder);//新增订单
+router.post('/getCharge',getCharge);//获取运费
+
 
 module.exports = router;

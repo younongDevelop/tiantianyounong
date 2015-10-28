@@ -256,21 +256,7 @@ personModel.chgOrder=function(orderId,statueId,cb) {
     });
 }
 
-//新增订单
-personModel.addOrder=function(data,cb) {
-    store.getPool().getConnection(function (err, conn) {
-        var querySQL = "select comm_id,comm_name from communities where district_id = ? and since_statue =1";
-        conn.query(querySQL, districtId, function (err, rows) {
-            conn.release();
-            if (err) {
-                console.log(err);
-                cb(err, null)
-            } else {
-                cb(null, rows);
-            }
-        });
-    });
-}
+
 
 
 

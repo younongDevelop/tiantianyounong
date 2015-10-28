@@ -4,6 +4,7 @@
 var DbStore = require('../../DbUtils/DbUtils');
 var store = new DbStore();
 var shopModel = module.exports;
+var moment=require('moment');
 
 //获取轮播图片
 shopModel.getCarousel=function(cb){
@@ -169,22 +170,29 @@ shopModel.addBasket = function(goods,cb){
     });
 }
 
-//删除购物车商品
-shopModel.delBasket = function(goods,cb){
-    var prod_id ='';
-    if(goods.length>1){
-        for(var i=0;i<goods.length;i++){
+function arrToStr(arr,key){
+
+    var str ='';
+    if(arr.length>1){
+        for(var i=0;i<arr.length;i++){
             if(i==0){
-                prod_id=prod_id+'('+goods[i].prod_id+',';
-            }else if(i==(goods.length-1)){
-                prod_id=prod_id+goods[i].prod_id+')';
+                str=str+'('+arr[i][key]+',';
+            }else if(i==(arr.length-1)){
+                str=str+arr[i][key]+')';
             }else{
-                prod_id=prod_id+goods[i].prod_id+',';
+                str=str+arr[i][key]+',';
             }
         }
     }else{
-        prod_id ='('+goods[0].prod_id+')';
+        str ='('+arr[0][key]+')';
     }
+
+    return str;
+}
+
+//删除购物车商品
+shopModel.delBasket = function(goods,cb){
+    var prod_id = arrToStr(goods,'prod_id');
 
     store.getPool().getConnection(function (err, conn) {
         var querySQL = 'update customers_baskets set status = 0  where customer_id = '+goods[0].customersId+' and prod_sku_id in ' + prod_id;
@@ -237,6 +245,171 @@ shopModel.chgBasket = function(customerId,prod_id,quantity,cb){
         });
     });
 }
+
+
+//获取订单号
+function getOrderNumber() {
+    var Num = "";
+    for (var i = 0; i < 6; i++) {
+        Num += Math.floor(Math.random() * 10);
+    }
+    Num += moment().format('X');
+    return Num;
+}
+
+
+//新增订单
+
+shopModel.addOrder = function(data,cb){
+    data.order_no=getOrderNumber();
+    store.getPool().getConnection(function (err, conn) {
+        var querySQL = 'insert into orders(customer_id,order_no,deliver_time,deliver_status,deliver_address,deliver_phone,' +
+            'deliver_charges,payment_id,payment_type,date_purchased,last_modified,order_total,order_status_id,order_status,' +
+            'receiver_name,deliver_type,status) values(?,?,?,?,?,?,?,?,?,now(),now(),?,?,?,?,?,1)';
+        conn.query(querySQL,[quantity,customerId,prod_id], function (err, rows) {
+            conn.release();
+            if (err){
+                console.log(err);
+                cb(err,null)
+            }else{
+                cb(null,rows);
+            }
+        });
+    });
+}
+
+
+//获取提交商品的商品信息
+
+function getGoodsInfor(goodsId,cb){
+
+    store.getPool().getConnection(function (err, conn) {
+        var querySQL = 'select prod_id,prod_name,prod_images,prod_weight,prod_price from products where prod_id in '+goodsId;
+        conn.query(querySQL,null, function (err, rows) {
+            conn.release();
+            if (err){
+                console.log(err);
+                cb(err,null)
+            }else{
+                cb(null,rows);
+            }
+        });
+    });
+
+
+
+}
+
+//strToJSON获取值
+
+function getDeliverValue(str,sumWeight){
+    var develiryObj=JSON.parse(str);
+    var keyArr=[0];
+    var valueArr=[];
+    for(var key in develiryObj){
+        keyArr.push(key);
+        valueArr.push(develiryObj[key])
+    }
+    if(keyArr.length>1){
+        for(var k=0;k<keyArr.length; k++){
+            if(parseInt(keyArr[k]) <= sumWeight && sumWeight < parseInt(keyArr[k+1])){
+                return valueArr[k];
+            }
+            if(k == (keyArr.length-1) ){
+                return valueArr[k-1];
+            }
+        }
+    }else {
+        return 0;
+    }
+}
+
+//字符串转json再转数组
+
+function strToArr(str){
+
+    var develiryObj=JSON.parse(str);
+    var valueArr=[];
+    var json={};
+    for(var key in develiryObj){
+        valueArr.push(json[key]=develiryObj[key])
+    }
+    return valueArr;
+
+}
+
+
+//获取运费
+
+shopModel.getCharge = function(data,cb){
+
+    var goodsId = arrToStr(data,'prod_id');
+
+    getGoodsInfor(goodsId,function(err,results){
+        if(!!err){
+            cb(err,null)
+        }else{
+            var sumWeight=0;
+            for(var i in results){
+                for(var m in data){
+                    if(data[m].prod_id == results[i].prod_id){
+                        results[i].quantity=data[m].quantity;
+                        sumWeight+=results[i].quantity*results[i].prod_weight;
+                    }
+                }
+            }
+
+            store.getPool().getConnection(function (err, conn) {
+                var querySQL = 'select attr_value,attr_type from attribute';
+                conn.query(querySQL,null, function (err, rows) {
+                    conn.release();
+                    if (err){
+                        console.log(err);
+                        cb(err,null)
+                    }else{
+                        var result={goods:results,deliver_charges:0,deliver_free:0};
+                        var delCharge='';
+                        var freeCharge='';
+                        var deliver_time='';
+                        var deliver_type='';
+                        var pay_type='';
+
+
+                        for (var i =0;i<rows.length;i++){
+                            if(rows[i].attr_type == 'deliver_free'){
+                                freeCharge=rows[i].attr_value;
+                            }
+                            if(rows[i].attr_type == 'deliver_charges'){
+                                delCharge=rows[i].attr_value;
+                            }
+                            if(rows[i].attr_type == 'deliver_time'){
+                                deliver_time=rows[i].attr_value;
+                            }
+                            if(rows[i].attr_type == 'deliver_type'){
+                                deliver_type=rows[i].attr_value;
+                            }
+                            if(rows[i].attr_type == 'pay_type'){
+                                pay_type=rows[i].attr_value;
+                            }
+                        }
+                        result.deliver_charges=getDeliverValue(delCharge,sumWeight);
+                        result.deliver_free=getDeliverValue(freeCharge,sumWeight);
+                        result.deliver_time=strToArr(deliver_time);
+                        result.deliver_type=strToArr(deliver_type);
+                        result.pay_type=strToArr(pay_type);
+
+                        cb(null,result);
+                    }
+                });
+            });
+        }
+
+    });
+
+
+}
+
+
 
 
 

@@ -14,7 +14,7 @@ angular.module('shop.controllers', [])
 	    console.log('shoppingCtrl');
 	})
 
-	.controller('listCtrl',function($scope,cart,$stateParams,$ionicPopup,cate,$location){
+	.controller('listCtrl',function($scope,cart,$stateParams,$ionicPopup,cate){
 
 
         if(!$stateParams.search){$stateParams.search=null};
@@ -33,14 +33,8 @@ angular.module('shop.controllers', [])
             if(!searchStr){searchStr=null};
             page=1;
             console.log(searchStr)
-
             cate.searchGoods(page,pageSize,searchStr,loadMore);
 
-        }
-
-        // 跳转到详情页
-        $scope.jumpDetail = function(proid){
-            $location.path('/shopping/detail/'+proid);
         }
 
 
@@ -150,13 +144,13 @@ angular.module('shop.controllers', [])
         var errorMap=errMap.getMap();
         // 绑定数据
             // 下拉选项
-        $scope.selectAttrsInfo = orderOp.getSelectAttrsInfo();
+        //$scope.selectAttrsInfo = orderOp.getSelectAttrsInfo();
             // 表单
-        $scope.formData = orderOp.getFormData();
+         orderOp.getFormData(function(data){
+             $scope.formData=data;
+        });
             // 订单商品
-        $scope.orderProsInfo = orderOp.getProsInfo();
-            // 结算信息
-        $scope.amountInfo = orderOp.getAmountInfo();
+
         // 绑定事件
             // 提交表单
         $scope.submit = function(){

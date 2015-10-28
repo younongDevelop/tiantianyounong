@@ -260,11 +260,11 @@ angular.module('index.controllers', [])
                                 exit=true;
                             }
                             if(m == (goodsId.length-1) && !exit){
-                                goodsId.push($scope.cartGoods[i].prod_id);
+                                goodsId.push({prod_id:$scope.cartGoods[i].prod_id,quantity:$scope.cartGoods[i].quantity});
                             }
                         }
                     }else{
-                        goodsId.push($scope.cartGoods[i].prod_id);
+                        goodsId.push({prod_id:$scope.cartGoods[i].prod_id,quantity:$scope.cartGoods[i].quantity});
                     }
                 }
             }else{
@@ -274,14 +274,15 @@ angular.module('index.controllers', [])
                 }
             }
 
-            cart.getGoodsNumber();
+            cart.getGoodsNumber(function(data){
 
+            });
         }
 
         $scope.selectOne=function(index){
             $scope.cartGoods[index].select=!$scope.cartGoods[index].select;
             if($scope.cartGoods[index].select){
-                goodsId.push($scope.cartGoods[index].prod_id);
+                goodsId.push({prod_id:$scope.cartGoods[i].prod_id,quantity:$scope.cartGoods[i].quantity});
             }else{
                 for(var i in goodsId){
                     if($scope.cartGoods[index].prod_id == goodsId[i]){
@@ -289,13 +290,26 @@ angular.module('index.controllers', [])
                     }
                 }
             }
+            cart.getGoodsNumber(function(data){
 
-            cart.getGoodsNumber();
-
+            });
         }
 
 
         $scope.accountCart = function(){
+            if(goodsId.length<1){
+                $ionicPopup.alert({
+                    title: '',
+                    template: '请选择结算商品',
+                    okText: '好的'
+                });
+                return;
+            }
+
+
+
+            orderOp.getDeliverCharges(goodsId);
+            $location.path('/orderFill');
 
         }
 })

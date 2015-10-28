@@ -165,18 +165,6 @@ function chgOrder(req,res){
     });
 }
 
-//新增订单
-function addOrder(req,res){
-    var data=req.body;
-    personModel.addOrder(data,function(err,data){
-        if (!!err) {
-            console.log(err);
-            return res.json(500, {error: err});
-        }
-        return res.json(200, {results: data});
-    });
-}
-
 
 router.get('/getAddress/:customerId/:page/:pageSize',getAddress); //获取用户所有地址
 router.post('/updateAddress',updateAddress); //修改用户地址

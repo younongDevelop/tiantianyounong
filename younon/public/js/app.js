@@ -132,14 +132,10 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
 
           }
       })
-      .state('shopping.orderFill', {
+      .state('orderFill', {
           url: '/orderFill',
-          views: {
-              'shopping': {
-                  templateUrl: 'templates/shopping/shopping-order-fill.html',
-                  controller:"orderFill"
-              }
-          }
+          templateUrl: 'templates/shopping/shopping-order-fill.html',
+          controller:"orderFill"
       })
 
         //shopping路由结束

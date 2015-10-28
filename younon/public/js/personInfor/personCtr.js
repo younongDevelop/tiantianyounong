@@ -287,16 +287,16 @@ angular.module('person.controllers', [])
             $scope.address.community_name=getValue($scope.community,'comm_id',$scope.address.community_id,'comm_name');
             //地址新增的部分
             if($stateParams.param!='add'){
+                //地址修改的部分
                 $scope.address.address_id=$stateParams.param;
                 personAddress.changeAddress($scope.address,function(data){
-                       attention(errorMap[data]);
+                    window.history.go(-1);
                 });
             }else{
-                //地址修改的部分
-                $scope.address.customer_id=customerId;
 
+                $scope.address.customer_id=customerId;
                 personAddress.addAddress($scope.address,function(data){
-                    attention(errorMap[data]);
+                    window.history.go(-1);
                 });
             }
 
