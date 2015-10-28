@@ -1,0 +1,53 @@
+<ion-view>
+    <ion-content class="addrChg">
+        <div class="list" style="margin-top:1rem;">
+            <label class="item item-input border-top-style">
+                <span class="input-label">收货人:</span>
+                <input type="text" ng-model="address.receiver_name">
+            </label>
+            <label class="item item-input border-top-style">
+                <span class="input-label">联系方式:</span>
+                <input type="text" ng-model="address.receiver_phone">
+            </label>
+            <label class="item item-input border-top-style">
+                <div style="width:50%;float: left;line-height: 8rem">
+                    <span class="input-label" style="float: left">市:</span>
+
+                    <select class=" aadressSelect fl"
+                            ng-model="address.city_id"
+                            ng-options="o.city_id as o.city_name for o in cities"
+                            ng-change="getDistrict(address.city_id)"
+                            style="width:21rem;height: 4rem;margin-top: 2rem;">
+
+                    </select>
+                    <i class="ion-ios-arrow-down" style="right:34rem"></i>
+
+                </div>
+                <div style="width:50%;float: left;height: 100%;line-height: 8rem;" class="border-left-style">
+                    <span class="input-label" style="float: left;margin-left: 2rem">区:</span>
+                    <select class="input-box aadressSelect"
+                            ng-model="address.district_id"
+                            ng-options="o.district_id as o.district_name for o in districts"
+                            ng-change="getCommunity(address.district_id)"
+                            style="line-height: 4rem;height: 4rem;margin-top:2rem;width:21rem">
+                    </select>
+                    <i class="ion-ios-arrow-down"></i>
+                </div>
+            </label>
+            <label class="item item-input border-top-style">
+                <span class="input-label">提货点:</span>
+                <select class="input-box aadressSelect"
+                        ng-model="address.community_id"
+                        ng-options="o.comm_id as o.comm_name for o in community" style="width:80%;">
+                </select>
+                <i class="ion-ios-arrow-down" ></i>
+            </label>
+        </div>
+
+    </ion-content>
+    <div class="bar bar-footer" style="height: 7rem;display: inline;background-image: none;
+    background-color: #39bf50;font-size: 3rem;line-height: 7rem;color: #ffffff;
+    text-align: center;padding:0" ng-click="submit()">
+        保存
+    </div>
+</ion-view>

@@ -178,3 +178,8 @@ p.list-pro-price{
 .list-content .list:last-child{
     margin-bottom:9rem;
 }
+
+.order-fill .list{
+    margin-top: 1rem;
+}
+

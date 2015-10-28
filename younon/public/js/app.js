@@ -138,6 +138,12 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
           controller:"orderFill"
       })
 
+      .state('since', {
+          url: '/since',
+          templateUrl: 'templates/shopping/since.html',
+          controller:"since"
+      })
+
         //shopping路由结束
 
       .state('account', {

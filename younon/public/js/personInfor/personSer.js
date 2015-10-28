@@ -4,7 +4,7 @@
 
 angular.module('person.services', [])
     //我的地址相关部分
-    .factory('personAddress', function($http) {
+    .factory('personAddress', function($http,orderOp) {
         var addresses=[];
         var cities=[];
         var districts=[];
@@ -129,12 +129,14 @@ angular.module('person.services', [])
                     cb('CHANGE_FAILURE');
                 })
             },
-            selectAddress:function(item){
+            selectAddress:function(item,deliverType){
                 selectedId.id=item.address_id;
+                localStorage.deliver_type=deliverType;
                 localStorage.address_id=item.address_id;
                 localStorage.receiver_name=item.receiver_name;
                 localStorage.receiver_phone=item.receiver_phone;
                 localStorage.address_detail=item.address_detail;
+                orderOp.fillAddress();
             },
             getSelectedId:function(cb){
                 cb(selectedId);

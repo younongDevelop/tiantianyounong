@@ -140,12 +140,158 @@ angular.module('shop.controllers', [])
         }
 
     })
-    .controller('orderFill', function($scope, orderOp, errMap, accountOrders, cart,$http, $ionicPopup,$location){
+    .controller('since', function($scope,personAddress,$stateParams,checkPhone,checkName,checkAddress,errMap,$ionicPopup) {
+
+        //地址新增与修改公共的部分
         var errorMap=errMap.getMap();
-        // 绑定数据
-            // 下拉选项
-        //$scope.selectAttrsInfo = orderOp.getSelectAttrsInfo();
-            // 表单
+        $scope.address={
+            city_id:1,
+            district_id:1,
+            community_id:1,
+            city_name:'',
+            district_name:'',
+            community_name:'',
+            receiver_phone:'',
+            receiver_name:''
+        };
+
+        personAddress.getCity(function(cities){
+            $scope.cities=cities;
+            getDistricts(cities[0].city_id);
+            $scope.address.city_name=cities[0].city_name;
+        });
+
+        var getDistricts =function(cityId){
+            personAddress.loadDistrict(cityId,function(districts){
+                $scope.districts=districts;
+                $scope.address.district_id=districts[0].district_id;
+                getCommunity(districts[0].district_id);
+                $scope.address.district_name=districts[0].district_name;
+            });
+        };
+
+
+
+        var getCommunity =function(districtId){
+            personAddress.loadSince(districtId,function(community){
+
+                if(community.length==0){
+                    community=[];
+                    community.push({
+                        comm_id:0,
+                        comm_name:"暂无自提点"
+                    })
+                }else{
+                    $scope.address.community_name=community[0].comm_name;
+                }
+                $scope.community=community;
+                $scope.address.community_id=community[0].comm_id;
+            });
+        };
+
+
+
+        $scope.getDistrict=function(districtId){
+            getDistricts(districtId);
+        }
+
+        $scope.getCommunity=function(communityId){
+            getCommunity(communityId);
+        }
+
+        var attention=function(param){
+            $ionicPopup.alert({
+                title: '',
+                template:param,
+                okText: '好的'
+            });
+        }
+
+        $scope.submit=function(){
+            var lock=false;
+            var checkNameResl=checkName.checkName($scope.address.receiver_name);
+            var checkMobileResl=checkPhone.checkMobile($scope.address.receiver_phone);
+            var resArr=[checkNameResl,checkMobileResl];
+            for(var i=0;i<resArr.length;i++){
+                if(resArr[i]){
+                    attention(errorMap[resArr[i]]);
+                    lock=true;
+                    break;
+                }
+            }
+
+            if(!$scope.address.district_name){
+                lock=true;
+                attention('请选择区');
+            }
+            if(!$scope.address.community_name){
+                lock=true;
+                attention('请重新选择自提点');
+            }
+
+
+            if(lock){return;}
+            var deliverType='定点自取';
+            var item={
+                id:0,
+                address_id:0,
+                receiver_name:$scope.address.receiver_name,
+                receiver_phone:$scope.address.receiver_phone,
+                address_detail:$scope.address.city_name+$scope.address.district_name+$scope.address.community_name
+            }
+            personAddress.selectAddress(item,deliverType);
+            window.history.go(-1);
+        }
+    })
+
+
+
+.controller('orderFill', function($scope, orderOp, errMap, accountOrders, cart,$http, $ionicPopup,$location){
+        var errorMap=errMap.getMap();
+        var addressMap={
+            '定点自取':'/since',
+            '送货上门':'/addresses'
+        }
+
+        $scope.addressTitle={
+            '定点自取':'请选择自提点',
+            '送货上门':'请选择送货地址'
+        }
+
+        $scope.getAddress=function(data){
+            $location.path(addressMap[data]);
+        }
+
+        $scope.selectDeliverType=function(deliverType){
+            $scope.formData.deliver_type=deliverType;
+            if(deliverType=='定点自取'){
+                $scope.formData.deliver_charges=0;
+                $scope.formData.deliver_free=0;
+                $scope.formData.order_total=$scope.formData.totalMoney;
+
+            }else{
+                $scope.formData.deliver_charges=$scope.formData.charges;
+                $scope.formData.deliver_free=$scope.formData.free;
+                $scope.formData.order_total=$scope.formData.totalMoney+parseInt($scope.formData.deliver_charges)-$scope.formData.deliver_free;
+            }
+
+            if(localStorage.deliver_type==deliverType){
+                $scope.formData.receiver_name=localStorage.receiver_name;
+                $scope.formData.deliver_phone=localStorage.receiver_phone;
+                $scope.formData.deliver_address=localStorage.address_detail;
+            }else{
+                $scope.formData.receiver_name='';
+                $scope.formData.receiver_phone='';
+                $scope.formData.address_detail='';
+            }
+        }
+
+        $scope.selectPayType=function(item){
+            $scope.formData.payment_id=item.id;
+            $scope.formData.payment_type=item.value;
+        }
+
+
          orderOp.getFormData(function(data){
              $scope.formData=data;
         });
@@ -174,18 +320,7 @@ angular.module('shop.controllers', [])
                 });
             })
         }
-            // 选择地址
-        $scope.toSelectAddress = function(){
-            $location.path('/account/addresses');
-        }
-        // 判断地址是否为空
-        $scope.hasDefaultAddress = function(){
-            var fd = $scope.formData;
-            if(fd.deliver_address && fd.deliver_phone && fd.receiver_name){
-                return true;
-            }
-            return false;
-        }
+
     })
     .controller('orderSuc', function($scope,accountOrders, $stateParams,weixin,$ionicBackdrop){
         var orderid = $stateParams.orderid;

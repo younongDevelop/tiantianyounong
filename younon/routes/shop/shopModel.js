@@ -330,9 +330,8 @@ function strToArr(str){
 
     var develiryObj=JSON.parse(str);
     var valueArr=[];
-    var json={};
     for(var key in develiryObj){
-        valueArr.push(json[key]=develiryObj[key])
+        valueArr.push({id:key,value:develiryObj[key]})
     }
     return valueArr;
 
