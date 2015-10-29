@@ -251,25 +251,8 @@ angular.module('person.services', [])
                     console.log(res);
                 })
             },
-            addOrder:function(order){
-                if(order.order_status==resultData[0].order_status){
-                    for(var i in order.items){
-                        order.items[i].final_price=order.items[i].prod_price;
-                    }
-
-                    var item=[{
-                        date_purchased:order.date_purchased,
-                        deliver_charges:order.deliver_charges,
-                        order_id:order.order_id,
-                        order_status:order.order_status,
-                        order_total:order.order_total,
-                        items:order.items
-                    }];
-                    formatData(item,1);
-                }
-
-
-
+            inintOrders:function(){
+                resultData.splice(0,resultData.length);
             }
         }
     })

@@ -288,7 +288,7 @@ angular.module('shop.controllers', [])
 
         $scope.selectPayType=function(item){
             $scope.formData.payment_id=item.id;
-            $scope.formData.payment_type=item.value;
+            $scope.formData.payment_type=item.id;
             var deliverMap={
                 定点自取:3,
                 送货上门:4
@@ -316,11 +316,14 @@ angular.module('shop.controllers', [])
 
             var orderStatue={
                 1:'待支付未发货',
-                9:'待电话确认'
+                9:'待电话确认',
+                14:'待自取'
             }
             $scope.formData.status_name=orderStatue[$scope.formData.order_status_id];
             orderOp.submitOrder(function(data){
-                console.log(data);
+
+                $location.path('/orderDetails/'+data.results);
+                $location.replace();
 
             },function(param){
                 $ionicPopup.alert({

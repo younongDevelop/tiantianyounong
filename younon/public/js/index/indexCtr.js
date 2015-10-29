@@ -194,11 +194,7 @@ angular.module('index.controllers', [])
 
 .controller('cartCtrl', function($scope,cart,orderOp,$ionicListDelegate,$ionicPopup,$location) {
         $scope.selected=false;
-        $scope.number=[];
-        var goodsId=[];
-        for(var i=1;i<51;i++){
-            $scope.number.push(i);
-        }
+
 
         cart.getGoods(function(data){
             $scope.cartGoods=data;
@@ -253,24 +249,10 @@ angular.module('index.controllers', [])
             if($scope.selected){
                 for(var i in $scope.cartGoods){
                     $scope.cartGoods[i].select=true;
-                    var exit=false;
-                    if(goodsId.length !=0 ){
-                        for(var m in goodsId){
-                            if(goodsId[m] == $scope.cartGoods[i].prod_id){
-                                exit=true;
-                            }
-                            if(m == (goodsId.length-1) && !exit){
-                                goodsId.push({prod_id:$scope.cartGoods[i].prod_id,quantity:$scope.cartGoods[i].quantity});
-                            }
-                        }
-                    }else{
-                        goodsId.push({prod_id:$scope.cartGoods[i].prod_id,quantity:$scope.cartGoods[i].quantity});
-                    }
                 }
             }else{
                 for(var i in $scope.cartGoods){
                     $scope.cartGoods[i].select=false;
-                    goodsId=[];
                 }
             }
 
@@ -281,15 +263,7 @@ angular.module('index.controllers', [])
 
         $scope.selectOne=function(index){
             $scope.cartGoods[index].select=!$scope.cartGoods[index].select;
-            if($scope.cartGoods[index].select){
-                goodsId.push({prod_id:$scope.cartGoods[index].prod_id,quantity:$scope.cartGoods[index].quantity});
-            }else{
-                for(var i in goodsId){
-                    if($scope.cartGoods[index].prod_id == goodsId[i]){
-                        goodsId.splice(i,1);
-                    }
-                }
-            }
+
             cart.getGoodsNumber(function(data){
 
             });
@@ -297,7 +271,19 @@ angular.module('index.controllers', [])
 
 
         $scope.accountCart = function(){
-            if(goodsId.length<1){
+
+            var lock=true;
+            var goodsId=[];
+
+            for(var i  in $scope.cartGoods){
+                if($scope.cartGoods[i].select){
+                    lock=false;
+                    goodsId.push({prod_id:$scope.cartGoods[i].prod_id,quantity:$scope.cartGoods[i].quantity});
+                }
+            }
+
+
+            if(lock){
                 $ionicPopup.alert({
                     title: '',
                     template: '请选择结算商品',
@@ -305,6 +291,8 @@ angular.module('index.controllers', [])
                 });
                 return;
             }
+
+
 
 
 

@@ -280,7 +280,7 @@ shopModel.addOrder = function(data,cb){
                     if(err){
                         cb(err,null);
                     }else{
-                            cb(null,data);
+                            cb(null,rows.insertId);
                     }
                 })
             }

@@ -58,7 +58,7 @@ angular.module('shop.services', [])
                     formData.totalMoney=0;
                     formData.weight=0;
                     formData.payment_id=formData.pay_typeArr[0].id;
-                    formData.payment_type=formData.pay_typeArr[0].value;
+                    formData.payment_type=formData.pay_typeArr[0].id;
                     formData.deliver_time=formData.deliver_timeArr[0].value;
                     if(localStorage.deliver_type==formData.deliver_type){
                         formData.deliver_address=localStorage.address_detail;   //deliver address
@@ -98,7 +98,7 @@ angular.module('shop.services', [])
                         }
                         cart.deleteGoods(formData.items,null);
                     }
-                    accountOrders.addOrder(data);
+                    suc(data);
                 }).error(function(data){
                     fail && fail(data);
                 })

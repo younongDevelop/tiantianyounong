@@ -6,8 +6,9 @@ angular.module('person.controllers', [])
 
 
     .controller('accountOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders) {
-        $scope.status=[{show:true,statue:'(1)',title:'待支付'},{show:false,statue:'(2,3,4)',title:'待收货'},{show:false,statue:'(14)',
+        $scope.status=[{show:true,statue:'(1)',title:'待支付'},{show:false,statue:'(2,3,4,9,10)',title:'待收货'},{show:false,statue:'(14)',
         title:'待自取'},{show:false,statue:'(5,12)',title:'已完成'}, {show:false,statue:'(6,7,8,11,13)',title:'已取消'}];
+        accountOrders.inintOrders();
         var page=1;
         var pageSize=10;
         var isMore = false;
@@ -310,6 +311,7 @@ angular.module('person.controllers', [])
 
         }
             //地址修改的部分
+        if($stateParams.param!='add'){
             personAddress.findAddress($stateParams.param,function(data){
                 findDistricts(data.city_id,data);
                 findCommunity(data.district_id,data);
@@ -320,6 +322,9 @@ angular.module('person.controllers', [])
                 $scope.address.receiver_phone=data.receiver_phone;
                 $scope.address.receiver_name=data.receiver_name;
             });
+
+        }
+
 
     })
 ;
