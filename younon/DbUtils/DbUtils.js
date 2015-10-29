@@ -11,10 +11,14 @@ var db = require('mysql');
 module.exports = function() {
     this.pool = db.createPool({
         //host: 'localhost',
-        host: '120.131.66.174',
-        user: 'cartdbuser',
-        password: 'cart@2014',
-        database:'yonong',
+        //host: '120.131.66.174',
+        //user: 'cartdbuser',
+        //password: 'cart@2014',
+        //database:'yonong',
+        host: '120.131.70.188',
+        user: 'root',
+        password: 'pass99',
+        database:'younong',
         port: 3306
     });
 
