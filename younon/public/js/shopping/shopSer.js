@@ -8,7 +8,6 @@ angular.module('shop.services', [])
     })
 
     .factory('orderOp',function($http, cart,accountOrders){
-        var fromCart=false;
         // 待提交的表单对象模板
         /*
          * item{
@@ -44,8 +43,8 @@ angular.module('shop.services', [])
                 cb(formData);
             },
             // 判断是否来自购物车
-            isFromCart:function(){
-                fromCart=true;
+            isFromCart:function(data){
+                formData.formCart=data;
             },
             getDeliverCharges:function(data){
                 $http.post('/shop/getCharge',data).success(function(data){

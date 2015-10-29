@@ -133,10 +133,11 @@ angular.module('shop.controllers', [])
         }
         // 立即购买
         $scope.buyNow = function(selectNumber){
-            var pro  = $scope.proDetailInfo.proDetail;
-            pro.quantity = selectNumber;
-            orderOp.initOrder([pro]);
-            $location.path('/shopping/orderFill');
+            var pro  = [];
+            pro.push({prod_id:$scope.detail.prod_id,quantity:$scope.detail.quantity});
+            orderOp.isFromCart(false);
+            orderOp.getDeliverCharges(pro);
+            $location.path('/orderFill');
         }
 
     })

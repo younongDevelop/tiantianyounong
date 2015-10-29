@@ -282,7 +282,6 @@ angular.module('index.controllers', [])
                 }
             }
 
-
             if(lock){
                 $ionicPopup.alert({
                     title: '',
@@ -291,10 +290,7 @@ angular.module('index.controllers', [])
                 });
                 return;
             }
-
-
-
-
+            orderOp.isFromCart(true);
 
             orderOp.getDeliverCharges(goodsId);
             $location.path('/orderFill');
