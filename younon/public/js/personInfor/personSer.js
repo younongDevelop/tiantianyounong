@@ -151,6 +151,25 @@ angular.module('person.services', [])
 
         var orderDetail={};
 
+        function formatData(arr,index){
+
+            arr.forEach(function(item){
+                item.title='';
+                item.quantity=0;
+                for(var i in item.items){
+                    item.quantity=item.quantity+item.items[i].product_quantity;
+                    item.items[i].prod_images=imgIP+item.items[i].prod_images;
+                    if(i != item.items.length-1){item.title=item.title+item.items[i].prod_name+',';}
+                    else{item.title=item.title+item.items[i].prod_name}
+                }
+                if(index) {resultData.unshift(item);}
+                else{
+                    resultData.push(item);
+                }
+            })
+
+        }
+
         return{
 
             loadOrders:function(page,pageSize,statue,cb){
@@ -161,19 +180,7 @@ angular.module('person.services', [])
                 console.log(resultData);
                 console.log(stat);
                 $http.get('/person/getOrders/'+customerId+'/'+statue+'/'+page+'/'+pageSize).success(function(data){
-                    console.log(data);
-                        data.results.forEach(function(item){
-                            item.title='';
-                            item.quantity=0;
-                            for(var i in item.items){
-                                item.quantity=item.quantity+item.items[i].product_quantity;
-                                item.items[i].prod_images='http://120.131.70.188:3003/'+item.items[i].prod_images;
-                                if(i != item.items.length-1){item.title=item.title+item.items[i].prod_name+',';}
-                                else{item.title=item.title+item.items[i].prod_name}
-                            }
-                            resultData.push(item);
-                        })
-                    console.log(resultData);
+                    formatData(data.results);
                     cb(resultData);
                 }).error(function(res){
                     console.log(res);
@@ -244,8 +251,25 @@ angular.module('person.services', [])
                     console.log(res);
                 })
             },
-            addUndoneOrder:function(order){
-                undoneOrders.unshift(order);
+            addOrder:function(order){
+                if(order.order_status==resultData[0].order_status){
+                    for(var i in order.items){
+                        order.items[i].final_price=order.items[i].prod_price;
+                    }
+
+                    var item=[{
+                        date_purchased:order.date_purchased,
+                        deliver_charges:order.deliver_charges,
+                        order_id:order.order_id,
+                        order_status:order.order_status,
+                        order_total:order.order_total,
+                        items:order.items
+                    }];
+                    formatData(item,1);
+                }
+
+
+
             }
         }
     })

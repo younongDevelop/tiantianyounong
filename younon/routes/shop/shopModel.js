@@ -262,11 +262,51 @@ function getOrderNumber() {
 
 shopModel.addOrder = function(data,cb){
     data.order_no=getOrderNumber();
+    data.date_purchased=moment().format("YYYY年MM月DD日 HH:mm");
     store.getPool().getConnection(function (err, conn) {
         var querySQL = 'insert into orders(customer_id,order_no,deliver_time,deliver_status,deliver_address,deliver_phone,' +
             'deliver_charges,payment_id,payment_type,date_purchased,last_modified,order_total,order_status_id,order_status,' +
             'receiver_name,deliver_type,status) values(?,?,?,?,?,?,?,?,?,now(),now(),?,?,?,?,?,1)';
-        conn.query(querySQL,[quantity,customerId,prod_id], function (err, rows) {
+        conn.query(querySQL,[data.customer_id,data.order_no,data.deliver_time,data.deliver_status,data.deliver_address,data.deliver_phone,
+        data.deliver_charges,data.payment_id,data.payment_type,data.order_total,data.order_status_id,data.status_name,data.receiver_name,data.deliver_type], function (err, rows) {
+            conn.release();
+            if (err){
+                console.log(err);
+                cb(err,null)
+            }else{
+                data.order_id=rows.insertId;
+                console.log(data.order_id);
+                insertOrderItems(data,function(err,insertResults){
+                    if(err){
+                        cb(err,null);
+                    }else{
+                            cb(null,data);
+                    }
+                })
+            }
+        });
+    });
+}
+
+//order_items中插入数据
+
+function insertOrderItems(data,cb){
+    var values='';
+
+    for(var i =0;i< data.items.length;i++){
+        if(i<data.items.length-1){
+            values+='('+data.order_id+','+data.items[i].prod_id+','+data.items[i].quantity+','+data.items[i].prod_price+',0,'+
+            data.customer_id+',1,0),';
+        }else{
+            values+='('+data.order_id+','+data.items[i].prod_id+','+data.items[i].quantity+','+data.items[i].prod_price+',0,'+
+            data.customer_id+',1,0)';
+        }
+    }
+
+    store.getPool().getConnection(function (err, conn) {
+        var querySQL = 'insert into order_items(order_id,prod_sku_id,product_quantity,final_price,base_price,customer_id,' +
+            'status,have_comment) values'+values;
+        conn.query(querySQL,null, function (err, rows) {
             conn.release();
             if (err){
                 console.log(err);
@@ -277,6 +317,10 @@ shopModel.addOrder = function(data,cb){
         });
     });
 }
+
+
+
+
 
 
 //获取提交商品的商品信息

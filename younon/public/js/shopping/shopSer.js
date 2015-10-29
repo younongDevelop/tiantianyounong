@@ -7,7 +7,7 @@ angular.module('shop.services', [])
 
     })
 
-    .factory('orderOp',function($http, cart){
+    .factory('orderOp',function($http, cart,accountOrders){
         var fromCart=false;
         // 待提交的表单对象模板
         /*
@@ -31,9 +31,11 @@ angular.module('shop.services', [])
             deliver_charges:'0',
             deliver_free:'0',
             payment_id:'1',
-            payment_type:'在线支付',  //支付方式   传值：“1”—在线支付；“2”—货到付款
+            payment_type:'1',  //支付方式   传值：“1”—在线支付；“2”—货到付款
             order_total:'0',
-            order_status_id:'1' //"1"-待支付未发货，“9”－待电话确认
+            order_status_id:'1',//"1"-待支付未发货，“9”－待电话确认
+            status_name:'待支付未发货',
+            formCart:false
         }
 
         return {
@@ -86,14 +88,17 @@ angular.module('shop.services', [])
                 formData.receiver_name=localStorage.receiver_name;
             },
             // 提交订单
-            submitOrder:function(suc,fail){                
-                $http.post(api+"/orders/checkout", formData).success(function(data){
-                    console.log('submit',data);
-                    if(data.code === 0){
-                        suc && suc(data);
-                    }else{
-                        fail && fail(data);
+            submitOrder:function(suc,fail){
+                console.log(formData);
+                $http.post('/shop/addOrder', formData).success(function(data){
+
+                    if(formData.formCart){
+                        for(var i in formData.items){
+                            formData.items[i].customersId=customerId;
+                        }
+                        cart.deleteGoods(formData.items,null);
                     }
+                    accountOrders.addOrder(data);
                 }).error(function(data){
                     fail && fail(data);
                 })

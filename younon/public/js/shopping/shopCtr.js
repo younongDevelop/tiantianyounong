@@ -289,29 +289,39 @@ angular.module('shop.controllers', [])
         $scope.selectPayType=function(item){
             $scope.formData.payment_id=item.id;
             $scope.formData.payment_type=item.value;
+            var deliverMap={
+                定点自取:3,
+                送货上门:4
+
+            }
+            var orderStatusMap={
+                3:1,
+                4:1,
+                6:14,
+                8:9
+            }
+            $scope.formData.order_status_id=orderStatusMap[parseInt(item.id)*deliverMap[$scope.formData.deliver_type]];
         }
 
 
          orderOp.getFormData(function(data){
              $scope.formData=data;
+             $scope.formData.formCart=true;
         });
             // 订单商品
 
         // 绑定事件
             // 提交表单
         $scope.submit = function(){
-            orderOp.submitOrder(function(data){
-                // 添加到未完成订单
-                var order = data.results;
-                order.order_status = "待支付";
-                accountOrders.addUndoneOrder(order);
-                // 跳转到订单成功页
-                $location.path('/tab/orderSuc/'+order.order_id);
-                // 如果是购物车订单，则清空购物车
-                if(orderOp.isFromCart()){
 
-                    cart.clearGoods();
-                }
+            var orderStatue={
+                1:'待支付未发货',
+                9:'待电话确认'
+            }
+            $scope.formData.status_name=orderStatue[$scope.formData.order_status_id];
+            orderOp.submitOrder(function(data){
+                console.log(data);
+
             },function(param){
                 $ionicPopup.alert({
                     title: '表单提交失败',

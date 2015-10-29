@@ -6,6 +6,7 @@ angular.module('index.services', [])
         var goods = [];
         var goodsNumber={number:0,sum:0,numberArr:[]};
         var changeGoodsNumber=function(){
+            console.log(goods);
             goodsNumber.number=0;
             goodsNumber.sum=0;
             goodsNumber.numberArr=[];

@@ -282,7 +282,7 @@ angular.module('index.controllers', [])
         $scope.selectOne=function(index){
             $scope.cartGoods[index].select=!$scope.cartGoods[index].select;
             if($scope.cartGoods[index].select){
-                goodsId.push({prod_id:$scope.cartGoods[i].prod_id,quantity:$scope.cartGoods[i].quantity});
+                goodsId.push({prod_id:$scope.cartGoods[index].prod_id,quantity:$scope.cartGoods[index].quantity});
             }else{
                 for(var i in goodsId){
                     if($scope.cartGoods[index].prod_id == goodsId[i]){

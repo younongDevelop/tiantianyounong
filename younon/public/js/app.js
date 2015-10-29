@@ -154,6 +154,7 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
       })
 
       .state('orders', {
+          cache: false,
           url: '/orders',
           templateUrl: 'templates/personInfor/account-orders.html',
           controller: 'accountOrdersCtrl'
