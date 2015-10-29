@@ -20,7 +20,6 @@ var appsecret =Config.AppSecret;
 var ticket = '';
 var URL = require('url');
 var businessNumber = Config.businessNumber;
-var DbStore = require('../dbUtils/DbUtils');
 var fs = require('fs');
 var weixinJs = require('../weixinjs/wechat.js');
 var notifyUrl = Config.hostUrl;
