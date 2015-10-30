@@ -109,9 +109,14 @@ angular.module('person.controllers', [])
                 money: $scope.orderDetail.order_total,productName:name};
             weixin.weixinPay(psyJson,function(data){
                 $ionicBackdrop.release();
-                accountOrders.changeOrderStatue($stateParams.orderId,'2',function(data){
+                var statueMap={
+                    定点自取:14,
+                    送货上门:2
+                }
 
-                    $scope.orderDetail.order_status_id==2;
+                accountOrders.changeOrderStatue($stateParams.orderId,statueMap[$scope.orderDetail.deliver_type],function(data){
+
+                    $scope.orderDetail.order_status_id=statueMap[$scope.orderDetail.deliver_type];
 
                 });
 

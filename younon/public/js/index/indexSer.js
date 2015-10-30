@@ -98,7 +98,7 @@ angular.module('index.services', [])
                     }
                         changeGoodsNumber();
                 }).error(function (res) {
-                    cb();
+                    cb(res);
                 });
             },
             changeNumber:function(index,quantity,cb){

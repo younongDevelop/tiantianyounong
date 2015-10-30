@@ -195,8 +195,8 @@ shopModel.delBasket = function(goods,cb){
     var prod_id = arrToStr(goods,'prod_id');
 
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = 'update customers_baskets set status = 0  where customer_id = '+goods[0].customersId+' and prod_sku_id in ' + prod_id;
-        conn.query(querySQL,null, function (err, rows) {
+        var querySQL = 'update customers_baskets set status = 0  where customer_id = ? and prod_sku_id in ' + prod_id;
+        conn.query(querySQL,goods[0].customersId, function (err, rows) {
             console.log(querySQL);
             conn.release();
             if (err){

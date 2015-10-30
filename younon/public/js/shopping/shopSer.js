@@ -91,11 +91,15 @@ angular.module('shop.services', [])
                 console.log(formData);
                 $http.post('/shop/addOrder', formData).success(function(data){
 
+                    console.log(formData.formCart)
+
                     if(formData.formCart){
                         for(var i in formData.items){
                             formData.items[i].customersId=customerId;
                         }
-                        cart.deleteGoods(formData.items,null);
+                        cart.deleteGoods(formData.items,function(data){
+                            console.log('删除购物车商品失败');
+                        });
                     }
                     suc(data);
                 }).error(function(data){
