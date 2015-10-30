@@ -77,12 +77,12 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
     }
   })
 
-      .state('tab.orderSuc', {
-          url: '/orderSuc/{orderid}',
-          templateUrl: 'templates/shopping/shopping-order-suc.html',
-          controller:"orderSuc"
-
-      })
+      //.state('tab.orderSuc', {
+      //    url: '/orderSuc/{orderid}',
+      //    templateUrl: 'templates/shopping/shopping-order-suc.html',
+      //    controller:"orderSuc"
+      //
+      //})
         //index路由结束
 
 

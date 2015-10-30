@@ -84,7 +84,7 @@ angular.module('index.controllers', [])
 
         var isMore =false;
         var page=1;
-        var pageSize=3;
+        var pageSize=10;
 
         var slideHandle = $ionicSlideBoxDelegate.$getByHandle('indexSlide');
         $interval(function(){
@@ -163,7 +163,7 @@ angular.module('index.controllers', [])
 
         // 跳转到详情页
         $scope.jumpDetail = function(proid){
-            $location.path('/shopping/detail/'+proid);
+            $location.path('/detail/'+proid);
         }
 
         //分页
