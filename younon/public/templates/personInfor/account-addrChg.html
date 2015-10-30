@@ -11,7 +11,7 @@
             </label>
             <label class="item item-input border-top-style">
                 <div style="width:50%;float: left;line-height: 8rem">
-                <span class="input-label" style="float: left">市:</span>
+                <span class="input-label" style="float: left;margin: 0">市:</span>
 
             <select class="input-box aadressSelect"
                     ng-model="address.city_id"
@@ -24,7 +24,7 @@
 
                     </div>
                 <div style="width:50%;float: left;height: 100%;line-height: 8rem;" class="border-left-style">
-                <span class="input-label" style="float: left;margin-left: 2rem">区:</span>
+                <span class="input-label" style="float: left;margin-left: 2rem;margin: 0">区:</span>
             <select class="input-box aadressSelect"
                     ng-model="address.district_id"
                     ng-options="o.district_id as o.district_name for o in districts"
