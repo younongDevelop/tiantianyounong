@@ -9,31 +9,31 @@
                 <span class="input-label">联系方式:</span>
                 <input type="text" ng-model="address.receiver_phone">
             </label>
-            <label class="item item-input border-top-style">
+            <div class="item border-top-style">
                 <div style="width:50%;float: left;line-height: 8rem">
-                <span class="input-label" style="float: left;margin: 0">市:</span>
+                <span class="input-label" style="float: left">市:</span>
 
             <select class="input-box aadressSelect"
                     ng-model="address.city_id"
                     ng-options="o.city_id as o.city_name for o in cities"
                     ng-change="getDistrict(address.city_id)"
-                    style="width:11rem;height: 4rem;margin-top: 2rem;">
+                    style="width:21rem;height: 4rem;margin-top: 2rem;">
 
             </select>
                     <i class="ion-ios-arrow-down" style="right:34rem"></i>
 
                     </div>
                 <div style="width:50%;float: left;height: 100%;line-height: 8rem;" class="border-left-style">
-                <span class="input-label" style="float: left;margin-left: 2rem;margin: 0">区:</span>
+                <span class="input-label" style="float: left;margin-left: 2rem">区:</span>
             <select class="input-box aadressSelect"
                     ng-model="address.district_id"
                     ng-options="o.district_id as o.district_name for o in districts"
                     ng-change="getCommunity(address.district_id)"
-                    style="line-height: 4rem;height: 4rem;margin-top:2rem;width:11rem;z-index: 999">
+                    style="line-height: 4rem;height: 4rem;margin-top:2rem;width:21rem;z-index: 999">
             </select>
                     <i class="ion-ios-arrow-down"></i>
                     </div>
-                </label>
+                </div>
             <label class="item item-input border-top-style">
                 <span class="input-label">小区:</span>
             <select class="input-box aadressSelect"
