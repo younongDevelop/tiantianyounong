@@ -43,6 +43,7 @@
 .addrChg label{
     padding:0;
     line-height: 8rem;
+    height: 8rem;
 }
 
 .addrChg .input-label{

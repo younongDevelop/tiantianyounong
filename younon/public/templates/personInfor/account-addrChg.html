@@ -13,7 +13,7 @@
                 <div style="width:50%;float: left;line-height: 8rem">
                 <span class="input-label" style="float: left">市:</span>
 
-            <select class=" aadressSelect fl"
+            <select class="input-box aadressSelect"
                     ng-model="address.city_id"
                     ng-options="o.city_id as o.city_name for o in cities"
                     ng-change="getDistrict(address.city_id)"
@@ -29,7 +29,7 @@
                     ng-model="address.district_id"
                     ng-options="o.district_id as o.district_name for o in districts"
                     ng-change="getCommunity(address.district_id)"
-                    style="line-height: 4rem;height: 4rem;margin-top:2rem;width:21rem">
+                    style="line-height: 4rem;height: 4rem;margin-top:2rem;width:21rem;z-index: 999">
             </select>
                     <i class="ion-ios-arrow-down"></i>
                     </div>

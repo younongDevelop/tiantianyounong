@@ -272,7 +272,7 @@ router.post('/node/pay', function (req, res, next) {
             mch_id: businessNumber,
             body: req.body.productName,
             out_trade_no: req.body.orderId,
-            total_fee: '1',
+            total_fee: parseInt(req.body.order_total)*100,
             spbill_create_ip: getClientIp(req),
             notify_url: notifyUrl,
             trade_type: 'JSAPI',
