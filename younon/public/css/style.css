@@ -224,12 +224,12 @@ ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-col
 
 .little-white-font-button{
     font-size: 2.2rem;color: #ffffff;width:12rem;border-radius: 0.4rem;height: 4.2rem;background-color: #d95c5c;
-    border: none;
+    border: none;padding: 0;
 }
 
 .little-black-font-button{
     font-size: 2.2rem;color: #737373;width:12rem;border-radius: 0.4rem;height: 4.2rem;background-color: #ffffff;
-    border: none;
+    border: none;padding: 0;
 }
 
 
