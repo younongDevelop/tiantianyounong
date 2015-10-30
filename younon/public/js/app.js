@@ -76,23 +76,12 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
       }
     }
   })
-      .state('tab.admin', {
-            url: '/admin',
-            views: {
-                'tab-admin': {
-                    templateUrl: 'templates/index/tab-admin.html',
-                    controller: 'adminCtrl'
-                }
-            }
-        })
+
       .state('tab.orderSuc', {
           url: '/orderSuc/{orderid}',
-          views: {
-              'tab-index': {
-                  templateUrl: 'templates/shopping/shopping-order-suc.html',
-                  controller:"orderSuc"
-              }
-          }
+          templateUrl: 'templates/shopping/shopping-order-suc.html',
+          controller:"orderSuc"
+
       })
         //index路由结束
 
@@ -104,34 +93,19 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
           controller:'shoppingBaseCtrl'
       })
 
-      .state('shopping.index', {
-          url: '/index',
-          views: {
-            'shopping':{
-                  templateUrl: 'templates/shopping/index.html',
-                  controller: 'shoppingCtrl'
-            }
-          }
-      })
-      .state('tab.list', {
+      .state('list', {
           url: '/list/{search}',
-          views: {
-            'tab-index':{
-                  templateUrl: 'templates/shopping/shopping-list.html',
-                  controller: 'listCtrl'
-            }
-          }
-      })
-      .state('shopping.detail', {
-          url: '/detail/{proid}',
-          views: {
-            'shopping':{
-                  templateUrl: 'templates/shopping/shopping-detail.html',
-                  controller: 'detailCtrl'              
-            }
+          templateUrl: 'templates/shopping/shopping-list.html',
+          controller: 'listCtrl'
 
-          }
       })
+      .state('detail', {
+          url: '/detail/{proid}',
+          templateUrl: 'templates/shopping/shopping-detail.html',
+          controller: 'detailCtrl'
+
+      })
+
       .state('orderFill', {
           url: '/orderFill',
           templateUrl: 'templates/shopping/shopping-order-fill.html',
@@ -179,27 +153,12 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
           templateUrl: 'templates/personInfor/account-addrChg.html',
           controller: 'addrChgCtrl'
       })
+
       .state('about', {
           url: '/about',
           templateUrl: 'templates/personInfor/account-about.html'
-      })
-
-      //person路由结束
-
-      .state('admin', {
-          url: '/admin',
-          abstract: true,
-          controller:'adminBaseCtrl'
-      })
-
-      .state('admin.index', {
-          url: '/index',
-          views: {
-              templateUrl: 'templates/adminstr/index.html',
-              controller: 'adminCtrl'
-
-          }
       });
+
 
   $urlRouterProvider.otherwise('/tab/index');
 
