@@ -98,9 +98,9 @@ angular.module('person.controllers', [])
             var name='';
             $scope.orderDetail.items.forEach(function(item){
                 if(name){
-                    name=item.product_name;
+                    name=item.prod_name;
                 }else{
-                    name=name+','+item.product_name;
+                    name=name+','+item.prod_name;
                 }
 
             });
@@ -109,7 +109,10 @@ angular.module('person.controllers', [])
                 money: $scope.orderDetail.order_total,productName:name};
             weixin.weixinPay(psyJson,function(data){
                 $ionicBackdrop.release();
-                accountOrders.changeOrderStatue($stateParams.orderId,'pay',function(data){
+                accountOrders.changeOrderStatue($stateParams.orderId,'2',function(data){
+
+                    $scope.orderDetail.order_status_id==2;
+
                 });
 
 

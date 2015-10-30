@@ -279,6 +279,8 @@ router.post('/node/pay', function (req, res, next) {
             openid: req.body.openid
         };
 
+        console.log(json);
+
         var resjson = paySign(json);
         console.log('paysign======================' + resjson);
         var fn = function (err, result) {
