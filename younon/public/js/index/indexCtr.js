@@ -64,6 +64,7 @@ angular.module('index.controllers', [])
 
         }
         getOpenId($http,weixin,getInformation);
+        cart.loadGoods();
 
         cart.getGoodsNumber(function(data){
             console.log(data);

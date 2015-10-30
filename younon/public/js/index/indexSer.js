@@ -10,13 +10,14 @@ angular.module('index.services', [])
             goodsNumber.number=0;
             goodsNumber.sum=0;
             goodsNumber.numberArr=[];
-            load();
             for (var i in goods) {
                 goodsNumber.number=goodsNumber.number+goods[i].quantity;
                 if(goods[i].select)goodsNumber.sum=goodsNumber.sum+goods[i].quantity*goods[i].prod_price;
                 goodsNumber.numberArr.push(goods[i].quantity);
             }
         }
+
+
         var load=function () {
             $http.get('/shop/getBasket/'+customerId).success(function (data) {
 
@@ -39,10 +40,14 @@ angular.module('index.services', [])
         return {
             getGoods: function (cb) {
                 cb(goods);
+
             },
             getGoodsNumber:function(cb){
                 changeGoodsNumber();
                 cb(goodsNumber);
+            },
+            loadGoods:function(){
+                load();
             },
             /**
             * @desc 添加商品到购物车
