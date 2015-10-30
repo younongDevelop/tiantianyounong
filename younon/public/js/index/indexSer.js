@@ -10,6 +10,7 @@ angular.module('index.services', [])
             goodsNumber.number=0;
             goodsNumber.sum=0;
             goodsNumber.numberArr=[];
+            load();
             for (var i in goods) {
                 goodsNumber.number=goodsNumber.number+goods[i].quantity;
                 if(goods[i].select)goodsNumber.sum=goodsNumber.sum+goods[i].quantity*goods[i].prod_price;
@@ -33,7 +34,7 @@ angular.module('index.services', [])
 
             });
         }
-        load();
+
 
         return {
             getGoods: function (cb) {
