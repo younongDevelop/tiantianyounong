@@ -4,10 +4,10 @@
 
             <div class="button-bar" style="height: 7.7rem;padding-top:2rem;width: 60.6rem;margin-left:auto;margin-right: auto">
                 <a class="button" ng-repeat="statue in status" style="height: 100%;padding:0;border-color:#39bf50;min-height: 0;min-width: 0" ng-click="selectStatue(statue)">
-                    <div ng-if="statue.show" style="font-size: 2.6rem;line-height: 5.7rem;height:100%;color: #ffffff;background-color: #39bf50">
+                    <div ng-if="statue.show" style="font-size: 2.6rem;line-height: 5.7rem;height:101%;color: #ffffff;background-color: #39bf50">
                     {{statue.title}}
                         </div>
-                    <div ng-if="!statue.show" style="font-size: 2.6rem;line-height: 5.7rem;height:100%;color: #39bf50;background-color: #ffffff">
+                    <div ng-if="!statue.show" style="font-size: 2.6rem;line-height: 5.7rem;height:101%;color: #39bf50;background-color: #ffffff">
                         {{statue.title}}
                     </div>
                 </a>
