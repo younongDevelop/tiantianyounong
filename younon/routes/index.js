@@ -460,7 +460,7 @@ router.post('/node/refund', function (request, response, next) {
 
 function insertUserInformation(data,openId) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "update wechat_users set nick_name='"+data.nickname+"',head_img_url='"+data.headimgurl+"' where open_id = '"+openId+"'";
+        var querySQL = "update customer set nick_name='"+data.nickname+"',head_img_url='"+data.headimgurl+"' where open_id = '"+openId+"'";
         console.log(querySQL);
         conn.query(querySQL, function (err, rows) {
             conn.release();

@@ -314,6 +314,12 @@ angular.module('shop.controllers', [])
         // 绑定事件
             // 提交表单
         $scope.submit = function(){
+            if(!$scope.formData.receiver_name){
+                $ionicPopup.alert({
+                    template:'收货人不能为空',
+                    okText: '好的'
+                });
+            }
 
             var orderStatue={
                 1:'待支付未发货',
