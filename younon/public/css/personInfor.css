@@ -12,6 +12,7 @@
     border: none;
     -webkit-appearance: none;
     float: left;
+    min-width: 0;
 }
 .account-address .list{
     background-color: #efeff4;

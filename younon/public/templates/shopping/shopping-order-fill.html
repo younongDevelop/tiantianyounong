@@ -1,5 +1,5 @@
 <ion-view view-title="天天有农">
-    <ion-content style="background-color: #efeff4" class="order-fill">
+    <ion-content style="background-color: #efeff4;bottom:9rem" class="order-fill">
         <!--配送方式-->
         <!--送货上门-->
         <div style="width:100%;height:12.8rem;margin-top:1rem;background-color: #ffffff;z-index: 0" class="border-top-bottom" ng-if="formData.deliver_type=='定点自取'">
@@ -25,7 +25,7 @@
                 </div>
                 <div style="width:30rem;height: 3.6rem;margin-left:2rem;margin-top:2rem;float: left;text-align: center" class="border-style">
                     <select style=" -webkit-appearance: none;border: none;text-align: left;font-size: 2.2rem;color: #666666;
-                    height: 3rem;margin-top: 0.1rem;width: 90%;"
+                    height: 3rem;margin-top: 0.1rem;width: 90%;line-height: 3rem"
                             ng-model="formData.deliver_time"
                             ng-options="o.value as o.value for o in formData.deliver_timeArr">
                     </select>
@@ -126,7 +126,7 @@
 
         <!--商品信息汇总-->
 
-        <div style="margin-top:1rem;height: 22.4rem;float:left;margin-bottom:9rem;width:100%;font-size: 2.4rem !important;color: #666666" class="text-div border-top-bottom">
+        <div style="margin-top:1rem;height: 23rem;width:100%;font-size: 2.4rem !important;color: #666666" class="text-div border-top-bottom">
             <div style="padding:2rem 2rem 0 2rem;float: left;width: 100%;margin:0;line-height: 2rem" >
                 <div class="fl" style="margin:0">商品总重</div>
                 <div class="fr" style="margin:0">{{formData.weight}}kg</div>
