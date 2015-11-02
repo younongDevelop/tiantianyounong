@@ -506,7 +506,7 @@ function createdWechatUser(res,req){
             conn.release();
             if (err) console.log(err);
 
-            res.json({customer_id:rows[0].customer_id});
+            res.json({customer_id:rows.insertId});
             console.log(id);
 
         });
