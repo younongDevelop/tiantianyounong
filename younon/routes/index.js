@@ -501,13 +501,12 @@ router.post('/node/login', function(req, res, next) {
 function createdWechatUser(res,req){
     store.getPool().getConnection(function (err, conn) {
 
-        var querySQL = "insert into customers (customer_id,openid) values(?,?)";
-        var id=createNonceStr();
-        conn.query(querySQL,[id,req.open_id],function(err,rows){
+        var querySQL = "insert into customers (openid) values(?,?)";
+        conn.query(querySQL,req.open_id,function(err,rows){
             conn.release();
             if (err) console.log(err);
 
-            res.json({customer_id:id});
+            res.json({customer_id:rows[0].customer_id});
             console.log(id);
 
         });
