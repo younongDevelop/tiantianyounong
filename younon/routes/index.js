@@ -505,9 +505,9 @@ function createdWechatUser(res,req){
         conn.query(querySQL,req.open_id,function(err,rows){
             conn.release();
             if (err) console.log(err);
+            console.log(rows);
 
             res.json({customer_id:rows.insertId});
-            console.log(id);
 
         });
     });
