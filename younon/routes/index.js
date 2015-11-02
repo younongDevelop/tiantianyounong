@@ -501,8 +501,8 @@ router.post('/node/login', function(req, res, next) {
 function createdWechatUser(res,req){
     store.getPool().getConnection(function (err, conn) {
 
-        var querySQL = "insert into customers (customer_name,openid) values('昵称',"+req.open_id+")";
-        conn.query(querySQL,null,function(err,rows){
+        var querySQL = "insert into customers (customer_name,openid) values('昵称',?)";
+        conn.query(querySQL,req.open_id,function(err,rows){
             conn.release();
             if (err) console.log(err);
             console.log(rows);
