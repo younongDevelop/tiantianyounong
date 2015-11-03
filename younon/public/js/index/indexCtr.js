@@ -31,7 +31,7 @@ var getOpenId=function($http,weixin,callback){
 }
 
 var loadGoodFist=true;
-
+var nickName='';
 
 
 var init=function($scope,cart,$http,$location,weixin){
@@ -58,6 +58,7 @@ var init=function($scope,cart,$http,$location,weixin){
     var getInformation = function () {
         var json = {openid: openid};
         weixin.getInformation(json,function(data){
+            nickName=data.nickname;
             if (data.nickname) {$scope.nickname = data.nickname;}
             if (data.headimgurl) $scope.headimgurl = data.headimgurl;
         })
@@ -68,7 +69,7 @@ var init=function($scope,cart,$http,$location,weixin){
         })
 
     }
-    getOpenId($http,weixin,getInformation);
+    if(!nickName) getOpenId($http,weixin,getInformation);
     if(loadGoodFist){
         cart.loadGoods();
         loadGoodFist=false;
