@@ -241,4 +241,8 @@ ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-col
     color: #ffffff !important;
 }
 
+.active i span{
+    color: #ffffff !important;
+}
+
 
