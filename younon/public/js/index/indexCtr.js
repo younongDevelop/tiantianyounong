@@ -39,11 +39,7 @@ var init=function($scope,cart,$http,$location,weixin){
     $scope.jump=function(path){
         $location.path(path);
     }
-
-    if(customerId !='11'){
-        return;
-    }
-
+    
     var str = $location.absUrl().split('#')[0];
     str = str.split('?')[1];
     if(str){
