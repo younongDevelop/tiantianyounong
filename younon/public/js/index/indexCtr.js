@@ -42,6 +42,10 @@ angular.module('index.controllers', [])
             customerId=str;
         }
 
+        $scope.tab={
+            id:1
+        };
+
         if(!token.timestamp){
             getToken($location.absUrl().split('#')[0],$http,weixin);
         }
@@ -49,6 +53,17 @@ angular.module('index.controllers', [])
         $scope.show = false;
         $scope.nickname = '昵称';
         $scope.headimgurl = '../img/logo.png';
+
+        $scope.jump=function(path,index){
+            $location.path(path);
+
+            $scope.tab.id=index;
+
+        }
+
+        $scope.active={
+            color:'#ffffff'
+        }
 
         var getInformation = function () {
             var json = {openid: openid};
@@ -88,7 +103,7 @@ angular.module('index.controllers', [])
 
         var slideHandle = $ionicSlideBoxDelegate.$getByHandle('indexSlide');
         $interval(function(){
-            //slideHandle.next();
+            slideHandle.next();
         },3000);
 
 

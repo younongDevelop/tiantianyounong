@@ -48,7 +48,7 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','perso
   .state('tab.index', {
     url: '/index',
     views: {
-      'tab-index': {
+      'menuContent': {
         templateUrl: 'templates/index/tab-index.html',
         controller: 'indexCtrl'
       }
@@ -58,7 +58,7 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','perso
   .state('tab.cart', {
       url: '/cart',
       views: {
-        'tab-cart': {
+        'menuContent': {
           templateUrl: 'templates/index/tab-cart.html',
           controller: 'cartCtrl'
         }
@@ -68,7 +68,7 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','perso
   .state('tab.account', {
     url: '/account',
     views: {
-      'tab-account': {
+      'menuContent': {
         templateUrl: 'templates/index/tab-account.html',
         controller: 'accountCtrl'
       }

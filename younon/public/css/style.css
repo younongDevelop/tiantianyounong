@@ -245,4 +245,26 @@ ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-col
     color: #ffffff !important;
 }
 
+.tabs-icon-top.tabs .tab-item{
+    font-size: 2rem;
+    max-width: none;
+    width: 33%;
+}
+
+.tabs-icon-top.tabs .active{
+    color: #ffffff;
+}
+
+.tabs-basket {
+    position: absolute;
+    background-color: red;
+    color: #ffffff;
+    padding: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    top: 1rem;
+    right: 7rem;
+    border-radius: 2rem;
+    font-size: 1rem;
+}
 
