@@ -30,74 +30,52 @@ var getOpenId=function($http,weixin,callback){
 
 }
 
-var loadGoodFist=true;
-var nickName='';
-
-
-var init=function($scope,cart,$http,$location,weixin){
-
-    $scope.jump=function(path){
-        $location.path(path);
-        $location.replace();
-    }
-
-    var str = $location.absUrl().split('#')[0];
-    str = str.split('?')[1];
-    if(str){
-        str =str.split('=')[1];
-        customerId=str;
-    }
-
-    if(!token.timestamp){
-        getToken($location.absUrl().split('#')[0],$http,weixin);
-    }
-
-    $scope.show = false;
-    $scope.nickname = '昵称';
-    $scope.headimgurl = '../img/logo.png';
-
-    var getInformation = function () {
-        var json = {openid: openid};
-        weixin.getInformation(json,function(data){
-            nickName=data.nickname;
-            if (data.nickname) {$scope.nickname = data.nickname;}
-            if (data.headimgurl) $scope.headimgurl = data.headimgurl;
-        })
-        weixin.getGroup(json,function(data){
-            if (data.groupid === 2) {
-                $scope.show = true;
-            }
-        })
-
-    }
-    if(!nickName) getOpenId($http,weixin,getInformation);
-    if(loadGoodFist){
-        cart.loadGoods();
-        loadGoodFist=false;
-    }
-
-    cart.getGoodsNumber(function(data){
-        console.log(data);
-        $scope.data=data;
-    });
-
-}
-
-
 
 angular.module('index.controllers', [])
 
-    //.controller('indexBaseCtrl', function($scope,cart,$http,$location,weixin) {
-    //
-    //
-    //
-    //
-    //})
+    .controller('indexBaseCtrl', function($scope,cart,$http,$location,weixin) {
+
+        var str = $location.absUrl().split('#')[0];
+        str = str.split('?')[1];
+        if(str){
+            str =str.split('=')[1];
+            customerId=str;
+        }
+
+        if(!token.timestamp){
+            getToken($location.absUrl().split('#')[0],$http,weixin);
+        }
+
+        $scope.show = false;
+        $scope.nickname = '昵称';
+        $scope.headimgurl = '../img/.jpg';
+
+        var getInformation = function () {
+            var json = {openid: openid};
+            weixin.getInformation(json,function(data){
+                if (data.nickname) {$scope.nickname = data.nickname;}
+                if (data.headimgurl) $scope.headimgurl = data.headimgurl;
+            })
+            weixin.getGroup(json,function(data){
+                if (data.groupid === 2) {
+                    $scope.show = true;
+                }
+            })
+
+        }
+        getOpenId($http,weixin,getInformation);
+        cart.loadGoods();
+
+        cart.getGoodsNumber(function(data){
+            console.log(data);
+            $scope.data=data;
+        });
+
+
+    })
 
 .controller('indexCtrl', function($scope, cate, cart,$interval, $ionicSlideBoxDelegate,$timeout,$location,
-                                  $ionicPopup, $rootScope,$ionicLoading,$ionicListDelegate,others,$http,weixin) {
-
-        init($scope,cart,$http,$location,weixin);
+                                  $ionicPopup, $rootScope,$ionicLoading,$ionicListDelegate,others) {
     
         $scope.searchStr = "";
         $scope.categoryArr=[];
@@ -215,8 +193,7 @@ angular.module('index.controllers', [])
         }
     })
 
-.controller('cartCtrl', function($scope,cart,orderOp,$ionicListDelegate,$ionicPopup,$location,weixin,$http) {
-        init($scope,cart,$http,$location,weixin);
+.controller('cartCtrl', function($scope,cart,orderOp,$ionicListDelegate,$ionicPopup,$location) {
         $scope.selected=false;
 
 
@@ -322,8 +299,7 @@ angular.module('index.controllers', [])
         }
 })
 
-.controller('accountCtrl', function($scope,cart,$http,$location,weixin) {
-        init($scope,cart,$http,$location,weixin);
+.controller('accountCtrl', function($scope) {
         console.log('account');
 
 })

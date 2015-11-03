@@ -40,28 +40,41 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-  //    .state('tab', {
-  //  url: '/tab',
-  //  abstract: true,
-  //  controller:'indexBaseCtrl'
-  //})
-
-  .state('index', {
-    url: '/tab/index',
-          templateUrl: 'templates/index/tab-index.html',
-          controller: 'indexCtrl'
+      .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'templates/index/tabs.html',
+    controller:'indexBaseCtrl'
   })
 
-  .state('cart', {
-      url: '/tab/cart',
+  .state('tab.index', {
+    url: '/index',
+    views: {
+      'tab-index': {
+        templateUrl: 'templates/index/tab-index.html',
+        controller: 'indexCtrl'
+      }
+    }
+  })
+
+  .state('tab.cart', {
+      url: '/cart',
+      views: {
+        'tab-cart': {
           templateUrl: 'templates/index/tab-cart.html',
           controller: 'cartCtrl'
+        }
+      }
     })
 
-  .state('tabAccount', {
-    url: '/tab/account',
+  .state('tab.account', {
+    url: '/account',
+    views: {
+      'tab-account': {
         templateUrl: 'templates/index/tab-account.html',
         controller: 'accountCtrl'
+      }
+    }
   })
 
       //.state('tab.orderSuc', {
