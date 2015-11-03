@@ -38,6 +38,7 @@ var init=function($scope,cart,$http,$location,weixin){
 
     $scope.jump=function(path){
         $location.path(path);
+        $location.replace();
     }
 
     var str = $location.absUrl().split('#')[0];
