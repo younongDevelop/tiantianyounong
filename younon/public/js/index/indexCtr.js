@@ -30,8 +30,19 @@ var getOpenId=function($http,weixin,callback){
 
 }
 
+var loadGoodFist=true;
+
+
 
 var init=function($scope,cart,$http,$location,weixin){
+
+    $scope.jump=function(path){
+        $location.path(path);
+    }
+
+    if(customerId !='11'){
+        return;
+    }
 
     var str = $location.absUrl().split('#')[0];
     str = str.split('?')[1];
@@ -46,7 +57,7 @@ var init=function($scope,cart,$http,$location,weixin){
 
     $scope.show = false;
     $scope.nickname = '昵称';
-    $scope.headimgurl = '../img/logo.jpg';
+    $scope.headimgurl = '../img/logo.png';
 
     var getInformation = function () {
         var json = {openid: openid};
@@ -62,7 +73,10 @@ var init=function($scope,cart,$http,$location,weixin){
 
     }
     getOpenId($http,weixin,getInformation);
-    cart.loadGoods();
+    if(loadGoodFist){
+        cart.loadGoods();
+        loadGoodFist=false;
+    }
 
     cart.getGoodsNumber(function(data){
         console.log(data);

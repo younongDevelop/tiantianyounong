@@ -174,9 +174,9 @@ select{
     padding:0;
 
 }
-.tabs-icon-top .tab-nav .tab-item-active{
-    color: #ffffff !important;
-}
+/*.tabs-icon-top .tab-nav .tab-item-active{*/
+    /*color: #ffffff !important;*/
+/*}*/
 
 .slider-slides{
     margin-top:1px;
@@ -230,6 +230,15 @@ ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-col
 .little-black-font-button{
     font-size: 2.2rem;color: #737373;width:12rem;border-radius: 0.4rem;height: 4.2rem;background-color: #ffffff;
     border: none;padding: 0;
+}
+
+
+.deActive i {
+    color: #9cdfa8 !important;
+}
+
+.active i {
+    color: #ffffff !important;
 }
 
 
