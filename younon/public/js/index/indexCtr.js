@@ -48,7 +48,7 @@ angular.module('index.controllers', [])
 
         $scope.show = false;
         $scope.nickname = '昵称';
-        $scope.headimgurl = '../img/.jpg';
+        $scope.headimgurl = '../img/logo.png';
 
         var getInformation = function () {
             var json = {openid: openid};

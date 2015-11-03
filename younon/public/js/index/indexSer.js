@@ -1,7 +1,7 @@
 
 angular.module('index.services', [])
 
-.factory('cart', function($http,util) {
+.factory('cart', function($http) {
 
         var goods = [];
         var goodsNumber={number:0,sum:0,numberArr:[]};

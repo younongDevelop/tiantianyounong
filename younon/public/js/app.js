@@ -1,8 +1,6 @@
 // Ionic Starter App
 
-var api='rest/';
-var search='search/';
-var pageNumber=10;
+
 var customerId='11';
 var openid='';
 var token='';
@@ -24,7 +22,7 @@ var imgIP='http://120.131.70.188:3003/';
 })(document, window);
 
 
-angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin.controllers', 'admin.services','person.controllers', 'person.services','shop.controllers', 'shop.services','common.util'])
+angular.module('starter', ['ionic', 'index.controllers', 'index.services','person.controllers', 'person.services','shop.controllers', 'shop.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -164,23 +162,3 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
 
 });
 
-// 公共方法
-angular.module('common.util', []).factory("util",function(){
-  return {
-    /**
-    * @desc 解析商品对象中的图片地址对象
-    */
-    parseImgUrls:function(urlsStr){
-        var urlObj;
-        try{
-            urlObj = JSON.parse(urlsStr);
-            var list = []
-            urlObj.list = urlObj.list.split(",");
-            return urlObj
-        }catch(e){
-            urlObj = {small:null,list:[]};
-            return urlObj;
-        }
-    }
-  }
-})
