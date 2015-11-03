@@ -260,11 +260,11 @@ ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-col
     background-color: red;
     color: #ffffff;
     padding: 0.5rem;
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     top: 1rem;
     right: 7rem;
     border-radius: 2rem;
-    font-size: 1rem;
+    font-size: 2rem;
 }
 
