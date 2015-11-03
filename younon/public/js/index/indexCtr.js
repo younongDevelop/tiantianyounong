@@ -110,7 +110,7 @@ angular.module('index.controllers', [])
 
         var slideHandle = $ionicSlideBoxDelegate.$getByHandle('indexSlide');
         $interval(function(){
-            slideHandle.next();
+            //slideHandle.next();
         },3000);
 
 
