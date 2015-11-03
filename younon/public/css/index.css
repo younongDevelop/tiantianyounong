@@ -73,7 +73,8 @@
 }
 
 .account .list:last-child{
-    margin-bottom: 17rem;
+    padding-bottom: 17rem;
+
 }
 
 
