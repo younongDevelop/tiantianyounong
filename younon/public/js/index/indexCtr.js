@@ -31,51 +31,61 @@ var getOpenId=function($http,weixin,callback){
 }
 
 
+var init=function($scope,cart,$http,$location,weixin){
+
+    var str = $location.absUrl().split('#')[0];
+    str = str.split('?')[1];
+    if(str){
+        str =str.split('=')[1];
+        customerId=str;
+    }
+
+    if(!token.timestamp){
+        getToken($location.absUrl().split('#')[0],$http,weixin);
+    }
+
+    $scope.show = false;
+    $scope.nickname = '昵称';
+    $scope.headimgurl = '../img/logo.jpg';
+
+    var getInformation = function () {
+        var json = {openid: openid};
+        weixin.getInformation(json,function(data){
+            if (data.nickname) {$scope.nickname = data.nickname;}
+            if (data.headimgurl) $scope.headimgurl = data.headimgurl;
+        })
+        weixin.getGroup(json,function(data){
+            if (data.groupid === 2) {
+                $scope.show = true;
+            }
+        })
+
+    }
+    getOpenId($http,weixin,getInformation);
+    cart.loadGoods();
+
+    cart.getGoodsNumber(function(data){
+        console.log(data);
+        $scope.data=data;
+    });
+
+}
+
+
+
 angular.module('index.controllers', [])
 
-    .controller('indexBaseCtrl', function($scope,cart,$http,$location,weixin) {
-
-        var str = $location.absUrl().split('#')[0];
-        str = str.split('?')[1];
-        if(str){
-            str =str.split('=')[1];
-            customerId=str;
-        }
-
-        if(!token.timestamp){
-            getToken($location.absUrl().split('#')[0],$http,weixin);
-        }
-
-        $scope.show = false;
-        $scope.nickname = '昵称';
-        $scope.headimgurl = '../img/slide1.jpg';
-
-        var getInformation = function () {
-            var json = {openid: openid};
-            weixin.getInformation(json,function(data){
-                if (data.nickname) {$scope.nickname = data.nickname;}
-                if (data.headimgurl) $scope.headimgurl = data.headimgurl;
-            })
-            weixin.getGroup(json,function(data){
-                if (data.groupid === 2) {
-                    $scope.show = true;
-                }
-            })
-
-        }
-        getOpenId($http,weixin,getInformation);
-        cart.loadGoods();
-
-        cart.getGoodsNumber(function(data){
-            console.log(data);
-            $scope.data=data;
-        });
-
-
-    })
+    //.controller('indexBaseCtrl', function($scope,cart,$http,$location,weixin) {
+    //
+    //
+    //
+    //
+    //})
 
 .controller('indexCtrl', function($scope, cate, cart,$interval, $ionicSlideBoxDelegate,$timeout,$location,
-                                  $ionicPopup, $rootScope,$ionicLoading,$ionicListDelegate,others) {
+                                  $ionicPopup, $rootScope,$ionicLoading,$ionicListDelegate,others,$http,weixin) {
+
+        init($scope,cart,$http,$location,weixin);
     
         $scope.searchStr = "";
         $scope.categoryArr=[];
@@ -193,7 +203,8 @@ angular.module('index.controllers', [])
         }
     })
 
-.controller('cartCtrl', function($scope,cart,orderOp,$ionicListDelegate,$ionicPopup,$location) {
+.controller('cartCtrl', function($scope,cart,orderOp,$ionicListDelegate,$ionicPopup,$location,weixin,$http) {
+        init($scope,cart,$http,$location,weixin);
         $scope.selected=false;
 
 
@@ -299,7 +310,8 @@ angular.module('index.controllers', [])
         }
 })
 
-.controller('accountCtrl', function($scope) {
+.controller('accountCtrl', function($scope,cart,$http,$location,weixin) {
+        init($scope,cart,$http,$location,weixin);
         console.log('account');
 
 })
