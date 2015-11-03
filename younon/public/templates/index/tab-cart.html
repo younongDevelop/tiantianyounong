@@ -45,21 +45,38 @@
         background-color: #d95c5c;color: #ffffff;font-size: 3rem;border:0;right: 0;border-radius: 0">去结算</button>
     </div>
 
-    <ion-tabs class="tabs-icon-top" >
 
-        <ion-tab title="首页" icon-off="ion-ios-home-outline" icon-on="ion-ios-home-outline"  ng-click="jump('/tab/index')" class="deActive">
+    <div class="tabs tabs-icon-top">
+        <a class="tab-item" ng-click="jump('/tab/index')">
+            <i class="icon ion-home"></i>
+            Home
+        </a>
+        <a class="tab-item" >
+            <i class="icon ion-star"></i>
+            Favorites
+        </a>
+        <a class="tab-item" ng-click="jump('/tab/account')">
+            <i class="icon ion-gear-a"></i>
+            Settings
+        </a>
+    </div>
 
-        </ion-tab>
 
-        <ion-tab title="购物车" icon-off="ion-ios-cart" icon-on="ion-ios-cart" badge="data.number" badge-style="badge-assertive" class="active">
+    <!--<ion-tabs class="tabs-icon-top" >-->
 
-        </ion-tab>
+        <!--<ion-tab title="首页" icon-off="ion-ios-home-outline" icon-on="ion-ios-home-outline"  ng-click="jump('/tab/index')" class="deActive">-->
 
-        <ion-tab title="我的有农" icon-off="ion-ios-person-outline " icon-on="ion-ios-person-outline"  ng-click="jump('/tab/account')" class="deActive">
+        <!--</ion-tab>-->
 
-        </ion-tab>
+        <!--<ion-tab title="购物车" icon-off="ion-ios-cart" icon-on="ion-ios-cart" badge="data.number" badge-style="badge-assertive" class="active">-->
+
+        <!--</ion-tab>-->
+
+        <!--<ion-tab title="我的有农" icon-off="ion-ios-person-outline " icon-on="ion-ios-person-outline"  ng-click="jump('/tab/account')" class="deActive">-->
+
+        <!--</ion-tab>-->
 
 
-    </ion-tabs>
+    <!--</ion-tabs>-->
 
 </ion-view>

@@ -47,21 +47,18 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','admin
   //})
 
   .state('index', {
-          cache: false,
     url: '/tab/index',
           templateUrl: 'templates/index/tab-index.html',
           controller: 'indexCtrl'
   })
 
   .state('cart', {
-          cache: false,
       url: '/tab/cart',
           templateUrl: 'templates/index/tab-cart.html',
           controller: 'cartCtrl'
     })
 
   .state('tabAccount', {
-          cache: false,
     url: '/tab/account',
         templateUrl: 'templates/index/tab-account.html',
         controller: 'accountCtrl'

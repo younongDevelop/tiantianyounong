@@ -80,21 +80,37 @@
     	</div>
     </ion-content>
 
-    <ion-tabs class="tabs-icon-top" >
+    <div class="tabs tabs-icon-top">
+        <a class="tab-item">
+            <i class="icon ion-home"></i>
+            Home
+        </a>
+        <a class="tab-item" ng-click="jump('/tab/cart')">
+            <i class="icon ion-star"></i>
+            Favorites
+        </a>
+        <a class="tab-item" ng-click="jump('/tab/account')">
+            <i class="icon ion-gear-a"></i>
+            Settings
+        </a>
+    </div>
 
-        <ion-tab title="首页" icon-off="ion-ios-home-outline" icon-on="ion-ios-home-outline"  class="active">
 
-        </ion-tab>
+    <!--<ion-tabs class="tabs-icon-top" >-->
 
-        <ion-tab title="购物车" icon-off="ion-ios-cart-outline" icon-on="ion-ios-cart-outline" badge="data.number" badge-style="badge-assertive" ng-click="jump('/tab/cart')"  class="deActive">
+        <!--<ion-tab title="首页" icon-off="ion-ios-home-outline" icon-on="ion-ios-home-outline"  class="active">-->
 
-        </ion-tab>
+        <!--</ion-tab>-->
 
-        <ion-tab title="我的有农" icon-off="ion-ios-person" icon-on="ion-ios-person" ng-click="jump('/tab/account')" class="deActive">
+        <!--<ion-tab title="购物车" icon-off="ion-ios-cart-outline" icon-on="ion-ios-cart-outline" badge="data.number" badge-style="badge-assertive" ng-click="jump('/tab/cart')"  class="deActive">-->
 
-        </ion-tab>
+        <!--</ion-tab>-->
+
+        <!--<ion-tab title="我的有农" icon-off="ion-ios-person" icon-on="ion-ios-person" ng-click="jump('/tab/account')" class="deActive">-->
+
+        <!--</ion-tab>-->
 
 
-    </ion-tabs>
+    <!--</ion-tabs>-->
 
 </ion-view>
