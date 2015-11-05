@@ -56,7 +56,7 @@ angular.module('person.controllers', [])
         }
     })
 
-    .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,adminGetOrders,weixin,$ionicBackdrop) {
+    .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,weixin,$ionicBackdrop) {
 
 
 
