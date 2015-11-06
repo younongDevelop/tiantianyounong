@@ -441,6 +441,8 @@ shopModel.getCharge = function(data,cb){
                         result.deliver_type=strToArr(deliver_type);
                         result.pay_type=strToArr(pay_type);
 
+                        console.log(result);
+
                         cb(null,result);
                     }
                 });
