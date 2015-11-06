@@ -307,6 +307,8 @@ angular.module('shop.controllers', [])
 
          orderOp.getFormData(function(data){
              $scope.formData=data;
+             console.log('!!!!!!!!');
+             console.log($scope.formData);
              $scope.formData.formCart=true;
         });
             // 订单商品

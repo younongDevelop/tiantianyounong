@@ -50,6 +50,8 @@ angular.module('shop.services', [])
                 $http.post('/shop/getCharge',data).success(function(data){
                     formData.items=data.results.goods;
                     formData.charges=data.results.deliver_charges;
+                    formData.deliver_charges =data.results.deliver_charges;
+                    formData.deliver_free=data.results.deliver_free;
                     formData.free=data.results.deliver_free;
                     formData.deliver_timeArr=data.results.deliver_time;
                     formData.deliver_typeArr=data.results.deliver_type;
@@ -73,9 +75,6 @@ angular.module('shop.services', [])
                     }
                     formData.totalMoney=sum;
                     formData.order_total=sum+parseInt(formData.deliver_charges)-parseInt(formData.deliver_free);
-
-                    console.log(data);
-
                 }).error(function(err){
                     console.log(err);
                 })
