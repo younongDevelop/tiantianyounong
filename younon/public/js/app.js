@@ -139,6 +139,20 @@ angular.module('starter', ['ionic', 'index.controllers', 'index.services','perso
           controller: 'accountOrderDetails'
       })
 
+      .state('manageOrders', {
+          cache: false,
+          url: '/manageOrders',
+          templateUrl: 'templates/personInfor/account-manageOrders.html',
+          controller: 'manageOrdersCtrl'
+
+      })
+
+      .state('manageOrdersDetails', {
+          url: '/manageOrderDetails/{orderId}',
+          templateUrl: 'templates/personInfor/account-manageOrderDetail.html',
+          controller: 'accountManageOrderDetails'
+      })
+
 
       .state('addresses', {
           url: '/addresses',

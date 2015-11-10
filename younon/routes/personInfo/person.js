@@ -138,6 +138,20 @@ function getOrders(req,res){
 
 }
 
+//管理员获取订单列表
+function adminGetOrders(req,res){
+    var page=req.params.page;
+    var pageSize=req.params.pageSize;
+    var statue=req.params.statue;
+    personModel.adminGetOrders(statue,page,pageSize,function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    });
+}
+
 
 //获取订单详情
 function findOrder(req,res){
@@ -178,6 +192,7 @@ router.get('/getCommunity/:districtId',getCommunity);//获取小区列表
 router.get('/getSince/:districtId',getSince);//获取自提点列表
 
 router.get('/getOrders/:customerId/:statue/:page/:pageSize',getOrders);//获取订单列表
+router.get('/adminGetOrders/:statue/:page/:pageSize',adminGetOrders);//获取订单列表
 router.get('/findOrder/:orderId',findOrder);//获取订单详情
 router.put('/chgOrder/:orderId/:statueId',chgOrder);//修改订单状态
 

@@ -6,7 +6,7 @@ angular.module('person.controllers', [])
 
 
     .controller('accountOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders) {
-        $scope.status=[{show:true,statue:'(1)',title:'待支付'},{show:false,statue:'(2,3,4,9,10)',title:'待收货'},{show:false,statue:'(14)',
+        $scope.status=[{show:true,statue:'(1)',title:'待支付'},{show:false,statue:'(2,3,4,9,10)',title:'待收货'},{show:false,statue:'(14,15)',
         title:'待自取'},{show:false,statue:'(5,12)',title:'已完成'}, {show:false,statue:'(6,7,8,11,13)',title:'已取消'}];
         accountOrders.inintOrders();
         var page=1;
@@ -74,9 +74,11 @@ angular.module('person.controllers', [])
                 $scope.orderDetail.weight=$scope.orderDetail.weight+$scope.orderDetail.items[i].prod_weight*$scope.orderDetail.items[i].product_quantity;
             }
             $scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"创建时间",content:$scope.orderDetail.date_purchased},
-                {title:"商品总重",content:$scope.orderDetail.weight+'kg'},{title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true},
-                {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},{title:"运费减免",content:'￥'+($scope.orderDetail.order_total-$scope.orderDetail.deliver_charges-$scope.orderDetail.money),attention:true},
-                {title:"赠送积分",content:'0积分'},];
+               {title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true}, {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},];
+            //$scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"创建时间",content:$scope.orderDetail.date_purchased},
+            //    {title:"商品总重",content:$scope.orderDetail.weight+'kg'},{title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true},
+            //    {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},{title:"运费减免",content:'￥'+($scope.orderDetail.order_total-$scope.orderDetail.deliver_charges-$scope.orderDetail.money),attention:true},
+            //    {title:"赠送积分",content:'0积分'},];
         });
 
         $scope.chgOrder=function(statueId){
@@ -136,6 +138,109 @@ angular.module('person.controllers', [])
 
 
     })
+
+
+
+
+    .controller('manageOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders) {
+        $scope.status=[{show:true,statue:'(2,9,10)',title:'待发货'},{show:false,statue:'(14,15)',title:'待自取'},{show:false,statue:'(5,12)',
+            title:'已完成'},{show:false,statue:'(13,6)',title:'已取消'}];
+        accountOrders.inintOrders();
+        var page=1;
+        var pageSize=10;
+        var isMore = false;
+        var statue=$scope.status[0].statue;
+
+        $scope.selectStatue=function(data){
+            page=1;
+            for(var i in $scope.status){
+                $scope.status[i].show=false;
+            }
+            data.show=true;
+
+            statue=data.statue;
+            console.log(statue);
+
+            accountOrders.loadOrders(page,pageSize,statue,loadMore);
+
+        }
+
+        var loadMore = function (data) {
+            console.log(data);
+            $scope.orders=data;
+
+            page++;
+            if (data.length < pageSize) {
+                isMore = false;
+            } else {
+                isMore = true;
+            }
+        };
+        accountOrders.loadOrders(page,pageSize,statue,loadMore);
+        $scope.moreDataCanBeLoaded = function () {
+            console.log(isMore);
+            if (isMore) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        $scope.getMore = function () {
+            isMore = false;
+            accountOrders.loadOrders(page,pageSize,statue,loadMore);
+            // 在重新完全载入数据后，需要发送一个scroll.infiniteScrollComplete事件，告诉directive，我们完成了这个动作，系统会清理scroller和为下一次的载入数据，重新绑定这一事件。
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+        }
+    })
+
+
+    .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,weixin,$ionicBackdrop) {
+
+
+
+        var errorMap=errMap.getMap();
+        accountOrders.getOrderDetail($stateParams.orderId,function(data){
+            $scope.orderDetail=data;
+            console.log(data);
+            $scope.orderDetail.money=0;
+            $scope.orderDetail.weight=0;
+            for(var i in $scope.orderDetail.items){
+                if(!$scope.orderDetail.items[i].prod_weight){
+                    $scope.orderDetail.items[i].prod_weight=0;
+                }
+                $scope.orderDetail.money=$scope.orderDetail.money+$scope.orderDetail.items[i].final_price*$scope.orderDetail.items[i].product_quantity;
+                $scope.orderDetail.weight=$scope.orderDetail.weight+$scope.orderDetail.items[i].prod_weight*$scope.orderDetail.items[i].product_quantity;
+            }
+            $scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"创建时间",content:$scope.orderDetail.date_purchased},
+                {title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true}, {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},];
+            //$scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"创建时间",content:$scope.orderDetail.date_purchased},
+            //    {title:"商品总重",content:$scope.orderDetail.weight+'kg'},{title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true},
+            //    {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},{title:"运费减免",content:'￥'+($scope.orderDetail.order_total-$scope.orderDetail.deliver_charges-$scope.orderDetail.money),attention:true},
+            //    {title:"赠送积分",content:'0积分'},];
+        });
+
+        $scope.chgOrder=function(statueId){
+
+            var statueIdMap={
+                2:'3',
+                9:'4',
+                10:'4',
+                14:'15'
+
+            }
+
+            accountOrders.changeOrderStatue($stateParams.orderId,statueIdMap[statueId],function(data){
+                $ionicPopup.alert({
+                    title: '',
+                    template:errorMap[data],
+                    okText: '好的'
+                });
+            });
+
+        };
+
+    })
+
 
     .controller('addressesCtrl', function($scope,$ionicLoading, $ionicListDelegate,personAddress,errMap,$ionicPopup,orderOp) {
         var errorMap=errMap.getMap();

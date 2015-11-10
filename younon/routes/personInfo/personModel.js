@@ -199,6 +199,40 @@ personModel.getOrders=function(customerId,statue,page,pageSize,cb) {
     });
 }
 
+
+//管理员获取订单列表
+
+personModel.adminGetOrders=function(statue,page,pageSize,cb) {
+    var start=(parseInt(page)-1)*parseInt(pageSize);
+    store.getPool().getConnection(function (err, conn) {
+        var querySQL = "select order_id,date_purchased,order_status,deliver_charges,order_total from orders  where  order_status_id in "+statue+" order by last_modified desc limit "+start+","+pageSize;
+        conn.query(querySQL,null, function (err, rows) {
+            conn.release();
+            if (err) {
+                console.log(err);
+                cb(err, null)
+            } else {
+                var k=0;
+                if(rows.length>0)for(var i in rows){
+                    rows[i].date_purchased=moment(rows[i].date_purchased).format("YYYY年MM月DD日 HH:mm");
+                    getItems(rows[i].order_id,function(err,data,orderId){
+                        for(var m in rows){
+                            if(rows[m].order_id == orderId){rows[m].items=data;}
+                        }
+                        k++;
+                        if(k == rows.length){
+                            cb(null, rows);
+                        }
+                    })
+                }else{
+                    cb(null, rows);
+                }
+            }
+        });
+    });
+}
+
+
 function getItems (orderId,cb){
 
     store.getPool().getConnection(function (err, conn) {

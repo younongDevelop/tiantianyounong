@@ -210,33 +210,16 @@ angular.module('person.services', [])
                     cb(errMAp[statue]);
                 });
             },
-            adminChangeOrder:function(orderId,statueId,cb){
-                $http.put('/adminOrders/changeStatue/'+orderId+'/'+statueId).success(function(data){
-                    if(data=200){
-                        var cbMap={
-                            3:'ADMIN_SEND_SUCCESS',
-                            4:'ADMIN_SEND_SUCCESS',
-                            13:'ADMIN_CLOSE_SUCCESS'
-                        };
-                        cb(cbMap[statueId],true);
-                    }else{
-
-                        var cbMap={
-                            3:'ADMIN_SEND_FAILURE',
-                            4:'ADMIN_SEND_FAILURE',
-                            13:'ADMIN_CLOSE_FAILURE'
-                        };
-                        cb(cbMap[statueId],false);
-
-                    }
-
+            adminLoadOrder:function(page,pageSize,statue,cb){
+                if(stat!=statue){
+                    resultData=[];
+                    stat=statue;
+                }
+                $http.get('/person/adminGetOrders/'+statue+'/'+page+'/'+pageSize).success(function(data){
+                    formatData(data.results);
+                    cb(resultData);
                 }).error(function(res){
-                    var cbMap={
-                        3:'ADMIN_SEND_FAILURE',
-                        4:'ADMIN_SEND_FAILURE',
-                        13:'ADMIN_CLOSE_FAILURE'
-                    };
-                    cb(cbMap[statueId],false);
+                    console.log(res);
                 })
             },
             getOrderDetail:function(orderId,cb){

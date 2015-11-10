@@ -397,7 +397,7 @@ shopModel.getCharge = function(data,cb){
                 for(var m in data){
                     if(data[m].prod_id == results[i].prod_id){
                         results[i].quantity=data[m].quantity;
-                        sumWeight+=results[i].quantity*results[i].prod_weight;
+                        sumWeight+=results[i].quantity*results[i].prod_price;
                     }
                 }
             }
