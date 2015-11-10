@@ -161,7 +161,7 @@ angular.module('person.controllers', [])
             statue=data.statue;
             console.log(statue);
 
-            accountOrders.loadOrders(page,pageSize,statue,loadMore);
+            accountOrders.adminLoadOrder(page,pageSize,statue,loadMore);
 
         }
 
@@ -176,7 +176,7 @@ angular.module('person.controllers', [])
                 isMore = true;
             }
         };
-        accountOrders.loadOrders(page,pageSize,statue,loadMore);
+        accountOrders.adminLoadOrder(page,pageSize,statue,loadMore);
         $scope.moreDataCanBeLoaded = function () {
             console.log(isMore);
             if (isMore) {
