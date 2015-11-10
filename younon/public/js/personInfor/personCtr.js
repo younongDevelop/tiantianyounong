@@ -194,7 +194,7 @@ angular.module('person.controllers', [])
     })
 
 
-    .controller('accountOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,weixin,$ionicBackdrop) {
+    .controller('accountManageOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,weixin,$ionicBackdrop) {
 
 
 
