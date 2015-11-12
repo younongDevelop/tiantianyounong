@@ -321,6 +321,7 @@ angular.module('shop.controllers', [])
                     template:'收货人不能为空',
                     okText: '好的'
                 });
+                return;
             }
 
             var orderStatue={

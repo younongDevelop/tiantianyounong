@@ -104,7 +104,7 @@ angular.module('index.controllers', [])
         var slideHandle = $ionicSlideBoxDelegate.$getByHandle('indexSlide');
         $interval(function(){
             slideHandle.next();
-        },3000);
+        },5000);
 
 
         //获取轮播图片

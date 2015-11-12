@@ -22,7 +22,7 @@ var imgIP='http://120.131.70.188:3003/';
 })(document, window);
 
 
-angular.module('starter', ['ionic', 'index.controllers', 'index.services','person.controllers', 'person.services','shop.controllers', 'shop.services'])
+angular.module('starter', ['ionic','ngIOS9UIWebViewPatch','index.controllers', 'index.services','person.controllers', 'person.services','shop.controllers', 'shop.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
