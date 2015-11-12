@@ -1,7 +1,41 @@
 /* defalut */
+
+
+html{
+    font-size:62.5%; /* 10÷16=62.5% */
+}
+body{
+    font-size:12px;
+    font-size:1.2rem ; /* 12÷10=1.2 */
+}
+p{
+    font-size:14px;
+    font-size:1.4rem;
+}
+
 a{
 	text-decoration: none;
 }
+
+html {
+    font-size: 62.5%;
+}
+@media only screen and (min-width: 481px){
+    html {
+        font-size: 94%!important;
+    }
+}
+@media only screen and (min-width: 561px){
+    html {
+        font-size: 109%!important;
+    }
+}
+@media only screen and (min-width: 641px){
+    html {
+        font-size: 125%!important;
+    }
+}
+
 /* Empty. Add your own CSS if you like */
 .fl{float: left;}
 .fr{float: right;}
@@ -260,10 +294,10 @@ ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-col
     background-color: red;
     color: #ffffff;
     padding: 0.5rem;
-    width: 3rem;
-    height: 3rem;
-    top: 1rem;
-    right: 7rem;
+    min-width: 2rem;
+    min-height: 2rem;
+    top: 0rem;
+    right: 4rem;
     border-radius: 2rem;
     font-size: 2rem;
 }

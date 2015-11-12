@@ -112,7 +112,7 @@
 .top-slide::after{
     content: " ";
     width: 200%;
-    height: 200%;
+    height: 1px;
     position: absolute;
     top: 0;
     left: 0;
@@ -120,6 +120,6 @@
     -webkit-transform: scale(.5);
     -webkit-transform-origin: 0 0;
     -webkit-box-sizing: border-box;
-    z-index :-999;
-    margin-top:-1px;
+    z-index :0;
+
 }
