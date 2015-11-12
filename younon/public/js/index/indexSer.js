@@ -79,7 +79,16 @@ angular.module('index.services', [])
                     if(lock) {return;}
                         // 如果商品不存在 将商品加入购物车模型
                         pro.select=false;
-                        goods.unshift(pro);
+                    var data={
+                        prod_detail: pro.prod_detail,
+                        prod_id:  pro.prod_id,
+                        prod_images: pro.prod_images,
+                        prod_name:pro.prod_name,
+                        prod_price: pro.prod_price,
+                        quantity: pro.quantity,
+                        select: pro.select
+                    }
+                        goods.unshift(data);
                         changeGoodsNumber();
                         return;
 

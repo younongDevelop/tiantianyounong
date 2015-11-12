@@ -101,6 +101,11 @@ angular.module('shop.controllers', [])
             console.log(data);
         })
 
+        cart.getGoodsNumber(function(data){
+            console.log(data);
+            $scope.data=data;
+        });
+
         $scope.minus=function(){
             if($scope.detail.quantity>1){
                 $scope.detail.quantity--;

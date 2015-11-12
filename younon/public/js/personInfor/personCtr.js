@@ -143,8 +143,8 @@ angular.module('person.controllers', [])
 
 
     .controller('manageOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders) {
-        $scope.status=[{show:true,statue:'(2,9,10)',title:'待发货'},{show:false,statue:'(14,15)',title:'待自取'},{show:false,statue:'(5,12)',
-            title:'已完成'},{show:false,statue:'(13,6)',title:'已取消'}];
+        $scope.status=[{show:true,statue:'(2,9,10)',title:'待发货'},{show:false,statue:'(3,4)',title:'已发货'},{show:false,statue:'(14,15)',
+            title:'自取单'},{show:false,statue:'(13,6,7,8)',title:'已关闭'}];
         accountOrders.inintOrders();
         var page=1;
         var pageSize=10;
@@ -294,6 +294,7 @@ angular.module('person.controllers', [])
             item.select=true;
             personAddress.selectAddress(item,'送货上门');
             orderOp.fillAddress(item);
+            window.history.go(-1);
         }
     })
 

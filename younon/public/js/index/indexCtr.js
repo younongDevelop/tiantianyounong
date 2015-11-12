@@ -30,6 +30,16 @@ var getOpenId=function($http,weixin,callback){
 
 }
 
+function cancelPil(){
+    if(this && this.stopPropagation){
+        //W3C取消冒泡事件
+        this.stopPropagation();
+    }else{
+        //IE取消冒泡事件
+        window.event.cancelBubble = true;
+    }
+}
+
 
 angular.module('index.controllers', [])
 
@@ -211,6 +221,10 @@ angular.module('index.controllers', [])
 .controller('cartCtrl', function($scope,cart,orderOp,$ionicListDelegate,$ionicPopup,$location) {
         $scope.selected=false;
 
+        // 跳转到详情页
+        $scope.jumpDetail = function(proid){
+            $location.path('/detail/'+proid);
+        }
 
         cart.getGoods(function(data){
             $scope.cartGoods=data;
@@ -219,6 +233,7 @@ angular.module('index.controllers', [])
         });
 
        $scope.del=function(index){
+           cancelPil();
            var item={
                customersId:customerId,
                prod_id:$scope.cartGoods[index].prod_id
@@ -247,6 +262,7 @@ angular.module('index.controllers', [])
         }
 
         $scope.minus = function(index){
+            cancelPil();
             if($scope.cartGoods[index].quantity>1){
                 var number=$scope.cartGoods[index].quantity;
                 changeNumber(index,--number);
@@ -255,12 +271,14 @@ angular.module('index.controllers', [])
         }
 
         $scope.add = function(index){
+            cancelPil();
             var number=$scope.cartGoods[index].quantity;
             changeNumber(index,++number);
 
         }
 
         $scope.selectAll = function(){
+
             $scope.selected=!$scope.selected;
             if($scope.selected){
                 for(var i in $scope.cartGoods){
@@ -278,19 +296,15 @@ angular.module('index.controllers', [])
         }
 
         $scope.selectOne=function(index){
+            cancelPil();
             $scope.cartGoods[index].select=!$scope.cartGoods[index].select;
-
             cart.getGoodsNumber(function(data){
-
             });
         }
 
-
         $scope.accountCart = function(){
-
             var lock=true;
             var goodsId=[];
-
             for(var i  in $scope.cartGoods){
                 if($scope.cartGoods[i].select){
                     lock=false;
@@ -307,7 +321,6 @@ angular.module('index.controllers', [])
                 return;
             }
             orderOp.isFromCart(true);
-
             orderOp.getDeliverCharges(goodsId);
             $location.path('/orderFill');
 
