@@ -13,7 +13,7 @@
             <div class="search padding-bottom padding-top" style="background-color: #fff;padding:0;height: 8rem;">
                 <div class="row" style="padding:1.5rem 1.5rem 1rem 1.5rem;z-index: 0;">
                     <div  style="z-index: 0">
-                        <div class="item item-input border-style" style="height: 5rem;width:28rem;margin:0 1.5rem 1px 4rem"   >
+                        <div class="item item-input border-style" style="height: 5rem;width:30rem;margin:0 1.5rem 1px 4rem"   >
                             <i class="icon ion-search placeholder-icon" style="font-size: 2.5rem"></i>
                             <input type="text" placeholder="请输入商品关键字" ng-model="searchStr" style="font-size: 2.5rem
                             ;line-height: 3rem;height: 4rem">
@@ -37,8 +37,8 @@
                         <div class="item tabs tabs-secondary" style="height: 100%;width: 100%" >
                             <div  class="tab-item" href="#" ng-repeat="category in categorites" style="font-size: 2.6rem;color:#808080;
                             max-width: none;text-align: center;width: 20%;height: 100%;line-height: 6rem;min-height: 0;" ng-click="getProduct(category.categories_id)">
-                                <div ng-if="!category.show" style="width:10rem;height:100%;text-align: center;">{{category.category_name}}</div>
-                                <div ng-if="category.show" style="width:10rem;height:100%;color: #ffffff;background-color:#39bf50;text-align: center">{{category.category_name}}</div>
+                                <div ng-if="!category.show" style="width:11rem;height:100%;text-align: center;">{{category.category_name}}</div>
+                                <div ng-if="category.show" style="width:11rem;height:100%;color: #ffffff;background-color:#39bf50;text-align: center">{{category.category_name}}</div>
                             </div>
                         </div>
 
@@ -55,7 +55,7 @@
                     <img ng-src="{{pro.prod_images}}"
                          style="float: left;max-width: none;max-height: none;height: 11rem;width: 14rem;margin:2rem 2rem;top:0">
                         <div style="float: left;" >
-                        <div style="margin:4rem 0 0 2rem;color: #838385;font-size: 2.5rem;
+                        <div style="margin:2rem 0 0 2rem;color: #838385;font-size: 2.5rem;
                     width: 10rem;">{{pro.prod_name}}</div>
                     <div class="attention" style="margin:4rem 0 0 2rem;font-size: 2.5rem;height: 3rem;line-height: 3rem;">￥{{pro.prod_price}}</div>
 
