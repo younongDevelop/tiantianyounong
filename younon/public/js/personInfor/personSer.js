@@ -30,6 +30,9 @@ angular.module('person.services', [])
         }
 
         return{
+            initAddress:function(){
+                addresses=[];
+            },
             getAddresses:function(cb){
                 cb(addresses);
             },

@@ -243,6 +243,9 @@ angular.module('person.controllers', [])
 
 
     .controller('addressesCtrl', function($scope,$ionicLoading, $ionicListDelegate,personAddress,errMap,$ionicPopup,orderOp) {
+
+        personAddress.initAddress();
+
         var errorMap=errMap.getMap();
         personAddress.getSelectedId(function(id){
             $scope.selectedId=id;
