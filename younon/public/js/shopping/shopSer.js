@@ -79,6 +79,14 @@ angular.module('shop.services', [])
                     console.log(err);
                 })
             },
+            //获取运费规则描述
+            getDeliverRule:function(cb){
+                $http.get('/shop/getDeliverRule').success(function(data){
+                    cb(null,data);
+                }).error(function(err){
+                    cb(err,null);
+                })
+            },
             // 填写地址
             fillAddress:function(address){
                 formData.deliver_address=localStorage.address_detail;   //deliver address

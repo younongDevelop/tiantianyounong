@@ -254,7 +254,7 @@ function getItems (orderId,cb){
 //获取订单详情
 personModel.findOrder=function(orderId,cb) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "select deliver_type,order_status_id,deliver_time,receiver_name,deliver_phone,deliver_address,order_no,date_purchased" +
+        var querySQL = "select deliver_type,order_status_id,order_status,deliver_time,receiver_name,deliver_phone,deliver_address,order_no,date_purchased" +
             ",order_total,deliver_charges,payment_methods.payment_type from orders left join payment_methods on orders.payment_type = payment_methods.payment_method_id " +
             " where order_id = ?";
         conn.query(querySQL,orderId, function (err, rows) {

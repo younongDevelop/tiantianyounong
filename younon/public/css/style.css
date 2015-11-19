@@ -302,3 +302,7 @@ ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-col
     font-size: 2rem;
 }
 
+.popup-body{
+    line-height: 2rem;
+}
+

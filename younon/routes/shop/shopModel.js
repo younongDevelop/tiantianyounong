@@ -440,21 +440,33 @@ shopModel.getCharge = function(data,cb){
                         result.deliver_time=strToArr(deliver_time);
                         result.deliver_type=strToArr(deliver_type);
                         result.pay_type=strToArr(pay_type);
-
                         console.log(result);
-
                         cb(null,result);
                     }
                 });
             });
         }
-
     });
-
-
 }
 
+//获取运费规则描述
 
+shopModel.getDeliverRule =function(cb){
+
+    store.getPool().getConnection(function (err, conn) {
+        var querySQL = 'select attr_value from attribute where attr_id = 8';
+        conn.query(querySQL,null, function (err, rows) {
+            conn.release();
+            if (err){
+                console.log(err);
+                cb(err,null)
+            }else{
+                cb(null,rows);
+            }
+        });
+    });
+
+}
 
 
 

@@ -253,6 +253,26 @@ angular.module('shop.controllers', [])
 
 
 .controller('orderFill', function($scope, orderOp, errMap, accountOrders, cart,$http, $ionicPopup,$location){
+
+        var rule='获取运费规则描述信息失败';
+        //获取运费规则描述
+        orderOp.getDeliverRule(function(err,data){
+            if(err){
+
+            }else{
+
+              rule=data.results[0].attr_value
+            }
+
+        })
+
+        $scope.showRule=function(){
+            $ionicPopup.alert({
+                template:rule,
+                okText: '好的'
+            });
+        }
+
         var errorMap=errMap.getMap();
         var addressMap={
             '定点自取':'/since',

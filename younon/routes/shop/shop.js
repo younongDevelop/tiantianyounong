@@ -150,6 +150,19 @@ function getCharge(req,res){
 }
 
 
+//获取运费规则描述
+function getDeliverRule(req,res){
+
+    shopModel.getDeliverRule(function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    })
+}
+
+
 
 router.get('/getCarousel',getCarousel); //获取轮播图片
 router.get('/getCategory',getCategory); //获取分类数据
@@ -166,6 +179,7 @@ router.get('/chgBasket/:customerId/:prod_id/:quantity',chgBasket); //修改购�
 
 router.post('/addOrder',addOrder);//新增订单
 router.post('/getCharge',getCharge);//获取运费
+router.get('/getDeliverRule',getDeliverRule);//获取运费规则描述
 
 
 module.exports = router;
