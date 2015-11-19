@@ -165,7 +165,7 @@ angular.module('index.controllers', [])
 
         // 点击搜索事件
         $scope.search = function(searchStr){
-            $location.path('/tab/list/'+searchStr);
+            $location.path('/list/'+searchStr);
         }
 
         // 添加购物车
