@@ -11,6 +11,11 @@ angular.module('index.services', [])
             goodsNumber.sum=0;
             goodsNumber.numberArr=[];
             for (var i in goods) {
+                var item=goods[i];
+                item.quantity=parseInt(item.quantity);
+                item.prod_price=parseFloat(item.prod_price).toFixed(2);
+                item.sum=item.quantity*item.prod_price;
+                item.sum=parseFloat(item.sum).toFixed(2);
                 goodsNumber.number=goodsNumber.number+goods[i].quantity;
                 if(goods[i].select)goodsNumber.sum=goodsNumber.sum+goods[i].quantity*goods[i].prod_price;
                 goodsNumber.numberArr.push(goods[i].quantity);
