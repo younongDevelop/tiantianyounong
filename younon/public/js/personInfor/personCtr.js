@@ -6,7 +6,7 @@ angular.module('person.controllers', [])
 
 
     .controller('accountOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders) {
-        $scope.status=[{show:true,statue:'(1)',title:'待支付'},{show:false,statue:'(2,4,6,7)',title:'待收货'},{show:false,statue:'(9,10,11,12,13)',
+        $scope.status=[{show:true,statue:'(1)',title:'待支付'},{show:false,statue:'(2,4,6,7,14)',title:'待收货'},{show:false,statue:'(9,10,11,12,13,15)',
         title:'待自取'},{show:false,statue:'(5)',title:'已完成'}, {show:false,statue:'(3,8)',title:'已取消'}];
         accountOrders.inintOrders();
         var page=1;
