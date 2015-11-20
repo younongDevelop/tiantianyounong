@@ -50,8 +50,8 @@ angular.module('shop.services', [])
                 $http.post('/shop/getCharge',data).success(function(data){
                     formData.items=data.results.goods;
                     formData.charges=data.results.deliver_charges;
-                    formData.deliver_charges =data.results.deliver_charges;
-                    formData.deliver_free=data.results.deliver_free;
+                    formData.deliver_charges =0;
+                    formData.deliver_free=0;
                     formData.free=data.results.deliver_free;
                     formData.deliver_timeArr=data.results.deliver_time;
                     formData.deliver_typeArr=data.results.deliver_type;
@@ -71,10 +71,18 @@ angular.module('shop.services', [])
                     for(var i in formData.items){
                         formData.items[i].prod_images=imgIP+formData.items[i].prod_images;
                         formData.weight+=formData.items[i].prod_weight*formData.items[i].quantity;
-                        sum+=formData.items[i].prod_price*formData.items[i].quantity;
+
+                        var item=formData.items[i];
+
+                        item.quantity=parseInt(item.quantity);
+                        item.prod_price=parseFloat(item.prod_price).toFixed(2);
+                        item.sum=item.quantity*item.prod_price;
+                        item.sum=parseFloat(item.sum).toFixed(2);
+                       sum+=item.quantity*item.prod_price;
+                        sum=parseFloat(sum).toFixed(2);
                     }
                     formData.totalMoney=sum;
-                    formData.order_total=sum+parseInt(formData.deliver_charges)-parseInt(formData.deliver_free);
+                    formData.order_total=parseInt(sum*100)/100+parseInt(formData.deliver_charges)-parseInt(formData.deliver_free);
                 }).error(function(err){
                     console.log(err);
                 })

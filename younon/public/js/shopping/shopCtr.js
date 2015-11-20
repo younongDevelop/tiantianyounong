@@ -298,7 +298,7 @@ angular.module('shop.controllers', [])
             }else{
                 $scope.formData.deliver_charges=$scope.formData.charges;
                 $scope.formData.deliver_free=$scope.formData.free;
-                $scope.formData.order_total=$scope.formData.totalMoney+parseInt($scope.formData.deliver_charges)-$scope.formData.deliver_free;
+                $scope.formData.order_total=parseInt($scope.formData.totalMoney*100)/100+parseInt($scope.formData.deliver_charges)-$scope.formData.deliver_free;
             }
 
             if(localStorage.deliver_type==deliverType){
@@ -332,6 +332,8 @@ angular.module('shop.controllers', [])
 
          orderOp.getFormData(function(data){
              $scope.formData=data;
+             $scope.formData.deliver_charges=0;
+             $scope.formData.deliver_free=0;
              console.log('!!!!!!!!');
              console.log($scope.formData);
              $scope.formData.formCart=true;

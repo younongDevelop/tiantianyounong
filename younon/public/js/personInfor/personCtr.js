@@ -70,11 +70,18 @@ angular.module('person.controllers', [])
                 if(!$scope.orderDetail.items[i].prod_weight){
                     $scope.orderDetail.items[i].prod_weight=0;
                 }
-                $scope.orderDetail.money=$scope.orderDetail.money+$scope.orderDetail.items[i].final_price*$scope.orderDetail.items[i].product_quantity;
+
+                var item=$scope.orderDetail.items[i];
+
+                item.final_price=parseFloat(item.final_price).toFixed(2);
+                item.sum=item.product_quantity*item.final_price;
+                item.sum=parseFloat(item.sum).toFixed(2);
+
+                $scope.orderDetail.money=$scope.orderDetail.money+parseInt(item.sum*100)/100;
                 $scope.orderDetail.weight=$scope.orderDetail.weight+$scope.orderDetail.items[i].prod_weight*$scope.orderDetail.items[i].product_quantity;
             }
             $scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"订单状态",content:$scope.orderDetail.order_status},{title:"创建时间",content:$scope.orderDetail.date_purchased},
-               {title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true}, {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},];
+               {title:"商品总金额",content:'￥'+$scope.orderDetail.money,attention:true}, {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},];
             //$scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"创建时间",content:$scope.orderDetail.date_purchased},
             //    {title:"商品总重",content:$scope.orderDetail.weight+'kg'},{title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true},
             //    {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},{title:"运费减免",content:'￥'+($scope.orderDetail.order_total-$scope.orderDetail.deliver_charges-$scope.orderDetail.money),attention:true},
@@ -208,11 +215,15 @@ angular.module('person.controllers', [])
                 if(!$scope.orderDetail.items[i].prod_weight){
                     $scope.orderDetail.items[i].prod_weight=0;
                 }
-                $scope.orderDetail.money=$scope.orderDetail.money+$scope.orderDetail.items[i].final_price*$scope.orderDetail.items[i].product_quantity;
+                var item=$scope.orderDetail.items[i];
+                item.final_price=parseFloat(item.final_price).toFixed(2);
+                item.sum=item.product_quantity*item.final_price;
+                item.sum=parseFloat(item.sum).toFixed(2);
+                $scope.orderDetail.money=$scope.orderDetail.money+parseInt(item.sum*100)/100;
                 $scope.orderDetail.weight=$scope.orderDetail.weight+$scope.orderDetail.items[i].prod_weight*$scope.orderDetail.items[i].product_quantity;
             }
             $scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"订单状态",content:$scope.orderDetail.order_status},{title:"创建时间",content:$scope.orderDetail.date_purchased},
-                {title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true}, {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},];
+                {title:"商品总金额",content:'￥'+$scope.orderDetail.money,attention:true}, {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},];
             //$scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"创建时间",content:$scope.orderDetail.date_purchased},
             //    {title:"商品总重",content:$scope.orderDetail.weight+'kg'},{title:"商品总金额",content:'￥'+$scope.orderDetail.order_total,attention:true},
             //    {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},{title:"运费减免",content:'￥'+($scope.orderDetail.order_total-$scope.orderDetail.deliver_charges-$scope.orderDetail.money),attention:true},

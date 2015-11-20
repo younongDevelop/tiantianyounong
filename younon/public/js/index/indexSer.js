@@ -8,7 +8,7 @@ angular.module('index.services', [])
         var changeGoodsNumber=function(){
             console.log(goods);
             goodsNumber.number=0;
-            goodsNumber.sum=0;
+            goodsNumber.sum=0.00;
             goodsNumber.numberArr=[];
             for (var i in goods) {
                 var item=goods[i];
@@ -17,7 +17,7 @@ angular.module('index.services', [])
                 item.sum=item.quantity*item.prod_price;
                 item.sum=parseFloat(item.sum).toFixed(2);
                 goodsNumber.number=goodsNumber.number+goods[i].quantity;
-                if(goods[i].select)goodsNumber.sum=goodsNumber.sum+goods[i].quantity*goods[i].prod_price;
+                if(goods[i].select)goodsNumber.sum=(parseInt(goodsNumber.sum*100)+parseInt(item.sum*100))/100;
                 goodsNumber.numberArr.push(goods[i].quantity);
             }
         }
