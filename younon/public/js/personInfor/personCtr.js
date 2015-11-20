@@ -89,12 +89,24 @@ angular.module('person.controllers', [])
         });
 
         $scope.chgOrder=function(statueId){
-            accountOrders.changeOrderStatue($stateParams.orderId,statueId,function(data){
-                $ionicPopup.alert({
-                    title: '',
-                    template:errorMap[data],
-                    okText: '好的'
-                });
+            accountOrders.changeOrderStatue($stateParams.orderId,statueId,function(err,data){
+                var orderStatueMap={
+                    3:'用户已作废',
+                    5:'用户已签收'
+                }
+                if(err){
+                    $ionicPopup.alert({
+                        title: '',
+                        template:errorMap[data],
+                        okText: '好的'
+                    });
+                }else{
+                    $scope.orderDetail.order_status_id=statueId;
+                    $scope.information[1].content=orderStatueMap[statueId];
+                    $scope.orderDetail.order_status=orderStatueMap[statueId];
+                    console.log($scope.orderDetail.order_status);
+                }
+
             });
 
         };
@@ -119,28 +131,20 @@ angular.module('person.controllers', [])
             weixin.weixinPay(psyJson,function(data){
                 $ionicBackdrop.release();
                 var statueMap={
-                    定点自取:14,
+                    定点自取:10,
                     送货上门:2
+                }
+                var orderStatueMap={
+                    定点自取:'已支付未发货待自取',
+                    送货上门:'已支付未发货'
                 }
 
                 accountOrders.changeOrderStatue($stateParams.orderId,statueMap[$scope.orderDetail.deliver_type],function(data){
-
                     $scope.orderDetail.order_status_id=statueMap[$scope.orderDetail.deliver_type];
-
+                    $scope.orderDetail.order_status=orderStatueMap[$scope.orderDetail.deliver_type];
+                    $scope.information[1].content=orderStatueMap[$scope.orderDetail.deliver_type];
                 });
-
-
             })
-
-            //accountOrders.changeOrderStatue($stateParams.orderId,'pay',function(data){
-            //    $ionicPopup.alert({
-            //        title: '',
-            //        template:errorMap[data],
-            //        okText: '好的'
-            //    });
-            //
-            //});
-
         };
 
 
@@ -150,7 +154,7 @@ angular.module('person.controllers', [])
 
 
     .controller('manageOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders) {
-        $scope.status=[{show:true,statue:'(2,6)',title:'待发货'},{show:false,statue:'(4,7)',title:'已发货'},{show:false,statue:'(10,11,12,13)',
+        $scope.status=[{show:true,statue:'(2,6,14,15)',title:'待发货'},{show:false,statue:'(4,7)',title:'已发货'},{show:false,statue:'(10,11,12,13)',
             title:'自取单'},{show:false,statue:'(3,8)',title:'已关闭'}];
         accountOrders.inintOrders();
         var page=1;
@@ -233,19 +237,39 @@ angular.module('person.controllers', [])
         $scope.chgOrder=function(statueId){
 
             var statueIdMap={
-                2:'3',
-                9:'4',
-                10:'4',
-                14:'15'
+                8:'8',
+                6:'14',
+                12:'15',
+                2:'4',
+                10:'11',
+                14:'7',
+                15:'13'
 
             }
 
-            accountOrders.changeOrderStatue($stateParams.orderId,statueIdMap[statueId],function(data){
-                $ionicPopup.alert({
-                    title: '',
-                    template:errorMap[data],
-                    okText: '好的'
-                });
+            accountOrders.changeOrderStatue($stateParams.orderId,statueIdMap[statueId],function(err,data){
+                if(err){
+                    $ionicPopup.alert({
+                        title: '',
+                        template:errorMap[data],
+                        okText: '好的'
+                    });
+                }else{
+
+                    var orderStatueMap={
+                        8:'电话确认取消',
+                        6:'电话确认成功',
+                        12:'自取电话确认成功',
+                        2:'已支付已发货',
+                        10:'已支付已发货待自取',
+                        14:'未支付已发货',
+                        15:'未付款待自取'
+                    }
+                    $scope.orderDetail.order_status_id=statueIdMap[statueId];
+                    $scope.orderDetail.order_status=orderStatueMap[statueId];
+                    $scope.information[1].content=orderStatueMap[statueId];
+                }
+
             });
 
         };

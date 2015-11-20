@@ -192,8 +192,11 @@ angular.module('person.services', [])
             changeOrderStatue:function(orderId,statueId,cb){
                 var errMAp={
                     2:'ORDER_PAY_FAILURE',
-                    6:'CANCEL_ORDER_FAILURE',
-                    12:'CUSTOMER_SIGN_FAILURE'
+                    3:'CANCEL_ORDER_FAILURE',
+                    10:'ORDER_PAY_FAILURE',
+                    8:'CANCEL_ORDER_FAILURE',
+                    14:'CONFIRM_FAILURE',
+                    15:'CONFIRM_FAILURE'
                 };
                 $http.put('/person/chgOrder/'+orderId+'/'+statueId).success(function(data){
 
@@ -204,13 +207,16 @@ angular.module('person.services', [])
                    }
                     var cbMAp={
                         2:'ORDER_PAY_SUCCESS',
-                        6:'CANCEL_ORDER_SUCCESS',
-                        12:'CUSTOMER_SIGN_SUCCESS'
+                        3:'CANCEL_ORDER_SUCCESS',
+                        10:'ORDER_PAY_SUCCESS',
+                        8:'CANCEL_ORDER_SUCCESS',
+                        14:'CONFIRM_SUCCESS',
+                        15:'CONFIRM_SUCCESS'
                     };
-                        cb(cbMAp[statueId]);
+                        cb(null,cbMAp[statueId]);
 
                 }).error(function(res){
-                    cb(errMAp[statue]);
+                    cb(errMAp[statue],null);
                 });
             },
             adminLoadOrder:function(page,pageSize,statue,cb){
@@ -287,6 +293,8 @@ angular.module('person.services', [])
             ADMIN_SEND_FAILURE:'发货失败',
             CUSTOMER_SIGN_SUCCESS:'签收成功',
             CUSTOMER_SIGN_FAILURE:'签收失败',
+            CONFIRM_FAILURE:'电话确认失败',
+            CONFIRM_SUCCESS:'电话确认成功'
         };
         return {
            getMap:function(){
