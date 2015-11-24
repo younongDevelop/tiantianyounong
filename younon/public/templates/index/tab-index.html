@@ -11,9 +11,9 @@
 			</ion-slide-box>
             <!-- 搜索框 -->
             <div class="search padding-bottom padding-top" style="background-color: #fff;padding:0;height: 8rem;">
-                <div class="row" style="padding:1.5rem 1.5rem 1rem 1.5rem;z-index: 0;">
+                <div class="row" style="padding:1.5rem 1.5rem 1rem 1rem;z-index: 0;">
                     <div  style="z-index: 0">
-                        <div class="item item-input border-style" style="height: 5rem;width:31rem;margin:0 1.5rem 1px 4rem"   >
+                        <div class="item item-input border-style" style="height: 5rem;width:38rem;margin:0 1.5rem 1px 4rem"   >
                             <i class="icon ion-search placeholder-icon" style="font-size: 2.5rem"></i>
                             <input type="text" placeholder="请输入商品关键字" ng-model="searchStr" style="font-size: 2.5rem
                             ;line-height: 3rem;height: 4rem">
@@ -57,7 +57,7 @@
                         <div style="float: left;" >
                         <div style="margin:2rem 0 0 2rem;color: #838385;font-size: 2.5rem;
                     width: 10rem;">{{pro.prod_name}}</div>
-                    <div class="attention" style="margin:4rem 0 0 2rem;font-size: 2.5rem;height: 3rem;line-height: 3rem;">￥{{pro.prod_price}}</div>
+                    <div class="attention" style="margin:4rem 0 0 2rem;font-size: 2.5rem;height: 3rem;line-height: 3rem;">￥{{pro.prod_price}} <span style="margin-left:15px;color: #838385">{{pro.prod_weight}}</span></div>
 
 </div>  </div>
                     <div class="fr list-cart-btn" style="padding-top:6rem">

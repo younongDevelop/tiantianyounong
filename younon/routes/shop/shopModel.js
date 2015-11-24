@@ -44,7 +44,7 @@ shopModel.getGoods = function(page,size,categoryid,cb){
     var start=(parseInt(page)-1)*parseInt(size);
     store.getPool().getConnection(function (err, conn) {
         var like = ' where prod_categoryids like \'%' + categoryid  + '%\' and prod_status != 5 ';
-        var querySQL ="select prod_id,prod_name,prod_images,prod_price from products "+like+"order by prod_updatetime desc limit "+start+","+size;
+        var querySQL ="select prod_id,prod_name,prod_weight,prod_images,prod_price from products "+like+"order by prod_updatetime desc limit "+start+","+size;
         conn.query(querySQL, null,function (err, rows) {
             conn.release();
             if (err){
@@ -63,7 +63,7 @@ shopModel.findGood = function(goodId,cb){
 
     store.getPool().getConnection(function (err, conn) {
 
-        var querySQL ="select prod_id,prod_name,prod_images,prod_price,prod_detail from products where prod_id = "+goodId;
+        var querySQL ="select prod_id,prod_name,prod_images,prod_price,prod_weight,prod_detail from products where prod_id = "+goodId;
         conn.query(querySQL, null,function (err, rows) {
             conn.release();
             if (err){
@@ -85,7 +85,7 @@ shopModel.searchGoods = function(page,size,keyword,cb){
     }
     store.getPool().getConnection(function (err, conn) {
         var like = ' where prod_name like \'%' + keyword  + '%\' and prod_status != 5 ';
-        var querySQL ="select prod_id,prod_name,prod_images,prod_price from products "+like+"order by prod_updatetime desc limit "+start+","+size;
+        var querySQL ="select prod_id,prod_name,prod_images,prod_weight,prod_price from products "+like+"order by prod_updatetime desc limit "+start+","+size;
         console.log(querySQL);
         conn.query(querySQL, null,function (err, rows) {
             conn.release();

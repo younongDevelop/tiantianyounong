@@ -11,6 +11,7 @@
                 </div>
                 <div style="padding-left: 2.5rem;margin-top:3.5rem;height: 3rem;line-height: 3rem">
                     <span class="attention" style="font-size: 3.4rem" >￥{{detail.prod_price}}</span>
+                    <span style="margin-left:15px;color: #838385;font-size: 2rem">{{detail.prod_weight}}</span>
                     <span style="color: #666666;font-size: 2rem;margin-left:2rem">可获0积分</span>
                     <div style="margin:0 4rem 0 0;font-size: 2.2rem;color: #4c4c4c;float: right;height: 3rem;
                   text-align: center;line-height: 2.6rem">
@@ -42,15 +43,19 @@
     		<!-- 商品详 -->
 
     </ion-content>
-	<div class="bar bar-footer detail-operation" style="height: 7rem;background: none">
+	<div class="bar bar-footer" style="height: 7rem;background-image: none;background:none;padding:0;">
 
-			<div  ng-click="gotoCart()" style="width:14rem;float: left;background-color:#312919;height: 100%;text-align: center;line-height: 7rem;color: #fff">
+
+			<div  ng-click="gotoCart()" style="width:22%;background-color:#312919;height: 100%;text-align: center;line-height: 7rem;color: #fff">
 				<i badge="1" class="icon ion-ios-cart detail-jump-cart" style="color: #ffffff;font-size: 3rem">
 					<span class="badge badge-assertive detail-cart-badge" style="right:-70%;top:-0.5rem">{{data.number}}</span>
 				</i>
                 <span style="font-size: 2rem;position: absolute;left:4rem;top:2rem">购物车</span>
 			</div>
-			<button style="width:25rem;float: left;height: 100%;background-color: #f2b554;color: #ffffff;font-size: 3rem;border: none" ng-click="addGoods()">加入购物车</button>
-			<button style="width:25rem;float: left;height: 100%;background-color: #d95c5c;color: #ffffff;font-size: 3rem;border: none" ng-click="buyNow(data.selectNumber)">立即购买</button>
+        <div style="width:78%;height: 100%">
+            <button style="width:50%;height: 100%;float:left;background-color: #f2b554;color: #ffffff;font-size: 3rem;border: none" ng-click="addGoods()">加入购物车</button>
+            <button style="width:50%;height: 100%;background-color: #d95c5c;color: #ffffff;font-size: 3rem;border: none" ng-click="buyNow(data.selectNumber)">立即购买</button>
+        </div>
+
 	</div>
 </ion-view>
