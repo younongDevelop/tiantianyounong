@@ -321,10 +321,10 @@ angular.module('shop.controllers', [])
 
             }
             var orderStatusMap={
-                3:1,
+                3:9,
                 4:1,
-                6:14,
-                8:9
+                6:12,
+                8:6
             }
             $scope.formData.order_status_id=orderStatusMap[parseInt(item.id)*deliverMap[$scope.formData.deliver_type]];
         }
