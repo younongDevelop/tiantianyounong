@@ -44,11 +44,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="account-order-details.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="account-order-details.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/templates/personInfor/account-order-details.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7844828" vertical-offset="1107" max-vertical-offset="1545">
+            <state vertical-scroll-proportion="-11.375" vertical-offset="1107" max-vertical-offset="1545">
               <caret line="101" column="100" selection-start-line="101" selection-start-column="100" selection-end-line="101" selection-end-column="100" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="personCtr.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/js/personInfor/personCtr.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.48387095" vertical-offset="2265" max-vertical-offset="7320">
+              <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -57,7 +67,7 @@
       <file leaf-file-name="shopCtr.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/shopping/shopCtr.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3555" max-vertical-offset="6105">
+            <state vertical-scroll-proportion="0.0" vertical-offset="5130" max-vertical-offset="6105">
               <caret line="359" column="24" selection-start-line="359" selection-start-column="24" selection-end-line="359" selection-end-column="24" />
               <folding />
             </state>
@@ -123,18 +133,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tab-cart.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/templates/index/tab-cart.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="795">
-              <caret line="39" column="69" selection-start-line="39" selection-start-column="59" selection-end-line="39" selection-end-column="69" />
-              <folding>
-                <element signature="n#style#0;n#div#1;n#div#0;n#ion-view#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="IdeDocumentHistory">
@@ -177,7 +175,6 @@
         <option value="$PROJECT_DIR$/public/js/personInfor/personSer.js" />
         <option value="$PROJECT_DIR$/public/templates/personInfor/account-manageOrderDetail.html" />
         <option value="$PROJECT_DIR$/public/templates/index/tab-account.html" />
-        <option value="$PROJECT_DIR$/public/js/personInfor/personCtr.js" />
         <option value="$PROJECT_DIR$/public/css/personInfor.css" />
         <option value="$PROJECT_DIR$/public/css/shopping.css" />
         <option value="$PROJECT_DIR$/public/css/index.css" />
@@ -191,6 +188,7 @@
         <option value="$PROJECT_DIR$/public/js/shopping/shopCtr.js" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/public/templates/personInfor/account-order-details.html" />
+        <option value="$PROJECT_DIR$/public/js/personInfor/personCtr.js" />
       </list>
     </option>
   </component>
@@ -953,14 +951,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/personInfor/personCtr.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7320">
-          <caret line="8" column="144" selection-start-line="8" selection-start-column="144" selection-end-line="8" selection-end-column="144" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6915739" vertical-offset="0" max-vertical-offset="629">
@@ -1051,14 +1041,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/shopping/shopCtr.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3555" max-vertical-offset="6105">
-          <caret line="359" column="24" selection-start-line="359" selection-start-column="24" selection-end-line="359" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bin/www">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1440">
@@ -1085,8 +1067,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/templates/personInfor/account-order-details.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7844828" vertical-offset="1107" max-vertical-offset="1545">
+        <state vertical-scroll-proportion="-11.375" vertical-offset="1107" max-vertical-offset="1545">
           <caret line="101" column="100" selection-start-line="101" selection-start-column="100" selection-end-line="101" selection-end-column="100" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/shopping/shopCtr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3555" max-vertical-offset="6105">
+          <caret line="359" column="24" selection-start-line="359" selection-start-column="24" selection-end-line="359" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/personInfor/personCtr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48387095" vertical-offset="2265" max-vertical-offset="7320">
+          <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
           <folding />
         </state>
       </provider>
