@@ -380,16 +380,7 @@ angular.module('shop.controllers', [])
         })
         $scope.toPay=function(){
 
-            function CountDown(){
-                if(maxtime>=0){
-                    --maxtime;
-                }else{
-                    clearInterval(timer);
-                }
-            }
 
-            var maxtime=3;
-            var  timer = setInterval("CountDown()",1000);
 
 
             var name='';

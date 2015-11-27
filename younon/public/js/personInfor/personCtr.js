@@ -115,6 +115,24 @@ angular.module('person.controllers', [])
 
 
         $scope.pay=function(){
+
+            var  timer;
+            var maxtime=3;
+            console.log(maxtime);
+
+            function CountDown(){
+                if(maxtime>0){
+                    --maxtime;
+                    console.log(maxtime);
+                }else{
+                    $ionicBackdrop.release();
+                    clearInterval(timer);
+                }
+            }
+
+
+              timer = setInterval(function(){CountDown()},1000);
+
             $ionicBackdrop.retain();
             var name='';
             $scope.orderDetail.items.forEach(function(item){
