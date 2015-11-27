@@ -379,6 +379,19 @@ angular.module('shop.controllers', [])
             $scope.orderDetail = data;
         })
         $scope.toPay=function(){
+
+            function CountDown(){
+                if(maxtime>=0){
+                    --maxtime;
+                }else{
+                    clearInterval(timer);
+                }
+            }
+
+            var maxtime=3;
+            var  timer = setInterval("CountDown()",1000);
+
+
             var name='';
             var psyJson = {openid: openid, orderId: $scope.orderDetail.order_no,
                 money: $scope.orderDetail.order_total,productName:name};
