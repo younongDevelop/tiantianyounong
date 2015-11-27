@@ -261,6 +261,7 @@ function getOrderNumber() {
 //新增订单
 
 shopModel.addOrder = function(data,cb){
+    console.log(data);
     data.order_no=getOrderNumber();
     data.date_purchased=moment().format("YYYY年MM月DD日 HH:mm");
     store.getPool().getConnection(function (err, conn) {
@@ -293,11 +294,12 @@ shopModel.addOrder = function(data,cb){
 function insertOrderItems(data,cb){
     var values='';
 
+
     for(var i =0;i< data.items.length;i++){
         if(i<data.items.length-1){
-            values+='('+data.order_id+','+data.items[i].prod_id+','+data.items[i].quantity+','+data.items[i].prod_price+',0,?,1,0),';
+            values+='('+data.order_id+','+data.items[i].prod_id+','+data.items[i].quantity+','+data.items[i].prod_price+',0,'+data.customer_id+',1,0),';
         }else{
-            values+='('+data.order_id+','+data.items[i].prod_id+','+data.items[i].quantity+','+data.items[i].prod_price+',0,?,1,0)';
+            values+='('+data.order_id+','+data.items[i].prod_id+','+data.items[i].quantity+','+data.items[i].prod_price+',0,'+data.customer_id+',1,0)';
         }
     }
 
@@ -305,7 +307,7 @@ function insertOrderItems(data,cb){
         var querySQL = 'insert into order_items(order_id,prod_sku_id,product_quantity,final_price,base_price,customer_id,' +
             'status,have_comment) values'+values;
         console.log(querySQL);
-        conn.query(querySQL,data.customer_id, function (err, rows) {
+        conn.query(querySQL,null, function (err, rows) {
             conn.release();
             if (err){
                 console.log('插入失败');

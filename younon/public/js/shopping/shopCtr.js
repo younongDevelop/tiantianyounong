@@ -315,18 +315,20 @@ angular.module('shop.controllers', [])
         $scope.selectPayType=function(item){
             $scope.formData.payment_id=item.id;
             $scope.formData.payment_type=item.id;
+            console.log(item.id);
             var deliverMap={
                 定点自取:3,
                 送货上门:4
 
             }
             var orderStatusMap={
-                3:9,
-                4:1,
-                6:12,
-                8:6
+                3:'9',
+                4:'1',
+                6:'12',
+                8:'6'
             }
             $scope.formData.order_status_id=orderStatusMap[parseInt(item.id)*deliverMap[$scope.formData.deliver_type]];
+            console.log($scope.formData.order_status_id);
         }
 
 
@@ -353,8 +355,9 @@ angular.module('shop.controllers', [])
 
             var orderStatue={
                 1:'待支付未发货',
-                9:'待电话确认',
-                14:'待自取'
+                9:'未支付待自取',
+                12:'自取待电话确认',
+                6:'待电话确认'
             }
             $scope.formData.status_name=orderStatue[$scope.formData.order_status_id];
             orderOp.submitOrder(function(data){
