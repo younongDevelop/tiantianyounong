@@ -295,7 +295,18 @@ angular.module('shop.controllers', [])
                 $scope.formData.deliver_free=0;
                 $scope.formData.order_total=$scope.formData.totalMoney;
 
+                var orderStatue={
+                    1:'9',
+                    2:'12'
+                }
+                $scope.formData.order_status_id=orderStatue[$scope.formData.payment_id];
+
             }else{
+                var orderStatue={
+                    1:'1',
+                    2:'6'
+                }
+                $scope.formData.order_status_id=orderStatue[$scope.formData.payment_id];
                 $scope.formData.deliver_charges=$scope.formData.charges;
                 $scope.formData.deliver_free=$scope.formData.free;
                 $scope.formData.order_total=parseInt($scope.formData.totalMoney*100)/100+parseInt($scope.formData.deliver_charges)-$scope.formData.deliver_free;
@@ -328,6 +339,7 @@ angular.module('shop.controllers', [])
                 8:'6'
             }
             $scope.formData.order_status_id=orderStatusMap[parseInt(item.id)*deliverMap[$scope.formData.deliver_type]];
+            console.log($scope.formData.order_status_id);
         }
 
 

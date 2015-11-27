@@ -70,10 +70,10 @@ angular.module('shop.services', [])
                 formData.formCart=data;
             },
             getDeliverCharges:function(data){
-                this.initFormData();
                 $http.post('/shop/getCharge',data).success(function(data){
                     formData.items=data.results.goods;
                     formData.charges=data.results.deliver_charges;
+                    formData.deliver_type='定点自取';
                     formData.deliver_charges =0;
                     formData.deliver_free=0;
                     formData.free=data.results.deliver_free;
