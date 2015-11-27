@@ -328,7 +328,6 @@ angular.module('shop.controllers', [])
                 8:'6'
             }
             $scope.formData.order_status_id=orderStatusMap[parseInt(item.id)*deliverMap[$scope.formData.deliver_type]];
-            console.log($scope.formData.order_status_id);
         }
 
 
@@ -336,8 +335,6 @@ angular.module('shop.controllers', [])
              $scope.formData=data;
              $scope.formData.deliver_charges=0;
              $scope.formData.deliver_free=0;
-             console.log('!!!!!!!!');
-             console.log($scope.formData);
              $scope.formData.formCart=true;
         });
             // 订单商品

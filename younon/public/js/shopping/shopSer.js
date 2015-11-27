@@ -32,8 +32,8 @@ angular.module('shop.services', [])
             payment_id:'1',
             payment_type:'1',  //支付方式   传值：“1”—在线支付；“2”—货到付款
             order_total:'0',
-            order_status_id:'1',//"1"-待支付未发货，“9”－待电话确认
-            status_name:'待支付未发货',
+            order_status_id:'9',//"1"-待支付未发货，“9”－未支付待自取
+            status_name:'未支付待自取',
             formCart:false
         }
 
