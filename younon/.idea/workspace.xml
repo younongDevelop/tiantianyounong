@@ -24,10 +24,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="www" pinned="false" current-in-tab="true">
+      <file leaf-file-name="www" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bin/www">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.54545456" vertical-offset="0" max-vertical-offset="1440">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1440">
               <caret line="14" column="48" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
               <folding />
             </state>
@@ -44,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="account-order-details.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="account-order-details.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/templates/personInfor/account-order-details.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-56.25" vertical-offset="0" max-vertical-offset="1545">
-              <caret line="98" column="116" selection-start-line="98" selection-start-column="116" selection-end-line="98" selection-end-column="116" />
+            <state vertical-scroll-proportion="0.7844828" vertical-offset="1107" max-vertical-offset="1545">
+              <caret line="101" column="100" selection-start-line="101" selection-start-column="100" selection-end-line="101" selection-end-column="100" />
               <folding />
             </state>
           </provider>
@@ -187,10 +187,10 @@
         <option value="$PROJECT_DIR$/public/templates/index/tab-cart.html" />
         <option value="$PROJECT_DIR$/public/templates/shopping/shopping-detail.html" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
-        <option value="$PROJECT_DIR$/public/templates/personInfor/account-order-details.html" />
         <option value="$PROJECT_DIR$/routes/shop/shopModel.js" />
         <option value="$PROJECT_DIR$/public/js/shopping/shopCtr.js" />
         <option value="$PROJECT_DIR$/bin/www" />
+        <option value="$PROJECT_DIR$/public/templates/personInfor/account-order-details.html" />
       </list>
     </option>
   </component>
@@ -643,7 +643,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2718601" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2718601" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39353892" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1035,30 +1035,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/shopping/shopping-order-fill.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-28.625" vertical-offset="1053" max-vertical-offset="2415">
-          <caret line="122" column="22" selection-start-line="122" selection-start-column="22" selection-end-line="122" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/personInfor/account-order-details.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-56.25" vertical-offset="0" max-vertical-offset="1545">
-          <caret line="98" column="116" selection-start-line="98" selection-start-column="116" selection-end-line="98" selection-end-column="116" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/shop/shop.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.925926" vertical-offset="1898" max-vertical-offset="2865">
-          <caret line="130" column="22" selection-start-line="130" selection-start-column="4" selection-end-line="130" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/shopping/shopSer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="1950">
@@ -1085,8 +1061,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bin/www">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.54545456" vertical-offset="0" max-vertical-offset="1440">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1440">
           <caret line="14" column="48" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/shop/shop.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.925926" vertical-offset="1898" max-vertical-offset="2865">
+          <caret line="130" column="22" selection-start-line="130" selection-start-column="4" selection-end-line="130" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/shopping/shopping-order-fill.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-28.625" vertical-offset="1053" max-vertical-offset="2415">
+          <caret line="122" column="22" selection-start-line="122" selection-start-column="22" selection-end-line="122" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/personInfor/account-order-details.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7844828" vertical-offset="1107" max-vertical-offset="1545">
+          <caret line="101" column="100" selection-start-line="101" selection-start-column="100" selection-end-line="101" selection-end-column="100" />
           <folding />
         </state>
       </provider>
