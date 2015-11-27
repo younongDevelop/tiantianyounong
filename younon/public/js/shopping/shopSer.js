@@ -38,15 +38,39 @@ angular.module('shop.services', [])
         }
 
         return {
+            initFormData:function(){
+
+                formData = {
+                    customer_id:customerId,         //customer id
+                    deliver_address:'',     //deliver address
+                    deliver_phone:'',       //contact phone
+                    deliver_type:'定点自取',        //送货方式    送货上门 / 柜台自提
+                    deliver_status:'1',
+                    deliver_time:'只在周末送货',        //送货时间   选项1：只在周末送货 选项2：每日17:00~20:00送货 选项3:不限
+                    items:[],
+                    receiver_name:'',
+                    deliver_charges:'0',
+                    deliver_free:'0',
+                    payment_id:'1',
+                    payment_type:'1',  //支付方式   传值：“1”—在线支付；“2”—货到付款
+                    order_total:'0',
+                    order_status_id:'9',//"1"-待支付未发货，“9”－未支付待自取
+                    status_name:'未支付待自取',
+                    formCart:false
+                }
+
+            },
             // 绑定数据
             getFormData:function(cb){
                 cb(formData);
             },
+
             // 判断是否来自购物车
             isFromCart:function(data){
                 formData.formCart=data;
             },
             getDeliverCharges:function(data){
+                this.initFormData();
                 $http.post('/shop/getCharge',data).success(function(data){
                     formData.items=data.results.goods;
                     formData.charges=data.results.deliver_charges;
