@@ -173,7 +173,7 @@ angular.module('person.controllers', [])
 
     .controller('manageOrdersCtrl', function($scope,$ionicLoading, $ionicListDelegate,accountOrders) {
         $scope.status=[{show:true,statue:'(2,6,14)',title:'待发货'},{show:false,statue:'(4,7)',title:'已发货'},{show:false,statue:'(10,11,12,13,15)',
-            title:'自取单'},{show:false,statue:'(3,8)',title:'已关闭'},{show:false,statue:'(5)',title:'已完成'}];
+            title:'自取单'},{show:false,statue:'(3,8)',title:'已取消'},{show:false,statue:'(5)',title:'已完成'}];
         accountOrders.inintOrders();
         var page=1;
         var pageSize=10;
