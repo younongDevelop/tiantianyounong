@@ -117,7 +117,7 @@ angular.module('person.controllers', [])
         $scope.pay=function(){
 
             var  timer;
-            var maxtime=3;
+            var maxtime=2;
             console.log(maxtime);
 
             function CountDown(){

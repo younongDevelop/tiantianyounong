@@ -105,6 +105,7 @@ angular.module('starter', ['ionic','ngIOS9UIWebViewPatch','index.controllers', '
       })
 
       .state('orderFill', {
+          cache: false,
           url: '/orderFill',
           templateUrl: 'templates/shopping/shopping-order-fill.html',
           controller:"orderFill"
