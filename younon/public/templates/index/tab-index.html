@@ -52,8 +52,9 @@
                 <ion-item  class=" border-style" ng-repeat = "pro in goods" style="background-color:#ffffff;min-height:0;height: 15rem;padding: 0;">
 
                     <div style="height: 100%;float: left" ng-click="jumpDetail(pro.prod_id)">
-                    <img src="../../img/load.gif"
-                         style="float: left;max-width: none;max-height: none;height: 11rem;width: 14rem;margin:2rem 2rem;top:0" lazy-src="{{pro.prod_images}}">
+                    <img lazy-container src="../../img/load.gif"
+                         style="float: left;max-width: none;max-height: none;height: 11rem;width: 14rem;margin:2rem 2rem;top:0"
+                         lazy-src="{{pro.prod_images}}">
                         <div style="float: left;" >
                         <div style="margin:2rem 0 0 2rem;color: #838385;font-size: 2.5rem;
                     width: 10rem;">{{pro.prod_name}}</div>
