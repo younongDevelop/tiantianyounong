@@ -34,14 +34,16 @@
                     <i class="ion-ios-arrow-down"></i>
                     </div>
                 </div>
-            <label class="item item-input border-top-style">
-                <span class="input-label">小区:</span>
-            <select class="input-box aadressSelect"
+            <div class="item border-top-style" style="padding:0;line-height: 8rem;height: 8rem">
+                <span class="input-label" style="float: left">小区:</span>
+                <select class="input-box aadressSelect"
                     ng-model="address.community_id"
-                    ng-options="o.comm_id as o.comm_name for o in community" style="width:80%;">
+                    ng-options="o.comm_id as o.comm_name for o in community"
+                    style="line-height: 4rem;height: 4rem;width:42rem;margin-top:2rem;z-index: 999;">
             </select>
-                <i class="ion-ios-arrow-down" ></i>
-                </label>
+                <i class="ion-ios-arrow-down"></i>
+            </div>
+
             <label class="item item-input border-top-bottom">
                 <span class="input-label">详细地址:</span>
                 <input type="text" ng-model="address.address_room">

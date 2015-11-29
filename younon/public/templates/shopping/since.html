@@ -34,14 +34,15 @@
                     <i class="ion-ios-arrow-down"></i>
                 </div>
             </div>
-            <label class="item item-input border-top-bottom">
-                <span class="input-label">提货点:</span>
+            <div class="item border-style" style="padding:0;line-height: 8rem;height: 8rem">
+                <span class="input-label" style="float: left">提货点:</span>
                 <select class="input-box aadressSelect"
                         ng-model="address.community_id"
-                        ng-options="o.comm_id as o.comm_name for o in community" style="line-height: 4rem;height: 4rem;margin-top:2rem;width:42rem">
+                        ng-options="o.comm_id as o.comm_name for o in community"
+                        style="line-height: 4rem;height: 4rem;width:42rem;margin-top:2rem;z-index: 999;">
                 </select>
-                <i class="ion-ios-arrow-down" ></i>
-            </label>
+                <i class="ion-ios-arrow-down"></i>
+            </div>
         </div>
 
     </ion-content>
