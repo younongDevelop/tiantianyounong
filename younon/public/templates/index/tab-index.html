@@ -5,7 +5,7 @@
 			<ion-slide-box does-continue="true" delegate-handle="indexSlide" ng-if="slideInfo.slides.length"  style="height: 22rem">
 				<ion-slide ng-repeat="slide in slideInfo.slides">
 					<div class="index-slide-item">
-							<img ng-src="{{slide.imgSrc}}">
+							<img lazy-container src="../../img/load.gif" lazy-src="{{slide.imgSrc}}">
 					</div>
 				</ion-slide>
 			</ion-slide-box>
