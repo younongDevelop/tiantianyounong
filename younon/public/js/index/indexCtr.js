@@ -1,3 +1,4 @@
+
 var signback = function (data) {
     wx.config({
         debug:false,
