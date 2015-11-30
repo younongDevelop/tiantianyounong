@@ -171,6 +171,7 @@ angular.module('index.controllers', [])
 
         // 添加购物车
         $scope.addGoods = function(pro){
+            cancelPil();
             pro.quantity=1;
 
             cart.addGoods(pro,function(res){
@@ -224,6 +225,7 @@ angular.module('index.controllers', [])
 
         // 跳转到详情页
         $scope.jumpDetail = function(proid){
+            cancelPil();
             $location.path('/detail/'+proid);
         }
 

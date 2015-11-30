@@ -14,7 +14,10 @@ angular.module('shop.controllers', [])
 	    console.log('shoppingCtrl');
 	})
 
-	.controller('listCtrl',function($scope,cart,$stateParams,$ionicPopup,cate){
+	.controller('listCtrl',function($scope,cart,$stateParams,$ionicPopup,cate,$location){
+        cart.getGoodsNumber(function(data){
+            $scope.data=data;
+        });
 
 
         if(!$stateParams.search){$stateParams.search=null};
@@ -40,6 +43,7 @@ angular.module('shop.controllers', [])
 
         // 添加购物车
         $scope.addGoods = function(pro){
+            cancelPil();
             pro.quantity=1;
 
             cart.addGoods(pro,function(res){
@@ -85,6 +89,16 @@ angular.module('shop.controllers', [])
             // 在重新完全载入数据后，需要发送一个scroll.infiniteScrollComplete事件，告诉directive，我们完成了这个动作，系统会清理scroller和为下一次的载入数据，重新绑定这一事件。
             $scope.$broadcast('scroll.infiniteScrollComplete');
         }
+        // 跳转到详情页
+        $scope.jumpDetail = function(proid){
+            $location.path('/detail/'+proid);
+        }
+
+        // 点击前往购物车事件
+        $scope.gotoCart = function(){
+            $location.path('/tab/cart');
+        }
+
 
 
 

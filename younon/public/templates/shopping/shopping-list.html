@@ -25,9 +25,9 @@
             <!-- 产品列表 -->
 
             <ion-list>
-                <ion-item  class=" border-style" ng-repeat = "pro in goods" style="background-color:#ffffff;min-height:0;height: 15rem;padding: 0">
+                <ion-item  class=" border-style" ng-repeat = "pro in goods" style="background-color:#ffffff;min-height:0;height: 15rem;padding: 0" ng-click="jumpDetail(pro.prod_id)">
 
-                    <div style="height: 100%;float: left" ng-click="jumpDetail(pro.prod_id)">
+                    <div style="height: 100%;float: left" >
                         <img lazy-container style="float: left;max-width: none;max-height: none;height: 11rem;width: 14rem;margin:2rem 2rem;top:0"
                              src="../../img/load.gif"
                              lazy-src="{{pro.prod_images}}">
@@ -38,8 +38,8 @@
 
                     </div>
 
-                    <div class="fr list-cart-btn" style="padding-top:6rem">
-                        <i class="icon ion-ios-cart list-cart-btn " style="color:#39bf50;margin-right: 1.8rem;font-size: 4.5rem;padding-top:5rem" ng-click="addGoods(pro)"></i>
+                    <div class="fr list-cart-btn" style="padding-top:6rem"  ng-click="addGoods(pro)">
+                        <i class="icon ion-ios-cart list-cart-btn " style="color:#39bf50;margin-right: 1.8rem;font-size: 4.5rem;padding-top:5rem"></i>
                         <p style="margin-top:3.5rem;color:#39bf50;font-size: 2rem;line-height:2rem">加入购物车</p>
                     </div>
 
@@ -51,13 +51,17 @@
             </ion-list>
             <div ng-if="goods.length == 0;" style="text-align: center">
                 <div >
-
-                    <span>该类目下暂无商品</span>
+                    <span>暂无商品</span>
                 </div>
             </div>
-
-
-
         </div>
     </ion-content>
+
+    <div class="bar bar-footer" style="height: 7rem;background-image: none;background:none;padding:0;">
+        <div  ng-click="gotoCart()" style="width:7rem;background-color:#39bf50;height: 100%;text-align: center;line-height: 7rem;color: #fff;border-radius: 7rem">
+            <i badge="1" class="icon ion-ios-cart detail-jump-cart" style="color: #ffffff;font-size: 3rem">
+                <span class="badge badge-assertive detail-cart-badge" style="right:-70%;top:-0.5rem">{{data.number}}</span>
+            </i>
+        </div>
+    </div>
 </ion-view>

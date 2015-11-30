@@ -49,9 +49,9 @@
             <!--商品list的部分-->
 
             <ion-list>
-                <ion-item  class=" border-style" ng-repeat = "pro in goods" style="background-color:#ffffff;min-height:0;height: 15rem;padding: 0;">
+                <ion-item  class=" border-style" ng-repeat = "pro in goods" style="background-color:#ffffff;min-height:0;height: 15rem;padding: 0;" ng-click="jumpDetail(pro.prod_id)">
 
-                    <div style="height: 100%;float: left" ng-click="jumpDetail(pro.prod_id)">
+                    <div style="height: 100%;float: left" >
                     <img lazy-container src="../../img/load.gif"
                          style="float: left;max-width: none;max-height: none;height: 11rem;width: 14rem;margin:2rem 2rem;top:0"
                          lazy-src="{{pro.prod_images}}">
@@ -59,15 +59,13 @@
                         <div style="margin:2rem 0 0 2rem;color: #838385;font-size: 2.5rem;
                     width: 10rem;">{{pro.prod_name}}</div>
                     <div class="attention" style="margin:4rem 0 0 2rem;font-size: 2.5rem;height: 3rem;line-height: 3rem;">￥{{pro.prod_price}} <span style="margin-left:15px;color: #838385">{{pro.prod_weight}}</span></div>
+                        </div>
 
-</div>  </div>
-                    <div class="fr list-cart-btn" style="padding-top:6rem">
-                        <i class="icon ion-ios-cart list-cart-btn " style="color:#39bf50;margin-right: 1.8rem;font-size: 4.5rem;padding-top:5rem" ng-click="addGoods(pro)"></i>
+                    </div>
+                    <div class="fr list-cart-btn" style="padding-top:6rem;z-index: 999" ng-click="addGoods(pro)">
+                        <i class="icon ion-ios-cart list-cart-btn " style="color:#39bf50;margin-right: 1.8rem;font-size: 4.5rem;padding-top:5rem" ></i>
                         <p style="margin-top:3.5rem;color:#39bf50;font-size: 2rem;line-height:2rem">加入购物车</p>
                     </div>
-
-
-
                 </ion-item>
 
                 <ion-infinite-scroll icon="ion-loading-c" ng-if="hasMore()" on-infinite="loadMore()" distance="10%">

@@ -36,6 +36,10 @@ html {
     }
 }
 
+.item.activated{
+    background-color: #D9D9D9 !important;
+}
+
 .tabs{
     background-image: none;
 }
@@ -478,7 +482,6 @@ p.list-pro-price{
 }
 .detail-jump-cart{
     font-size: 2rem;
-    margin-left: 1rem;
     position: relative;
 }
 .detail-number-select{
