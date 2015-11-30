@@ -657,7 +657,7 @@ p.list-pro-price{
 }
 
 .index-content .list:last-child{
-    padding-bottom:10rem;
+    padding-bottom:0;
 }
 
 .index-cate-list{
