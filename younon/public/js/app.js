@@ -36,8 +36,9 @@ angular.module('starter', ['ionic','ngIOS9UIWebViewPatch','me-lazyimg','index.co
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+        $ionicConfigProvider.tabs.position('bottom');
+        $stateProvider
       .state('tab', {
     url: '/tab',
     abstract: true,

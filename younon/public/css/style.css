@@ -20,6 +20,8 @@ a{
 html {
     font-size: 62.5%;
 }
+
+
 @media only screen and (min-width: 481px){
     html {
         font-size: 94%!important;
@@ -225,7 +227,6 @@ select{
     background-color:#39bf50;
     height: 10rem;
     padding:0;
-
 }
 /*.tabs-icon-top .tab-nav .tab-item-active{*/
     /*color: #ffffff !important;*/
@@ -263,12 +264,21 @@ select{
 .tab-item .badge{
     padding:0;
 }
+.tabs{
+    background-image: none;
+}
+
+ion-tabs.tabs-color-active-positive .tab-item{
+    color: #ffffff ;
+}
 
 .ion-tabs.tabs-color-active-positive .tab-item.activated{
-        color: #ffffff;
+        color: #ffffff ;
+    background-image: none;
 }
 ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-color-active-positive .tab-item.active, ion-tabs.tabs-color-active-positive .tab-item.activated{
-    color: #ffffff;
+    color: #ffffff ;
+    background-image: none;
 }
 
 .title-font{
