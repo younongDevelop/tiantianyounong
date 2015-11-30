@@ -45,35 +45,35 @@ angular.module('starter', ['ionic','ngIOS9UIWebViewPatch','me-lazyimg','index.co
     controller:'indexBaseCtrl'
   })
 
-  .state('tab.index', {
-    url: '/index',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/index/tab-index.html',
-        controller: 'indexCtrl'
-      }
-    }
-  })
+      .state('tab.index', {
+          url: '/index',
+          views: {
+              'tab-index': {
+                  templateUrl: 'templates/index/tab-index.html',
+                  controller: 'indexCtrl'
+              }
+          }
+      })
 
-  .state('tab.cart', {
-      url: '/cart',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/index/tab-cart.html',
-          controller: 'cartCtrl'
-        }
-      }
-    })
+      .state('tab.cart', {
+          url: '/cart',
+          views: {
+              'tab-cart': {
+                  templateUrl: 'templates/index/tab-cart.html',
+                  controller: 'cartCtrl'
+              }
+          }
+      })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/index/tab-account.html',
-        controller: 'accountCtrl'
-      }
-    }
-  })
+      .state('tab.account', {
+          url: '/account',
+          views: {
+              'tab-account': {
+                  templateUrl: 'templates/index/tab-account.html',
+                  controller: 'accountCtrl'
+              }
+          }
+      })
 
       //.state('tab.orderSuc', {
       //    url: '/orderSuc/{orderid}',
