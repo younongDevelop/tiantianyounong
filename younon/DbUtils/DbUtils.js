@@ -18,7 +18,7 @@ module.exports = function() {
         host: '120.131.70.188',
         user: 'root',
         password: 'pass99',
-        database:'younong',
+        database:"younongProduct",
         port: 3306
     });
 
