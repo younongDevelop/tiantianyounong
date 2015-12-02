@@ -1,7 +1,7 @@
 // Ionic Starter App
 
 
-var customerId='11';
+var customerId='38';
 var openid='';
 var token='';
 var appid='wx248d78d070b8fb35';

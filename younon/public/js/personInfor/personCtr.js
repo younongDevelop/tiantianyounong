@@ -371,6 +371,7 @@ angular.module('person.controllers', [])
         };
 
         personAddress.getCity(function(cities){
+            $scope.address.city_id=cities[0].city_id;
             $scope.cities=cities;
             if($stateParams.param =='add') {getDistricts(cities[0].city_id);
             $scope.address.city_name=cities[0].city_name;}

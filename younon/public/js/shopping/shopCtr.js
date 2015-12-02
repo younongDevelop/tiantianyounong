@@ -176,6 +176,7 @@ angular.module('shop.controllers', [])
         };
 
         personAddress.getCity(function(cities){
+            $scope.address.city_id=cities[0].city_id;
             $scope.cities=cities;
             getDistricts(cities[0].city_id);
             $scope.address.city_name=cities[0].city_name;
