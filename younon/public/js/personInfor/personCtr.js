@@ -33,7 +33,7 @@ angular.module('person.controllers', [])
             $scope.orders=data;
 
             page++;
-            if (data.length < pageSize) {
+            if (data.length < pageSize*page) {
                 isMore = false;
             } else {
                 isMore = true;
@@ -50,6 +50,7 @@ angular.module('person.controllers', [])
         }
         $scope.getMore = function () {
                 isMore = false;
+            console.log('qwe');
                 accountOrders.loadOrders(page,pageSize,statue,loadMore);
             // 在重新完全载入数据后，需要发送一个scroll.infiniteScrollComplete事件，告诉directive，我们完成了这个动作，系统会清理scroller和为下一次的载入数据，重新绑定这一事件。
             $scope.$broadcast('scroll.infiniteScrollComplete');
