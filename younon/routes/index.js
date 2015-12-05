@@ -108,7 +108,7 @@ router.get('/node/home', function (req, res, next) {
     if (!arg.target) {
         arg.target = '';
     }
-    res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + apid + '&redirect_uri=http://www.dayday7.com/node/openId' +
+    res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + apid + '&redirect_uri=http://www.dayday7.com/node/back' +
     '&response_type=code&scope=snsapi_base&state=' + arg.target);
     res.end();
 })
@@ -121,7 +121,7 @@ router.get('/node/home', function (req, res, next) {
  * url中uid为wechat_user表中的id
  *
  */
-router.get('/node/openId', function (reques, res, next) {
+router.get('/node/back', function (reques, res, next) {
     var arg = URL.parse(reques.url, true).query;
     console.log(arg);
     console.log('code====================' + arg.code);
