@@ -99,14 +99,17 @@ angular.module('shop.services', [])
                         var item=formData.items[i];
 
                         item.quantity=parseInt(item.quantity);
-                        item.prod_price=parseFloat(item.prod_price).toFixed(2);
+                        item.prod_price=parseFloat(item.prod_price).toFixed(1);
                         item.sum=item.quantity*item.prod_price;
-                        item.sum=parseFloat(item.sum).toFixed(2);
-                       sum+=item.quantity*item.prod_price;
-                        sum=parseFloat(sum).toFixed(2);
+                        item.sum=parseFloat(item.sum).toFixed(1);
+                       sum=parseInt(sum*10)+parseInt(item.sum*10);
+                        sum=parseFloat(sum/10);
                     }
+
                     formData.totalMoney=sum;
-                    formData.order_total=parseInt(sum*100)/100+parseInt(formData.deliver_charges)-parseInt(formData.deliver_free);
+                    formData.order_total=parseInt(sum*100)/100+parseInt(formData.deliver_charges*100)/100-parseInt(formData.deliver_free*100)/100;
+                    console.log(formData);
+                    console.log(sum);
                 }).error(function(err){
                     console.log(err);
                 })
