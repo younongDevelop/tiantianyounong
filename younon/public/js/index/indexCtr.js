@@ -24,7 +24,7 @@ var signback = function (data) {
     });
 }
 
-var shareIndex = function (param) {
+var shareIndex = function (param,imageUrl) {
     console.log(param);
     var data=param;
     var reg = new RegExp("detail", "");
@@ -46,6 +46,10 @@ var shareIndex = function (param) {
             break;
         }
         default :break;
+    }
+
+    if(imageUrl){
+        imgUrl=imageUrl;
     }
     wx.onMenuShareTimeline({
         title: title, // 分享标题
