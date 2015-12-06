@@ -206,7 +206,7 @@ router.get('/node/back', function (reques, res, next) {
                 results += chunk;
             }).on('end', function () {
                 var obj = JSON.parse(results);
-                if(url==='' ){url = 'http://www.dayday7.com/?uid=' + obj.customer_id + '#/' + route;}
+                if(url==='' ){url = 'http://www.dayday7.com/?uid=' + obj.customer_id + '#' + route;}
                 console.log(obj);
                 console.log(url);
                 res.redirect(url);
