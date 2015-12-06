@@ -278,7 +278,7 @@ router.post('/node/pay', function (req, res, next) {
         req.body.money=parseFloat(req.body.money).toFixed(2);
         req.body.money=req.body.money*10;
         req.body.money=req.body.money*10;
-        
+
         var json = {
             appid: apid,
             mch_id: businessNumber,
