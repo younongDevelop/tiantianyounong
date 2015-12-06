@@ -298,6 +298,7 @@ angular.module('index.services', [])
                 });
             },
             weixinPay:function(data,cb){
+                console.log(data);
                 $http.post('/node/pay',data).success(function(data){
 
                     wx.chooseWXPay({

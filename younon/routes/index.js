@@ -275,13 +275,16 @@ router.post('/node/pay', function (req, res, next) {
             return ipAddress;
         };
 
-
+        req.body.money=parseFloat(req.body.money).toFixed(2);
+        req.body.money=req.body.money*10;
+        req.body.money=req.body.money*10;
+        
         var json = {
             appid: apid,
             mch_id: businessNumber,
             body: req.body.productName,
             out_trade_no: req.body.orderId,
-            total_fee: parseInt(req.body.money*100),
+            total_fee: parseInt(req.body.money),
             spbill_create_ip: getClientIp(req),
             notify_url: notifyUrl,
             trade_type: 'JSAPI',

@@ -234,6 +234,7 @@ angular.module('person.services', [])
             getOrderDetail:function(orderId,cb){
                 $http.get('/person/findOrder/'+orderId).success(function(data){
                         orderDetail=data.results;
+                    console.log(data.results);
                         orderDetail.items.forEach(function(item){
                             item.prod_images=imgIP+item.prod_images;
                         })
