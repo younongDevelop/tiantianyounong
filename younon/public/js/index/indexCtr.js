@@ -33,7 +33,7 @@ var shareIndex = function (param) {
     }
     var title='天天有农';
     var link='http://www.dayday7.com/node/home/?target=share';
-    //var imgUrl= 'http://www.dayday7.com/images/logo.png';
+    var imgUrl= 'http://www.dayday7.com/public/img/logo.png';
 
 
     switch(data){
@@ -42,7 +42,7 @@ var shareIndex = function (param) {
         case 'group':{
             title='天天有农';
             link='http://www.dayday7.com/node/home/?target='+param;
-            //imgUrl= 'http://sdusz.com.cn/images/pin.jpg';
+            imgUrl= 'http://www.dayday7.com/public/img/back.jpg';
             break;
         }
         default :break;
@@ -50,7 +50,7 @@ var shareIndex = function (param) {
     wx.onMenuShareTimeline({
         title: title, // 分享标题
         link: link, // 分享链接
-        //imgUrl:imgUrl, // 分享图标
+        imgUrl:imgUrl, // 分享图标
         success: function () {
         },
         cancel: function () {
@@ -59,7 +59,7 @@ var shareIndex = function (param) {
     wx.onMenuShareAppMessage({
         title: title, // 分享标题
         link: link, // 分享链接
-        //imgUrl:imgUrl, // 分享图标
+        imgUrl:imgUrl, // 分享图标
         desc: '一个专注于本地农产品的网站', // 分享描述
         type: '', // 分享类型,music、video或link，不填默认为link
         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -101,39 +101,26 @@ angular.module('index.controllers', [])
 
     .controller('indexBaseCtrl', function($scope,cart,$http,$location,weixin,$rootScope,$log) {
         $rootScope.$on('$locationChangeStart', locationChangeStart);
-        $rootScope.$on('$locationChangeSuccess', locationChangeSuccess);
 
         function locationChangeStart(event) {
-            $log.log('locationChangeStart');
-            $log.log(arguments);
+            console.log('locationChangeStart');
+            console.log(arguments);
 
             var targetUrl = arguments[1];
-            var cur = arguments[2];
+            console.log(targetUrl.indexOf('/detail/'));
 
 
             // 如果跳转页面不是详情页 设置分享为首页
-            if (targetUrl.indexOf('/order/') != -1 && cur.indexOf('/detail/') != -1) {
+            if (targetUrl.indexOf('/detail/') != -1) {
 //            alert("设置分享首页");
 
-                $location.path('tab.index');
+                shareIndex(targetUrl);
+
+
             }
 
         }
 
-        function locationChangeSuccess(event) {
-            //$log.log('locationChangeSuccess');
-            var targetUrl = arguments[1];
-
-            // 如果跳转页面不是详情页 设置分享为首页
-            if (targetUrl.indexOf('detail') == -1) {
-//            alert("设置分享首页");
-//            shareIndex();
-            } else {
-//            wx.onMenuShareTimeline($rootScope.timelineShare);
-//            wx.onMenuShareAppMessage($rootScope.msgShare);
-            }
-
-        }
 
 
 
