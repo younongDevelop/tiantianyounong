@@ -120,6 +120,8 @@ angular.module('index.controllers', [])
                 var str = targetUrl.split('#')[1];
                 console.log(str);
                     shareIndex(str);
+            }else{
+                shareIndex();
             }
 
         }
