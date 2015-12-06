@@ -173,7 +173,7 @@ router.get('/node/back', function (reques, res, next) {
             }
             case "group":
             {
-                path = '/users/login';
+                path = '/node/login';
                 data = JSON.stringify({open_id: openId});
                 route =arg.state;
                 break;
