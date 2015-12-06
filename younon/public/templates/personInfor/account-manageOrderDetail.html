@@ -78,7 +78,12 @@
                     <div class="fr" style="margin:0" ng-if="!detail.attention">{{detail.content}}</div>
                 </div>
             </div>
+            <img ng-src="generate/qrcode/?jpath={{url}}" style="width: 100px;" ng-show="code">
+
         </div>
+
+
+
     </ion-content>
 
     <div class="bar bar-footer" style="padding:0;height: 7rem;background-image: none">

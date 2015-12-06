@@ -277,6 +277,12 @@ angular.module('index.services', [])
     .factory('weixin',function($http){
 
         return{
+            mdsign:function(data,cb){
+                $http.post('/node/sign',data).success(function(data){
+                    cb(data);
+                });
+
+        },
             getToken:function(data,cb){
                 $http.post('/node/token',data).success(function(data){
                     cb(data);

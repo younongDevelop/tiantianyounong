@@ -20,83 +20,39 @@ var businessNumber = Config.businessNumber;
 var fs = require('fs');
 var weixinJs = require('../weixinjs/wechat.js');
 var notifyUrl = Config.hostUrl;
+var qrcode = require('../public/lib/qrcode.js');
 
 
 
-
-
-
-/* GET home page. */
-router.get('/adminOrders/:statue/:page/:size', function(req, res, next) {
-
-    var statue = req.params.statue;
-    var page=req.params.page;
-    var size=req.params.size;
-    var statueMap={
-        unship:'(2,9)',
-        shipped:'(3,4)',
-        closed:'(13,0)'
-    }
-    store.getPool().getConnection(function (err, conn) {
-        var querySQL = "select orders.order_id,orders.order_no,orders.deliver_time," +
-            "orders.deliver_phone,orders.date_purchased,orders.order_total,orders.order_status," +
-            "orders.deliver_type,payment_methods.payment_type from orders,payment_methods where orders.status=1 and " +
-            "payment_methods.payment_method_id=orders.payment_type and orders.order_status_id in "+statueMap[statue]+
-            "order by orders.last_modified desc limit "+(page-1)*size+","+size;
-        conn.query(querySQL, function (err, rows) {
-            conn.release();
-            if (err){
-                console.log(err);
-                res.json(500, {error: err});
-            }else{
-                rows.forEach(function(data){
-                    var date_purchased = moment(data.date_purchased).format('YYYY-MM-DD HH:mm:ss');
-                    data.date_purchased=date_purchased;
-
-                });
-                res.json(rows);
-                //res.json(love_number);
-            }
-            res.end();
-
-        });
-    });
-});
-
-
-
-router.put('/adminOrders/changeStatue/:orderId/:statueId', function(req, res, next) {
-
-    var statueId = req.params.statueId;
-    var orderId = req.params.orderId;
-    var statueMap={
-        3:'已支付已发货',
-        4:'未付款已发货',
-        13:'管理员关闭'
-    };
-
-    store.getPool().getConnection(function (err, conn) {
-        var querySQL = "update orders set order_status_id="+statueId+",order_status='"+statueMap[statueId]+
-            "' where order_id = "+orderId;
-        console.log(querySQL);
-        conn.query(querySQL, function (err, rows) {
-            conn.release();
-            if (err){
-                console.log(err);
-                res.json(500, {error: err});
-            }else{
-                res.json(200);
-            }
-            res.end();
-        });
-    });
-});
 
 
 
 
 var createNonceStr = function () {
     return Math.random().toString(36).substr(2, 15);
+};
+var createTimestamp = function () {
+    return parseInt(new Date().getTime() / 1000) + '';
+};
+
+var raw = function (args) {
+    var keys = Object.keys(args);
+    keys = keys.sort()
+    var newArgs = {};
+    keys.forEach(function (key) {
+        newArgs[key.toLowerCase()] = args[key];
+    });
+
+    var string = '';
+    for (var k in newArgs) {
+        string += '&' + k + '=' + newArgs[k];
+    }
+    string = string.substr(1);
+    console.log(string);
+    var crypto = require('crypto');
+    var md5 = crypto.createHash('md5');
+    string=string+'&sign='+md5.update(string).digest('hex').toUpperCase();
+    return string;
 };
 /**
  * 重定向到微信接口获取页面授权，取得code
@@ -231,6 +187,30 @@ router.get('/node/back', function (reques, res, next) {
     });
 
 })
+
+/**
+ * 签名
+ *
+ */
+
+
+
+router.post('/node/sign', function (req, res) {
+
+    var json = {
+        appid: apid,
+        mch_id: businessNumber,
+        time_stamp: createTimestamp(),
+        nonce_str:createNonceStr(),
+        product_id:req.body.product_id
+    };
+
+     raw(json);
+    console.log(raw(json));
+    res.json({result: raw(json)});
+})
+
+
 
 /**
  * 根据用户id获取用户open_id，这个open_id在wechat_user表中
@@ -472,7 +452,8 @@ router.post('/node/refund', function (request, response, next) {
 
 function insertUserInformation(data,openId) {
     store.getPool().getConnection(function (err, conn) {
-        var querySQL = "update customers set nick_name='"+data.nickname+"',head_img_url='"+data.headimgurl+"' where openid = '"+openId+"'";
+        var querySQL = "update customers set nick_name='"+data.nickname+"',head_img_url='"+data.headimgurl+"',subscribe=" +
+            "'"+data.subscribe+"' where openid = '"+openId+"'";
         console.log(querySQL);
         conn.query(querySQL, function (err, rows) {
             conn.release();
@@ -508,6 +489,13 @@ router.post('/node/login', function(req, res, next) {
     });
 });
 
+router.post('node/code',function(req,res){
+
+    console.log(req.body);
+    res.json();
+
+})
+
 
 /*如果用户不存在，创建用户*/
 function createdWechatUser(res,req){
@@ -524,6 +512,23 @@ function createdWechatUser(res,req){
         });
     });
 }
+
+
+router.get('/generate/qrcode/',function(req,res){
+    var order_id = req.query.jpath;
+    console.log("订单id："+order_id);
+    var qr = qrcode.qrcode(4, 'M');
+    qr.addData(order_id);  // 解决中文乱码
+    qr.make();
+    var base64 = qr.createImgTag(5, 10);  // 获取base64编码图片字符串
+    base64 = base64.match(/src="([^"]*)"/)[1];  // 获取图片src数据
+    base64 = base64.replace(/^data:image\/\w+;base64,/, '');  // 获取base64编码
+    base64 = new Buffer(base64, 'base64');  // 新建base64图片缓存
+    res.writeHead(200, {'Content-Type': 'image/png', 'Content-Disposition': 'attachment; filename=' + order_id + '.png'});  // 设置http头
+    res.write(base64);  // 输出图片
+    res.end();
+});
+
 
 
 module.exports = router;

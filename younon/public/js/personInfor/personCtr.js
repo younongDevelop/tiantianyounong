@@ -224,12 +224,18 @@ angular.module('person.controllers', [])
     })
 
 
-    .controller('accountManageOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,weixin,$ionicBackdrop) {
-
-
-
+    .controller('accountManageOrderDetails', function($scope,$stateParams,accountOrders,errMap,$ionicPopup,weixin) {
+        $scope.code=false;
         var errorMap=errMap.getMap();
         accountOrders.getOrderDetail($stateParams.orderId,function(data){
+
+            weixin.mdsign({product_id:data.order_no},function(data){
+                $scope.url='weixin：//wxpay/bizpayurl?'+data.result;
+                $scope.code=true;
+                console.log(data.result);
+            });
+
+
             $scope.orderDetail=data;
             console.log(data);
             $scope.orderDetail.money=0;
