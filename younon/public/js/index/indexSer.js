@@ -3,6 +3,7 @@ angular.module('index.services', [])
 
 .factory('cart', function($http) {
 
+        var goodDetail;
         var goods = [];
         var goodsNumber={number:0,sum:0,numberArr:[]};
         var changeGoodsNumber=function(){
@@ -127,6 +128,7 @@ angular.module('index.services', [])
             },
             findGood:function(goodId,cb){
                 $http.get('/shop/findGood/'+goodId).success(function (data) {
+                    goodDetail=data.results[0]
                     cb(data.results[0]);
                 }).error(function (res) {
                     console.log(res);

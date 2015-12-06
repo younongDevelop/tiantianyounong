@@ -103,7 +103,7 @@ function cancelPil(){
 
 angular.module('index.controllers', [])
 
-    .controller('indexBaseCtrl', function($scope,cart,$http,$location,weixin,$rootScope,$log) {
+    .controller('indexBaseCtrl', function($scope,cart,$http,$location,weixin,$rootScope) {
         $rootScope.$on('$locationChangeStart', locationChangeStart);
 
         function locationChangeStart(event) {
@@ -119,10 +119,7 @@ angular.module('index.controllers', [])
 //            alert("设置分享首页");
                 var str = targetUrl.split('#')[1];
                 console.log(str);
-
-                shareIndex(str);
-
-
+                    shareIndex(str);
             }
 
         }

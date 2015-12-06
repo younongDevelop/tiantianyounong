@@ -104,7 +104,7 @@ angular.module('shop.controllers', [])
 
     })
 
-    .controller("detailCtrl",function($scope,cart, orderOp,$stateParams,$location, $ionicPopup, $rootScope){
+    .controller("detailCtrl",function($scope,cart, orderOp,$stateParams,$location, $ionicPopup){
 
 
 
@@ -113,31 +113,10 @@ angular.module('shop.controllers', [])
 
         cart.findGood(proid,function(data){
             data.prod_images=imgIP+data.prod_images;
-            shareIndex()
+            shareIndex('/detail/'+$stateParams.proid,data.prod_images)
             $scope.detail=data;
             $scope.detail.quantity=1;
             console.log(data);
-
-
-
-            $rootScope.$on('$locationChangeStart', locationChangeStart);
-
-            function locationChangeStart(event) {
-                console.log('locationChangeStart');
-                console.log(arguments);
-
-                var targetUrl = arguments[1];
-                console.log(targetUrl.indexOf('/detail/'));
-                if (targetUrl.indexOf('/detail/') != -1) {
-                    var str = targetUrl.split('#')[1];
-                    console.log(str);
-
-                    shareIndex(str, data.prod_images);
-                }
-
-            }
-
-
         })
 
         cart.getGoodsNumber(function(data){
