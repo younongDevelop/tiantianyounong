@@ -126,9 +126,10 @@ router.get('/node/back', function (reques, res, next) {
     console.log(arg);
     console.log('code====================' + arg.code);
     console.log('code====================' + arg.state);
+    var state=arg.state;
     var reg = new RegExp("detail", "");
     if(reg.test(arg.state)){
-        arg.state='group';
+        state='group';
     }
 
     var getUid = function (openId) {
@@ -137,7 +138,7 @@ router.get('/node/back', function (reques, res, next) {
         var route='';
         var url='' ;
 
-        switch (arg.state) {
+        switch (state) {
             case '':
             {
                 path = '/node/login';
