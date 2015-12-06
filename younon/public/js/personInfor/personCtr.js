@@ -230,7 +230,7 @@ angular.module('person.controllers', [])
         accountOrders.getOrderDetail($stateParams.orderId,function(data){
 
             weixin.mdsign({product_id:data.order_no},function(data){
-                $scope.url='weixin：//wxpay/bizpayurl?'+data.result;
+                $scope.url='weixin://wxpay/bizpayurl?'+data.result;
                 $scope.code=true;
                 console.log(data.result);
             });

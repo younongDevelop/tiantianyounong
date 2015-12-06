@@ -21,6 +21,7 @@ var fs = require('fs');
 var weixinJs = require('../weixinjs/wechat.js');
 var notifyUrl = Config.hostUrl;
 var qrcode = require('../public/lib/qrcode.js');
+var payKey = Config.payKey;
 
 
 
@@ -48,10 +49,11 @@ var raw = function (args) {
         string += '&' + k + '=' + newArgs[k];
     }
     string = string.substr(1);
+    var signString =string+'&key='+payKey;
     console.log(string);
     var crypto = require('crypto');
     var md5 = crypto.createHash('md5');
-    string=string+'&sign='+md5.update(string).digest('hex').toUpperCase();
+    string=string+'&sign='+md5.update(signString).digest('hex').toUpperCase();
     return string;
 };
 /**
