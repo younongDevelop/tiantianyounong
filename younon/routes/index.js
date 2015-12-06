@@ -165,9 +165,15 @@ router.get('/node/back', function (reques, res, next) {
             {
                 path = '/node/login';
                 data = JSON.stringify({open_id: openId});
-                url ='http://mp.weixin.qq.com/s?__biz=MzAwNjQ3MjI5MQ==&mid=206079215&idx=1&sn=ee8af195866afe4f5b43dab8f5a92dd9#rd ';
                 break;
             }
+            {
+                path = '/users/login';
+                data = JSON.stringify({open_id: openId});
+                route =arg.state;
+                break;
+            }
+
             default :
             {
                 path = '/users/advertising';
