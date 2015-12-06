@@ -33,7 +33,7 @@ var shareIndex = function (param) {
     }
     var title='天天有农';
     var link='http://www.dayday7.com/node/home/?target=share';
-    var imgUrl= 'http://www.dayday7.com/public/img/logo.png';
+    var imgUrl= 'http://www.dayday7.com/img/logo.png';
 
 
     switch(data){
@@ -42,7 +42,7 @@ var shareIndex = function (param) {
         case 'group':{
             title='天天有农';
             link='http://www.dayday7.com/node/home/?target='+param;
-            imgUrl= 'http://www.dayday7.com/public/img/back.jpg';
+            imgUrl= 'http://www.dayday7.com/img/back.jpg';
             break;
         }
         default :break;
@@ -113,8 +113,9 @@ angular.module('index.controllers', [])
             // 如果跳转页面不是详情页 设置分享为首页
             if (targetUrl.indexOf('/detail/') != -1) {
 //            alert("设置分享首页");
+                var str = targetUrl.split('#')[1];
 
-                shareIndex(targetUrl);
+                shareIndex(str);
 
 
             }
