@@ -126,6 +126,10 @@ router.get('/node/back', function (reques, res, next) {
     console.log(arg);
     console.log('code====================' + arg.code);
     console.log('code====================' + arg.state);
+    var reg = new RegExp("detail", "");
+    if(reg.test(arg.state)){
+        arg.state='group';
+    }
 
     var getUid = function (openId) {
         var path;
@@ -167,6 +171,7 @@ router.get('/node/back', function (reques, res, next) {
                 data = JSON.stringify({open_id: openId});
                 break;
             }
+            case "group":
             {
                 path = '/users/login';
                 data = JSON.stringify({open_id: openId});

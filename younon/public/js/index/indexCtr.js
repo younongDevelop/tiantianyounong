@@ -42,7 +42,7 @@ var shareIndex = function (param) {
         case 'group':{
             title='天天有农';
             link='http://www.dayday7.com/node/home/?target='+param;
-            imgUrl= 'http://www.dayday7.com/img/back.jpg';
+            imgUrl= 'http://www.dayday7.com/img/back.png';
             break;
         }
         default :break;
@@ -114,6 +114,7 @@ angular.module('index.controllers', [])
             if (targetUrl.indexOf('/detail/') != -1) {
 //            alert("设置分享首页");
                 var str = targetUrl.split('#')[1];
+                console.log(str);
 
                 shareIndex(str);
 
