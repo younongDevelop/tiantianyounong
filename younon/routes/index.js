@@ -649,7 +649,7 @@ router.post('/node/code',function(req,res){
 
                     postData={
                         money:rows[0].order_total,
-                        productName:'',
+                        productName:'test',
                         orderId:result.product_id,
                         openid:result.openid
                     }
