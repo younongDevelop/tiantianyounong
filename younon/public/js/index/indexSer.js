@@ -283,6 +283,12 @@ angular.module('index.services', [])
                 });
 
         },
+            getQrcode:function(data,cb){
+                $http.post('/node/prepareOrder',data).success(function(data){
+                    cb(data)
+                })
+
+            },
             getToken:function(data,cb){
                 $http.post('/node/token',data).success(function(data){
                     cb(data);

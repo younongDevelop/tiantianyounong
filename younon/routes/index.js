@@ -341,7 +341,7 @@ router.post('/node/prepareOrder', function (req, res, next) {
             total_fee: parseInt(req.body.money),
             spbill_create_ip: getClientIp(req),
             notify_url: notifyUrl,
-            trade_type: 'NATIVE',
+            trade_type: req.body.Type,
             openid: req.body.openid
         };
 
@@ -567,96 +567,96 @@ router.post('/node/login', function(req, res, next) {
     });
 });
 
-router.post('/node/code',function(req,res){
-
-    var postData;
-    var NonceStr;
-
-    function getPrepay_id(dataJson){
-
-         var data = JSON.stringify(dataJson);
-
-
-
-        var opt = {
-            host: 'www.dayday7.com',
-            method: 'POST',
-            path: '/node/prepareOrder',
-            headers: {
-                "Content-Type": 'application/json',
-                "Content-Length": data.length
-            }
-        }
-        var body = '';
-        console.log(opt);
-        var request = http.request(opt,function (response) {
-            var results = '';
-            console.log("Got response: " + response.statusCode);
-            response.on('data',function (chunk) {
-                results += chunk;
-            }).on('end', function () {
-                var obj = JSON.parse(results);
-
-                var signJson={
-                    return_code:obj.return_code,
-                    appid:obj.appid,
-                    mch_id:obj.mch_id,
-                    nonce_str:obj.nonce_str,
-                    prepay_id: obj.prepay_id,
-                    result_code:obj.result_code
-                };
-
-                var data = util.buildXML(mdSign(signJson));
-                console.log(data);
-
-                res.writeHead(200, {'Content-Type': 'application/xml'});
-                res.end(data);
-            });
-        }).on('error', function (e) {
-            console.log("Got error: " + e.message);
-        })
-        request.write(data + "\n");
-        request.end();
-
-    }
-
-    var resultsData='';
-
-    req.on('data',function (chunk) {
-         resultsData += chunk;
-
-
-    }).on('end', function () {
-
-        util.parseXML(resultsData,  function (err, result) {
-            console.log(result);
-            store.getPool().getConnection(function (err, conn) {
-
-                var querySQL = "select order_total from orders where order_no='"+result.product_id+"' ";
-                conn.query(querySQL,function(err,rows){
-                    console.log('!!!!!!!!');
-                    if (err) console.log(err);
-                    conn.release();
-                    NonceStr=result.nonce_str;
-
-                    postData={
-                        money:rows[0].order_total,
-                        productName:'test',
-                        orderId:result.product_id,
-                        openid:result.openid
-                    }
-                    console.log(postData);
-                    getPrepay_id(postData);
-
-
-                });
-            });
-        });
-    });
-
-
-
-})
+//router.post('/node/code',function(req,res){
+//
+//    var postData;
+//    var NonceStr;
+//
+//    function getPrepay_id(dataJson){
+//
+//         var data = JSON.stringify(dataJson);
+//
+//
+//
+//        var opt = {
+//            host: 'www.dayday7.com',
+//            method: 'POST',
+//            path: '/node/prepareOrder',
+//            headers: {
+//                "Content-Type": 'application/json',
+//                "Content-Length": data.length
+//            }
+//        }
+//        var body = '';
+//        console.log(opt);
+//        var request = http.request(opt,function (response) {
+//            var results = '';
+//            console.log("Got response: " + response.statusCode);
+//            response.on('data',function (chunk) {
+//                results += chunk;
+//            }).on('end', function () {
+//                var obj = JSON.parse(results);
+//
+//                var signJson={
+//                    return_code:obj.return_code,
+//                    appid:obj.appid,
+//                    mch_id:obj.mch_id,
+//                    nonce_str:obj.nonce_str,
+//                    prepay_id: obj.prepay_id,
+//                    result_code:obj.result_code
+//                };
+//
+//                var data = util.buildXML(mdSign(signJson));
+//                console.log(data);
+//
+//                res.writeHead(200, {'Content-Type': 'application/xml'});
+//                res.end(data);
+//            });
+//        }).on('error', function (e) {
+//            console.log("Got error: " + e.message);
+//        })
+//        request.write(data + "\n");
+//        request.end();
+//
+//    }
+//
+//    var resultsData='';
+//
+//    req.on('data',function (chunk) {
+//         resultsData += chunk;
+//
+//
+//    }).on('end', function () {
+//
+//        util.parseXML(resultsData,  function (err, result) {
+//            console.log(result);
+//            store.getPool().getConnection(function (err, conn) {
+//
+//                var querySQL = "select order_total from orders where order_no='"+result.product_id+"' ";
+//                conn.query(querySQL,function(err,rows){
+//                    console.log('!!!!!!!!');
+//                    if (err) console.log(err);
+//                    conn.release();
+//                    NonceStr=result.nonce_str;
+//
+//                    postData={
+//                        money:rows[0].order_total,
+//                        productName:'test',
+//                        orderId:result.product_id,
+//                        openid:result.openid
+//                    }
+//                    console.log(postData);
+//                    getPrepay_id(postData);
+//
+//
+//                });
+//            });
+//        });
+//    });
+//
+//
+//
+//})
 
 
 router.post('/node/payBack',function(req,res){
@@ -730,20 +730,9 @@ function createdWechatUser(res,req){
 
 
 router.get('/generate/qrcode/',function(req,res){
-    var product_id = req.query.jpath;
-    var json = {
-        appid: apid,
-        mch_id: businessNumber,
-        time_stamp: createTimestamp(),
-        nonce_str:createNonceStr(),
-        product_id:product_id
-    };
-
-    var dataUrl='weixin://wxpay/bizpayurl?'+raw(json);
-
-
+    var dataUrl = req.query.jpath;
     console.log("二维码内容："+dataUrl);
-    var qr = qrcode.qrcode(10, 'L');
+    var qr = qrcode.qrcode(4, 'M');
     qr.addData(dataUrl);  // 解决中文乱码
     qr.make();
     var base64 = qr.createImgTag(5, 10);  // 获取base64编码图片字符串
