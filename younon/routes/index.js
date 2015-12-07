@@ -22,6 +22,9 @@ var weixinJs = require('../weixinjs/wechat.js');
 var notifyUrl = Config.hostUrl;
 var qrcode = require('../public/lib/qrcode.js');
 var payKey = Config.payKey;
+var logger = require('../app').logger('index');
+
+
 
 
 
@@ -56,6 +59,15 @@ var raw = function (args) {
     string=string+'&sign='+md5.update(signString).digest('hex').toUpperCase();
     return string;
 };
+
+
+router.get('/testlog', function (req, res, next) {
+   console.log('testlog');
+    logger.info("This is an index page! -- log4js");
+    res.end();
+})
+
+
 /**
  * 重定向到微信接口获取页面授权，取得code
  *
@@ -635,12 +647,14 @@ router.post('/node/code',function(req,res){
                     if (err) console.log(err);
                     conn.release();
 
+
                     postData={
                         money:rows[0].order_total,
                         productName:'商品',
                         orderId:result.product_id,
                         openid:result.openid
                     }
+                    console.log(postData);
                     getPrepay_id(postData);
 
 
@@ -649,6 +663,52 @@ router.post('/node/code',function(req,res){
         });
     });
 
+
+
+})
+
+
+router.post('/node/payBack',function(req,res){
+
+    var resultsData='';
+
+    req.on('data',function (chunk) {
+        resultsData += chunk;
+
+
+    }).on('end', function () {
+
+        util.parseXML(resultsData,  function (err, result) {
+            console.log(result);
+            if(result.return_code=='SUCCESS'){
+
+                store.getPool().getConnection(function (err, conn) {
+
+                    var querySQL = "select order_total from orders where order_no='"+result.product_id+"' ";
+                    conn.query(querySQL,function(err,rows){
+                        console.log('!!!!!!!!');
+                        if (err) console.log(err);
+                        conn.release();
+
+                    });
+                });
+
+
+
+
+            }else{
+
+                var rejson={
+                    return_code:'FAIL'
+                }
+                var data = util.buildXML(rejson);
+                console.log(data);
+                res.json(data);
+                res.end;
+            }
+
+        });
+    });
 
 
 })

@@ -21,7 +21,7 @@ var Config = {
     AppID:"wx248d78d070b8fb35",
     AppSecret:"9409134dfd9f3bfd6215f32bbd0b1882",
     payKey:"yonong2015ttmycart1234567890qwer",
-    hostUrl:"http://www.dayday7.com",
+    hostUrl:"http://www.dayday7.com/node/payBack",
     host:"www.dayday7.com",
     businessNumber: '1233511302',
     keyPath:path.join (__dirname , 'public/key/'),

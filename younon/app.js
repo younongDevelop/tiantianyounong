@@ -4,17 +4,46 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var log4js = require('log4js');
+
+log4js.configure({
+    appenders: [
+        { type: 'console' }, //控制台输出
+        {
+            type: 'file', //文件输出
+            filename: __dirname+'/logs/access.log',
+            maxLogSize: 1024,
+            backups:4,
+            category: 'normal'
+        }
+    ],
+    replaceConsole: true
+});
+var loggers = log4js.getLogger('normal');
+loggers.setLevel('INFO');
+
+
+exports.logger=function(name){
+    var logger = log4js.getLogger(name);
+    logger.setLevel('INFO');
+    return logger;
+}
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var shop = require('./routes/shop/shop');
 var person = require('./routes/personInfo/person');
 
+
+
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -23,6 +52,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(log4js.connectLogger(loggers, {level:'auto', format:':method :url'}));
 
 app.use('/', routes);
 app.use('/users', users);
@@ -61,4 +91,7 @@ app.use(function(err, req, res, next) {
 });
 
 
+
+
 module.exports = app;
+
