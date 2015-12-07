@@ -605,8 +605,7 @@ router.post('/node/code',function(req,res){
                     prepay_id: obj.prepay_id,
                     result_code:'SUCCESS'
                 };
-
-                console.log(mdSign(signJson));
+                
 
                 var rejson={
                     return_code:'SUCCESS',
