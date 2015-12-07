@@ -605,6 +605,8 @@ router.post('/node/code',function(req,res){
                     result_code:'SUCCESS'
                 };
 
+                console.log(mdSign(signJson));
+
                 var rejson={
                     return_code:'SUCCESS',
                     appid:apid,
@@ -614,6 +616,7 @@ router.post('/node/code',function(req,res){
                     result_code:'SUCCESS',
                     sign:mdSign(signJson)
                 }
+
 
                 var data = util.buildXML(rejson);
                 console.log(data);
