@@ -491,7 +491,12 @@ router.post('/node/login', function(req, res, next) {
     });
 });
 
-router.post('node/code',function(req,res){
+router.post('/node/code',function(req,res){
+
+    util.parseXML(req.body, function (err, result) {
+        console.log(result);
+
+    });
 
     console.log(req.body);
     res.json();
@@ -517,16 +522,27 @@ function createdWechatUser(res,req){
 
 
 router.get('/generate/qrcode/',function(req,res){
-    var order_id = req.query.jpath;
-    console.log("订单id："+order_id);
-    var qr = qrcode.qrcode(4, 'M');
-    qr.addData(order_id);  // 解决中文乱码
+    var product_id = req.query.jpath;
+    var json = {
+        appid: apid,
+        mch_id: businessNumber,
+        time_stamp: createTimestamp(),
+        nonce_str:createNonceStr(),
+        product_id:product_id
+    };
+
+    var dataUrl='weixin://wxpay/bizpayurl?'+raw(json);
+
+
+    console.log("二维码内容："+dataUrl);
+    var qr = qrcode.qrcode(10, 'L');
+    qr.addData(dataUrl);  // 解决中文乱码
     qr.make();
     var base64 = qr.createImgTag(5, 10);  // 获取base64编码图片字符串
     base64 = base64.match(/src="([^"]*)"/)[1];  // 获取图片src数据
     base64 = base64.replace(/^data:image\/\w+;base64,/, '');  // 获取base64编码
     base64 = new Buffer(base64, 'base64');  // 新建base64图片缓存
-    res.writeHead(200, {'Content-Type': 'image/png', 'Content-Disposition': 'attachment; filename=' + order_id + '.png'});  // 设置http头
+    res.writeHead(200, {'Content-Type': 'image/png', 'Content-Disposition': 'attachment; filename=' + product_id + '.png'});  // 设置http头
     res.write(base64);  // 输出图片
     res.end();
 });

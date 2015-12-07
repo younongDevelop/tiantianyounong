@@ -200,7 +200,7 @@ angular.module('person.controllers', [])
             $scope.orders=data;
 
             page++;
-            if (data.length < pageSize) {
+            if (data.length < pageSize*page) {
                 isMore = false;
             } else {
                 isMore = true;
@@ -228,14 +228,8 @@ angular.module('person.controllers', [])
         $scope.code=false;
         var errorMap=errMap.getMap();
         accountOrders.getOrderDetail($stateParams.orderId,function(data){
-
-            weixin.mdsign({product_id:data.order_no},function(data){
-                $scope.url='weixin://wxpay/bizpayurl?'+data.result;
+                $scope.url=data.order_no;
                 $scope.code=true;
-                console.log(data.result);
-            });
-
-
             $scope.orderDetail=data;
             console.log(data);
             $scope.orderDetail.money=0;
