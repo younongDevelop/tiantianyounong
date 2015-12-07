@@ -571,6 +571,7 @@ router.post('/node/login', function(req, res, next) {
 router.post('/node/code',function(req,res){
 
     var postData;
+    var NonceStr;
 
     function getPrepay_id(dataJson){
 
@@ -596,7 +597,7 @@ router.post('/node/code',function(req,res){
                 results += chunk;
             }).on('end', function () {
                 var obj = JSON.parse(results);
-                var NonceStr=createNonceStr();
+
                 var signJson={
                     return_code:'SUCCESS',
                     return_msg:'OK',
@@ -653,6 +654,7 @@ router.post('/node/code',function(req,res){
                     console.log('!!!!!!!!');
                     if (err) console.log(err);
                     conn.release();
+                    NonceStr=result.nonce_str;
 
                     postData={
                         money:rows[0].order_total,
