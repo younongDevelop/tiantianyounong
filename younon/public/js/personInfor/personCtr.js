@@ -246,17 +246,22 @@ angular.module('person.controllers', [])
                 $scope.orderDetail.money=$scope.orderDetail.money+parseInt(item.sum*100)/100;
                 $scope.orderDetail.weight=$scope.orderDetail.weight+$scope.orderDetail.items[i].prod_weight*$scope.orderDetail.items[i].product_quantity;
             }
-            weixin.getQrcode({
-                productName: productName,
-                orderId:data.order_no,
-                total_fee: data.order_total,
-                openid:openid,
-                Type:'NATIVE',
-                money:data.order_total
-            },function(result){
-                $scope.url=result.code_url;
-                $scope.code=true;
-            })
+
+            if(data.order_status==13||data.order_status==7){
+                weixin.getQrcode({
+                    productName: productName,
+                    orderId:data.order_no,
+                    total_fee: data.order_total,
+                    openid:openid,
+                    Type:'NATIVE',
+                    money:data.order_total
+                },function(result){
+                    $scope.url=result.code_url;
+                    $scope.code=true;
+                })
+
+            }
+
             $scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"订单状态",content:$scope.orderDetail.order_status},{title:"创建时间",content:$scope.orderDetail.date_purchased},
                 {title:"商品总金额",content:'￥'+$scope.orderDetail.money,attention:true}, {title:"运费",content:'￥'+$scope.orderDetail.deliver_charges,attention:true},];
             //$scope.information=[{title:"订单号",content:$scope.orderDetail.order_no},{title:"创建时间",content:$scope.orderDetail.date_purchased},
