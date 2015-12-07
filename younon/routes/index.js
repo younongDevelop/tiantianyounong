@@ -647,10 +647,9 @@ router.post('/node/code',function(req,res){
                     if (err) console.log(err);
                     conn.release();
 
-
                     postData={
                         money:rows[0].order_total,
-                        productName:'商品',
+                        productName:'',
                         orderId:result.product_id,
                         openid:result.openid
                     }
