@@ -600,25 +600,21 @@ router.post('/node/code',function(req,res){
 
                 var signJson={
                     return_code:'SUCCESS',
-                    return_msg:'OK',
                     appid:apid,
-                    mch_id:businessNumber,
+                    return_msg:'',
                     nonce_str:NonceStr,
                     prepay_id: obj.prepay_id,
-                    result_code:'SUCCESS',
-                    err_code_des:'FAIL'
+                    result_code:'SUCCESS'
                 };
 
 
                 var rejson={
                     return_code:'SUCCESS',
-                    return_msg:'OK',
                     appid:apid,
-                    mch_id:businessNumber,
+                    return_msg:'',
                     nonce_str:NonceStr,
                     prepay_id:obj.prepay_id,
                     result_code:'SUCCESS',
-                    err_code_des:'FAIL',
                     sign:mdSign(signJson).sign
                 }
 
