@@ -596,11 +596,12 @@ router.post('/node/code',function(req,res){
                 results += chunk;
             }).on('end', function () {
                 var obj = JSON.parse(results);
+                var NonceStr=createNonceStr();
                 var signJson={
                     return_code:'SUCCESS',
                     appid:apid,
                     mch_id:businessNumber,
-                    nonce_str:createNonceStr(),
+                    nonce_str:NonceStr,
                     prepay_id: obj.prepay_id,
                     result_code:'SUCCESS'
                 };
@@ -611,7 +612,7 @@ router.post('/node/code',function(req,res){
                     return_code:'SUCCESS',
                     appid:apid,
                     mch_id:businessNumber,
-                    nonce_str:createNonceStr(),
+                    nonce_str:NonceStr,
                     prepay_id:obj.prepay_id,
                     result_code:'SUCCESS',
                     sign:mdSign(signJson).sign
