@@ -492,6 +492,7 @@ router.post('/node/login', function(req, res, next) {
 });
 
 router.post('/node/code',function(req,res){
+    console.log(req.body);
 
     util.parseXML(req.body, function (err, result) {
         console.log(result);
