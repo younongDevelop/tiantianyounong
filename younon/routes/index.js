@@ -294,6 +294,71 @@ router.post('/node/pay', function (req, res, next) {
         });
     }
 )
+
+
+/**
+ * 统一下单接口
+ *
+ */
+
+router.post('/node/prepareOrder', function (req, res, next) {
+
+
+        var getClientIp =function  (req) {
+            var ipAddress;
+            var forwardedIpsStr = req.headers['x-forwarded-for'];
+            if (forwardedIpsStr) {
+                var forwardedIps = forwardedIpsStr.split(',');
+                ipAddress = forwardedIps[0];
+            }
+            if (!ipAddress) {
+                ipAddress = req.connection.remoteAddress;
+            }
+            console.log(ipAddress);
+            return ipAddress;
+        };
+
+        req.body.money=parseFloat(req.body.money).toFixed(2);
+        req.body.money=req.body.money*10;
+        req.body.money=req.body.money*10;
+
+        var json = {
+            appid: apid,
+            mch_id: businessNumber,
+            body: req.body.productName,
+            out_trade_no: req.body.orderId,
+            total_fee: parseInt(req.body.money),
+            spbill_create_ip: getClientIp(req),
+            notify_url: notifyUrl,
+            trade_type: 'JSAPI',
+            openid: req.body.openid
+        };
+
+        console.log(json);
+
+        var resjson = paySign(json);
+        console.log('paysign======================' + resjson);
+        var fn = function (err, result) {
+
+            console.log(result);
+            res.send(result);
+            res.end();
+        }
+
+        request({
+            url: "https://api.mch.weixin.qq.com/pay/unifiedorder",
+            method: 'POST',
+            body: util.buildXML(resjson)
+        }, function (err, response, body) {
+            util.parseXML(body, fn);
+        });
+    }
+)
+
+
+
+
+
 /**
  * 获取token，请求微信接口的唯一票据，7200秒过期或者提前过期，不稳定
  *
@@ -493,19 +558,98 @@ router.post('/node/login', function(req, res, next) {
 
 router.post('/node/code',function(req,res){
 
+    var postData;
+
+    function getPrepay_id(dataJson){
+
+         var data = JSON.stringify(dataJson);
+
+
+
+        var opt = {
+            host: 'www.dayday7.com',
+            method: 'POST',
+            path: '/node/prepareOrder',
+            headers: {
+                "Content-Type": 'application/json',
+                "Content-Length": data.length
+            }
+        }
+        var body = '';
+        console.log(opt);
+        var request = http.request(opt,function (response) {
+            var results = '';
+            console.log("Got response: " + response.statusCode);
+            response.on('data',function (chunk) {
+                results += chunk;
+            }).on('end', function () {
+                var obj = JSON.parse(results);
+                var signJson={
+                    return_code:'SUCCESS',
+                    appid:apid,
+                    mch_id:businessNumber,
+                    nonce_str:createNonceStr(),
+                    prepay_id: obj.prepay_id,
+                    result_code:'SUCCESS'
+                };
+
+                var rejson={
+                    return_code:'SUCCESS',
+                    appid:apid,
+                    mch_id:businessNumber,
+                    nonce_str:createNonceStr(),
+                    prepay_id:obj.prepay_id,
+                    result_code:'SUCCESS',
+                    sign:mdSign(signJson)
+                }
+
+                var data = util.buildXML(rejson);
+                console.log(data);
+                res.json(data);
+                res.end;
+
+            });
+        }).on('error', function (e) {
+            console.log("Got error: " + e.message);
+        })
+        request.write(data + "\n");
+        request.end();
+
+    }
+
+    var resultsData='';
+
     req.on('data',function (chunk) {
-        console.log(chunk);
-        util.parseXML(chunk,  function (err, result) {
-            console.log(result);
+         resultsData += chunk;
 
-        });
+
     }).on('end', function () {
-        console.log(res.headers)
-    });
- 
 
-    console.log(req.body);
-    res.json();
+        util.parseXML(resultsData,  function (err, result) {
+            console.log(result);
+            store.getPool().getConnection(function (err, conn) {
+
+                var querySQL = "select order_total from orders where order_no='"+result.product_id+"' ";
+                conn.query(querySQL,function(err,rows){
+                    console.log('!!!!!!!!');
+                    if (err) console.log(err);
+                    conn.release();
+
+                    postData={
+                        money:rows[0].order_total,
+                        productName:'商品',
+                        orderId:result.product_id,
+                        openid:result.openid
+                    }
+                    getPrepay_id(postData);
+
+
+                });
+            });
+        });
+    });
+
+
 
 })
 
