@@ -739,7 +739,7 @@ router.get('/generate/qrcode/',function(req,res){
     base64 = base64.match(/src="([^"]*)"/)[1];  // 获取图片src数据
     base64 = base64.replace(/^data:image\/\w+;base64,/, '');  // 获取base64编码
     base64 = new Buffer(base64, 'base64');  // 新建base64图片缓存
-    res.writeHead(200, {'Content-Type': 'image/png', 'Content-Disposition': 'attachment; filename=' + product_id + '.png'});  // 设置http头
+    res.writeHead(200, {'Content-Type': 'image/png', 'Content-Disposition': 'attachment; filename=' + dataUrl + '.png'});  // 设置http头
     res.write(base64);  // 输出图片
     res.end();
 });
