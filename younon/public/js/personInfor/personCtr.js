@@ -247,7 +247,7 @@ angular.module('person.controllers', [])
                 $scope.orderDetail.weight=$scope.orderDetail.weight+$scope.orderDetail.items[i].prod_weight*$scope.orderDetail.items[i].product_quantity;
             }
             weixin.getQrcode({
-                body: productName,
+                productName: productName,
                 out_trade_no:data.order_no,
                 total_fee: data.order_total,
                 openid:openid,
