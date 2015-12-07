@@ -492,12 +492,17 @@ router.post('/node/login', function(req, res, next) {
 });
 
 router.post('/node/code',function(req,res){
-    console.log(req);
 
-    util.parseXML(req.body, function (err, result) {
-        console.log(result);
+    req.on('data',function (chunk) {
+        console.log(chunk);
+        util.parseXML(chunk,  function (err, result) {
+            console.log(result);
 
+        });
+    }).on('end', function () {
+        console.log(res.headers)
     });
+ 
 
     console.log(req.body);
     res.json();
