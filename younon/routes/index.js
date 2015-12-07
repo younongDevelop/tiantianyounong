@@ -732,7 +732,7 @@ function createdWechatUser(res,req){
 router.get('/generate/qrcode/',function(req,res){
     var dataUrl = req.query.jpath;
     console.log("二维码内容："+dataUrl);
-    var qr = qrcode.qrcode(4, 'M');
+    var qr = qrcode.qrcode(10, 'L');
     qr.addData(dataUrl);  // 解决中文乱码
     qr.make();
     var base64 = qr.createImgTag(5, 10);  // 获取base64编码图片字符串
