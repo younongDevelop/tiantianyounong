@@ -614,7 +614,7 @@ router.post('/node/code',function(req,res){
                     nonce_str:createNonceStr(),
                     prepay_id:obj.prepay_id,
                     result_code:'SUCCESS',
-                    sign:mdSign(signJson)
+                    sign:mdSign(signJson).sign
                 }
 
 
