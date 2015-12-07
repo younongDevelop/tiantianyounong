@@ -599,27 +599,15 @@ router.post('/node/code',function(req,res){
                 var obj = JSON.parse(results);
 
                 var signJson={
-                    return_code:'SUCCESS',
-                    appid:apid,
-                    mch_id:businessNumber,
-                    nonce_str:NonceStr,
+                    return_code:obj.return_code,
+                    appid:obj.appid,
+                    mch_id:obj.mch_id,
+                    nonce_str:obj.nonce_str,
                     prepay_id: obj.prepay_id,
-                    result_code:'SUCCESS'
+                    result_code:obj.result_code
                 };
 
-
-                var rejson={
-                    return_code:'SUCCESS',
-                    appid:apid,
-                    mch_id:businessNumber,
-                    nonce_str:NonceStr,
-                    prepay_id:obj.prepay_id,
-                    result_code:'SUCCESS',
-                    sign:mdSign(signJson).sign
-                }
-
-
-                var data = util.buildXML(rejson);
+                var data = util.buildXML(mdSign(signJson));
                 console.log(data);
 
                 res.writeHead(200, {'Content-Type': 'application/xml'});
