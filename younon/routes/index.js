@@ -605,7 +605,7 @@ router.post('/node/code',function(req,res){
                     prepay_id: obj.prepay_id,
                     result_code:'SUCCESS'
                 };
-                
+
 
                 var rejson={
                     return_code:'SUCCESS',
@@ -620,7 +620,7 @@ router.post('/node/code',function(req,res){
 
                 var data = util.buildXML(rejson);
                 console.log(data);
-                res.json(data);
+                res.send(data);
                 res.end;
 
             });
