@@ -620,9 +620,9 @@ router.post('/node/code',function(req,res){
 
                 var data = util.buildXML(rejson);
                 console.log(data);
-                res.send(data);
-                res.end;
 
+                res.writeHead(200, {'Content-Type': 'application/xml'});
+                res.end(data);
             });
         }).on('error', function (e) {
             console.log("Got error: " + e.message);
