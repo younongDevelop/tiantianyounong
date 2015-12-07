@@ -247,7 +247,7 @@ angular.module('person.controllers', [])
                 $scope.orderDetail.weight=$scope.orderDetail.weight+$scope.orderDetail.items[i].prod_weight*$scope.orderDetail.items[i].product_quantity;
             }
 
-            if(data.order_status==13||data.order_status==7){
+            if(data.order_status_id==13||data.order_status_id==7){
                 weixin.getQrcode({
                     productName: productName,
                     orderId:data.order_no,
