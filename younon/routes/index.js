@@ -599,21 +599,25 @@ router.post('/node/code',function(req,res){
                 var NonceStr=createNonceStr();
                 var signJson={
                     return_code:'SUCCESS',
+                    return_msg:'OK',
                     appid:apid,
                     mch_id:businessNumber,
                     nonce_str:NonceStr,
                     prepay_id: obj.prepay_id,
-                    result_code:'SUCCESS'
+                    result_code:'SUCCESS',
+                    err_code_des:'FAIL'
                 };
 
 
                 var rejson={
                     return_code:'SUCCESS',
+                    return_msg:'OK',
                     appid:apid,
                     mch_id:businessNumber,
                     nonce_str:NonceStr,
                     prepay_id:obj.prepay_id,
                     result_code:'SUCCESS',
+                    err_code_des:'FAIL',
                     sign:mdSign(signJson).sign
                 }
 
