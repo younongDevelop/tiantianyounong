@@ -248,10 +248,11 @@ angular.module('person.controllers', [])
             }
             weixin.getQrcode({
                 productName: productName,
-                out_trade_no:data.order_no,
+                orderId:data.order_no,
                 total_fee: data.order_total,
                 openid:openid,
-                Type:'NATIVE'
+                Type:'NATIVE',
+                money:data.order_total
             },function(result){
                 $scope.url=result.code_url;
                 $scope.code=true;
