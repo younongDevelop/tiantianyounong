@@ -342,7 +342,7 @@ router.post('/node/prepareOrder', function (req, res, next) {
             total_fee: parseInt(req.body.money),
             spbill_create_ip: getClientIp(req),
             notify_url: notifyUrl,
-            trade_type: 'JSAPI',
+            trade_type: 'NATIVE',
             openid: req.body.openid
         };
 
@@ -601,7 +601,7 @@ router.post('/node/code',function(req,res){
                 var signJson={
                     return_code:'SUCCESS',
                     appid:apid,
-                    return_msg:'',
+                    mch_id:businessNumber,
                     nonce_str:NonceStr,
                     prepay_id: obj.prepay_id,
                     result_code:'SUCCESS'
@@ -611,7 +611,7 @@ router.post('/node/code',function(req,res){
                 var rejson={
                     return_code:'SUCCESS',
                     appid:apid,
-                    return_msg:'',
+                    mch_id:businessNumber,
                     nonce_str:NonceStr,
                     prepay_id:obj.prepay_id,
                     result_code:'SUCCESS',
