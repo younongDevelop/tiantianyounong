@@ -68,8 +68,8 @@ var shareIndex = function (param,imageUrl) {
 
     wx.onMenuShareQQ({
         title: title, // 分享标题
-        desc: '一个专注于本地农产品的网站', // 分享描述
-        link: link, // 分享链接
+        desc: '苹果用户请搜索微信公众号天天有农', // 分享描述
+        link: 'http://weixin.qq.com/r/g3ViehfET0owrVMZ9yCR', // 分享链接
         imgUrl: imgUrl, // 分享图标
         success: function () {
             // 用户确认分享后执行的回调函数
@@ -81,8 +81,8 @@ var shareIndex = function (param,imageUrl) {
 
     wx.onMenuShareWeibo({
         title: title, // 分享标题
-        desc: '一个专注于本地农产品的网站', // 分享描述
-        link: link, // 分享链接
+        desc: '苹果用户请搜索微信公众号天天有农', // 分享描述
+        link: 'http://weixin.qq.com/r/g3ViehfET0owrVMZ9yCR', // 分享链接
         imgUrl: imgUrl, // 分享图标
         success: function () {
             // 用户确认分享后执行的回调函数
