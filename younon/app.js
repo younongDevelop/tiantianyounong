@@ -12,7 +12,7 @@ log4js.configure({
         {
             type: 'file', //文件输出
             filename: __dirname+'/logs/access.log',
-            maxLogSize: 1024,
+            maxLogSize: 1024000,
             backups:4,
             category: 'normal'
         }

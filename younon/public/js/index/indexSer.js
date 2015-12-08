@@ -25,6 +25,7 @@ angular.module('index.services', [])
 
 
         var load=function () {
+            goods = [];
             $http.get('/shop/getBasket/'+customerId).success(function (data) {
 
                     for (var i in data.results) {

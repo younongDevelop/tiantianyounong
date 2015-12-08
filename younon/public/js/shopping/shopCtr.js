@@ -106,6 +106,15 @@ angular.module('shop.controllers', [])
 
     .controller("detailCtrl",function($scope,cart, orderOp,$stateParams,$location, $ionicPopup){
 
+       var str = $location.absUrl().split('#')[0];
+        str = str.split('?')[1];
+        if(str){
+            str =str.split('=')[1];
+            customerId=str;
+        }
+
+        cart.loadGoods();
+
 
 
 
