@@ -68,7 +68,7 @@ var shareIndex = function (param,imageUrl) {
 
     wx.onMenuShareQQ({
         title: title, // 分享标题
-        desc: '一个专注于本地农产品的网站', // 分享描述
+        desc: '请关注微信公众号天天有农', // 分享描述
         link: 'http://mp.weixin.qq.com/s?__biz=MjM5NTg0ODI3Nw==&mid=400903408&idx=1&sn=86d43acac12865b4004a16a8284ea2e0&scene=18#wechat_redirect', // 分享链接
         imgUrl: imgUrl, // 分享图标
         success: function () {
@@ -81,7 +81,7 @@ var shareIndex = function (param,imageUrl) {
 
     wx.onMenuShareWeibo({
         title: title, // 分享标题
-        desc: '一个专注于本地农产品的网站', // 分享描述
+        desc: '请关注微信公众号天天有农', // 分享描述
         link: 'http://mp.weixin.qq.com/s?__biz=MjM5NTg0ODI3Nw==&mid=400903408&idx=1&sn=86d43acac12865b4004a16a8284ea2e0&scene=18#wechat_redirect', // 分享链接
         imgUrl: imgUrl, // 分享图标
         success: function () {
