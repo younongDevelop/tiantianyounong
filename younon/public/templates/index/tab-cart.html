@@ -2,7 +2,7 @@
   <ion-content>
       <ion-list>
           <ion-item ng-repeat="item in cartGoods"  style="height: 19rem;padding:0;margin-top:1rem" ng-click="jumpDetail(item.prod_id)">
-              <div style="width:7.2rem;float: left;margin-top:5.9rem;line-height: 15rem;height: 13rem;" ng-click="selectOne($index)">
+              <div style="width:7.2rem;float: left;margin-top:5.9rem;line-height: 10rem;height: 7rem;" ng-click="selectOne($index)">
                   <i class="ion-ios-circle-outline" style="color:#39bf50;font-size: 3.2rem;margin-left:2rem" ng-show="!item.select" ></i>
                   <i class="ion-ios-checkmark" style="color:#39bf50;font-size: 3.2rem;margin-left:2rem" ng-show="item.select"></i>
               </div>
