@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4baffbbc-3fa3-49e3-8e2d-96dd0a87db50" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/younon/public/js/index/indexCtr.js" afterPath="$PROJECT_DIR$/younon/public/js/index/indexCtr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/younon/public/templates/personInfor/account-addresses.html" afterPath="$PROJECT_DIR$/younon/public/templates/personInfor/account-addresses.html" />
     </list>
     <ignored path="tiantianyounong.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,12 +56,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="indexCtr.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="indexCtr.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/younon/public/js/index/indexCtr.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.1875" vertical-offset="0" max-vertical-offset="6765">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6765">
               <caret line="8" column="115" selection-start-line="8" selection-start-column="115" selection-end-line="8" selection-end-column="115" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="account-addresses.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/younon/public/templates/personInfor/account-addresses.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.14610389" vertical-offset="0" max-vertical-offset="616">
+              <caret line="6" column="95" selection-start-line="6" selection-start-column="95" selection-end-line="6" selection-end-column="95" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#ion-item#0;n#ion-list#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -130,6 +142,7 @@
         <option value="$PROJECT_DIR$/younon/public/js/index/indexSer.js" />
         <option value="$PROJECT_DIR$/younon/public/js/shopping/shopCtr.js" />
         <option value="$PROJECT_DIR$/younon/public/js/index/indexCtr.js" />
+        <option value="$PROJECT_DIR$/younon/public/templates/personInfor/account-addresses.html" />
       </list>
     </option>
   </component>
@@ -253,6 +266,10 @@
               <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shopping" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -303,6 +320,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="index" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tiantianyounong" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tiantianyounong" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="younon" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -588,14 +627,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/younon/public/js/index/indexSer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4170" max-vertical-offset="4905">
-          <caret line="300" column="32" selection-start-line="300" selection-start-column="32" selection-end-line="300" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/younon/bin/www">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1440">
@@ -973,9 +1004,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/younon/public/js/index/indexCtr.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1875" vertical-offset="0" max-vertical-offset="6765">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6765">
           <caret line="8" column="115" selection-start-line="8" selection-start-column="115" selection-end-line="8" selection-end-column="115" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/younon/public/templates/personInfor/account-addresses.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14610389" vertical-offset="0" max-vertical-offset="616">
+          <caret line="6" column="95" selection-start-line="6" selection-start-column="95" selection-end-line="6" selection-end-column="95" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#ion-item#0;n#ion-list#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
