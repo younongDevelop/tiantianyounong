@@ -673,16 +673,17 @@ router.post('/node/payBack',function(req,res){
             console.log(result);
             if(result.return_code=='SUCCESS'){
 
-                //store.getPool().getConnection(function (err, conn) {
-                //
-                //    var querySQL = "select order_total from orders where order_no='"+result.product_id+"' ";
-                //    conn.query(querySQL,function(err,rows){
-                //        console.log('!!!!!!!!');
-                //        if (err) console.log(err);
-                //        conn.release();
-                //
-                //    });
-                //});
+                store.getPool().getConnection(function (err, conn) {
+
+                    var querySQL = "update orders LEFT JOIN order_status ON order_status.order_status_id = 5 set orders.order_status_id = 5 ," +
+                        "orders.order_status = order_status.status_name where orders.order_no='"+result.out_trade_no+"' and orders.order_status_id in (7,13) ";
+                    conn.query(querySQL,function(err,rows){
+                        console.log('!!!!!!!!');
+                        if (err) console.log(err);
+                        conn.release();
+
+                    });
+                });
 
                 var rejson={
                     return_code:'SUCCESS'
