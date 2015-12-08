@@ -9,10 +9,7 @@ var signback = function (data) {
         jsApiList: ['chooseWXPay','onMenuShareTimeline', 'onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','onMenuShareQZone','hideMenuItems']
     });
     wx.ready(function () {
-        wx.hideMenuItems({
-            menuList: ['onMenuShareQQ','onMenuShareQZone'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
-        });
-
+    
     });
     shareIndex();
     wx.error(function (res) {
