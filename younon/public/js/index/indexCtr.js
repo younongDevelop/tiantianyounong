@@ -6,17 +6,10 @@ var signback = function (data) {
         timestamp: data.timestamp,
         nonceStr: data.nonceStr,
         signature: data.signature,
-        jsApiList: ['chooseWXPay','onMenuShareTimeline', 'onMenuShareAppMessage']
+        jsApiList: ['chooseWXPay','onMenuShareTimeline', 'onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','onMenuShareQZone']
     });
     wx.ready(function () {
-        wx.hideMenuItems({
-            menuList: [
-                'menuItem:readMode', // 阅读模式
-                'menuItem:share:QZone', // 分享到QQ空间
-                'menuItem:share:qq', // 分享到QQ
-                'menuItem:copyUrl' // 复制链接
-            ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
-        });
+
     });
     shareIndex();
     wx.error(function (res) {
@@ -72,6 +65,46 @@ var shareIndex = function (param,imageUrl) {
         cancel: function () {
         }
     });
+
+    wx.onMenuShareQQ({
+        title: title, // 分享标题
+        desc: '一个专注于本地农产品的网站', // 分享描述
+        link: link, // 分享链接
+        imgUrl: imgUrl, // 分享图标
+        success: function () {
+            // 用户确认分享后执行的回调函数
+        },
+        cancel: function () {
+            // 用户取消分享后执行的回调函数
+        }
+    });
+
+    wx.onMenuShareWeibo({
+        title: title, // 分享标题
+        desc: '一个专注于本地农产品的网站', // 分享描述
+        link: link, // 分享链接
+        imgUrl: imgUrl, // 分享图标
+        success: function () {
+            // 用户确认分享后执行的回调函数
+        },
+        cancel: function () {
+            // 用户取消分享后执行的回调函数
+        }
+    });
+
+    wx.onMenuShareQZone({
+        title: title, // 分享标题
+        desc: '一个专注于本地农产品的网站', // 分享描述
+        link: link, // 分享链接
+        imgUrl: imgUrl, // 分享图标
+        success: function () {
+            // 用户确认分享后执行的回调函数
+        },
+        cancel: function () {
+            // 用户取消分享后执行的回调函数
+        }
+    });
+
 };
 
 var getToken=function(url,$http,weixin){
