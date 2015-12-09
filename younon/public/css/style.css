@@ -69,7 +69,8 @@ select{
 
 .popup-container .popup{
     width:40rem;
-    font-size: 2rem;
+    font-size: 3rem;
+    line-height: 3rem;
 }
 
 .list{
