@@ -66,6 +66,9 @@ a{text-decoration: none;color: #444}
 select{
     background-color: #fff;
 }
+.popup-body{
+    line-height: 3rem;
+}
 
 .popup-container .popup{
     width:40rem;
