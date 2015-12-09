@@ -330,6 +330,13 @@ angular.module('shop.controllers', [])
                 $scope.formData.order_status_id=orderStatue[$scope.formData.payment_id];
 
             }else{
+
+                $ionicPopup.alert({
+                    title: '',
+                    template:rule,
+                    okText: '好的'
+                });
+
                 var orderStatue={
                     1:'1',
                     2:'6'

@@ -67,6 +67,11 @@ select{
     background-color: #fff;
 }
 
+.popup-container .popup{
+    width:40rem;
+    font-size: 2rem;
+}
+
 .list{
     padding-top:0;
 }
