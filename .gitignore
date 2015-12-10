@@ -1,2 +1,2 @@
-younon/bin/www
-younong/logs/
+younon/bin/*
+younon/logs/*
