@@ -115,6 +115,10 @@ angular.module('shop.controllers', [])
 
         cart.loadGoods();
 
+        $scope.gotoHome=function(){
+            $location.path('/tab/index');
+        }
+
 
 
 
